@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Zap, TrendingUp, Shield } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
+import logoVideo from "@/assets/sgc-logo-video.mp4";
 
 const Hero = () => {
   return (
@@ -24,27 +25,40 @@ const Hero = () => {
       {/* Content */}
       <div className="container relative z-10 px-4 sm:px-6 lg:px-8 py-20">
         <div className="max-w-5xl mx-auto text-center space-y-8">
+          {/* Logo Video */}
+          <div className="flex justify-center mb-8 animate-fade-in">
+            <video 
+              autoPlay 
+              loop 
+              muted={false}
+              playsInline
+              className="w-64 h-64 md:w-80 md:h-80 object-contain"
+            >
+              <source src={logoVideo} type="video/mp4" />
+            </video>
+          </div>
+
           {/* Launch Partner Badge */}
-          <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full glass border border-accent/50 text-sm font-semibold text-accent animate-fade-in">
+          <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full glass border border-accent/50 text-sm font-semibold text-accent animate-fade-in stagger-1">
             <Zap size={16} className="animate-glow" />
             <span>Launch Partner Program: <span className="text-gold">8 of 50 spots remaining</span></span>
           </div>
 
           {/* Main Headline */}
-          <h1 className="font-display font-black text-5xl md:text-7xl lg:text-8xl leading-tight animate-fade-in stagger-1">
-            <span className="text-gradient block mb-4">Intelligent Infrastructure.</span>
-            <span className="text-foreground">Instant Impact.</span>
+          <h1 className="font-display font-black text-5xl md:text-7xl lg:text-8xl leading-tight animate-fade-in stagger-2">
+            <span className="text-gradient block mb-4 animate-glow">Intelligent Infrastructure.</span>
+            <span className="text-foreground animate-fade-in stagger-3">Instant Impact.</span>
           </h1>
 
           {/* Subheadline */}
-          <p className="text-xl md:text-2xl text-foreground-muted max-w-3xl mx-auto leading-relaxed animate-fade-in stagger-2">
-            Transform your enterprise in <span className="text-accent font-bold">14 days</span> with AI-native technology. 
-            Guaranteed <span className="text-success font-bold">150-200% ROI</span>. 
+          <p className="text-xl md:text-2xl text-foreground-muted max-w-3xl mx-auto leading-relaxed animate-fade-in stagger-4">
+            Transform your enterprise in <span className="text-accent font-bold animate-glow">14 days</span> with AI-native technology. 
+            Guaranteed <span className="text-success font-bold animate-glow">150-200% ROI</span>. 
             No PowerPoint. No delays. Just production-ready intelligent systems.
           </p>
 
           {/* Value Props */}
-          <div className="flex flex-wrap items-center justify-center gap-6 text-sm md:text-base animate-fade-in stagger-3">
+          <div className="flex flex-wrap items-center justify-center gap-6 text-sm md:text-base animate-fade-in stagger-5">
             <div className="flex items-center gap-2 text-foreground-muted">
               <Zap size={20} className="text-accent" />
               <span>14-Day Deployments</span>
@@ -60,7 +74,7 @@ const Hero = () => {
           </div>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 animate-fade-in stagger-4">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 animate-fade-in stagger-6">
             <Button variant="hero" size="xl" className="group" asChild>
               <a href="#book-consultation">
                 Book Free Consultation
@@ -75,7 +89,7 @@ const Hero = () => {
           </div>
 
           {/* Trust Indicators */}
-          <div className="pt-8 animate-fade-in stagger-5">
+          <div className="pt-8 animate-fade-in stagger-7">
             <p className="text-xs text-foreground-subtle mb-4 uppercase tracking-wider">
               Trusted by Enterprise Leaders in UAE
             </p>
