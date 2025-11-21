@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import sgcLogo from "@/assets/sgc-logo.png";
+import scholarixLogo from "@/assets/scholarix-logo.png";
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -21,7 +21,7 @@ const Header = () => {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
-            <img src={sgcLogo} alt="SGC TECH AI Logo" className="h-10 w-10 transition-transform group-hover:scale-110" />
+            <img src={scholarixLogo} alt="Scholarix Global Logo" className="h-10 w-10 transition-transform group-hover:scale-110" />
             <div className="flex flex-col">
               <span className="font-display font-bold text-xl text-gradient leading-none">SGC TECH AI</span>
               <span className="text-xs text-foreground-subtle font-body">by Scholarix Global</span>

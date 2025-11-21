@@ -1,22 +1,14 @@
-# Welcome to your Lovable project
+# Scholarix Global Website
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/303d8a6b-3ed0-4198-bea5-83555fbc9e66
+**Company**: Scholarix Global / SGC TECH AI
 
 ## How can I edit this code?
 
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/303d8a6b-3ed0-4198-bea5-83555fbc9e66) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
 **Use your preferred IDE**
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+You can work locally using your own IDE. Clone this repo and push changes.
 
 The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
@@ -62,12 +54,16 @@ This project is built with:
 
 ## How can I deploy this project?
 
-Simply open [Lovable](https://lovable.dev/projects/303d8a6b-3ed0-4198-bea5-83555fbc9e66) and click on Share -> Publish.
+Build the project and deploy to your preferred hosting platform:
 
-## Can I connect a custom domain to my Lovable project?
+```bash
+npm run build
+```
 
-Yes, you can!
+The `dist` folder will contain your production-ready files.
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## Deployment Options
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+- **Vercel**: Connect your GitHub repo for automatic deployments
+- **Netlify**: Drag and drop the `dist` folder or connect via Git
+- **Custom Server**: Upload the `dist` folder to your web server

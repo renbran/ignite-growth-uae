@@ -9,14 +9,14 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90 shadow-md hover:shadow-lg rounded-sm",
-        hero: "bg-gradient-to-r from-primary to-accent text-primary-foreground hover:shadow-glow rounded-sm font-bold uppercase tracking-wide text-base px-8 py-6 transform hover:scale-105",
-        outline: "border-2 border-primary bg-transparent text-primary hover:bg-primary hover:text-primary-foreground rounded-sm",
+        default: "metallic-shine text-carbon-black hover:shadow-glow shadow-md hover:shadow-lg rounded-sm electric-pulse",
+        hero: "metallic-shine text-carbon-black hover:shadow-glow rounded-sm font-bold uppercase tracking-wide text-base px-8 py-6 transform hover:scale-105 electric-pulse",
+        outline: "border-2 border-primary bg-transparent text-primary hover:bg-primary hover:text-primary-foreground rounded-sm electric-pulse",
         ghost: "bg-transparent text-foreground hover:bg-muted rounded-sm",
         destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-md hover:shadow-lg rounded-sm",
-        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80 rounded-sm",
-        accent: "bg-accent text-accent-foreground hover:shadow-glow-green rounded-sm font-bold",
-        glass: "bg-background-glass backdrop-blur-md border border-border text-foreground hover:bg-muted rounded-sm",
+        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80 rounded-sm electric-pulse",
+        accent: "metallic-shine text-carbon-black hover:shadow-glow rounded-sm font-bold electric-pulse",
+        glass: "bg-background-glass backdrop-blur-md border border-border text-foreground hover:bg-muted rounded-sm electric-pulse",
         link: "text-primary underline-offset-4 hover:underline bg-transparent p-0",
       },
       size: {

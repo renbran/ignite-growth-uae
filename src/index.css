@@ -12,16 +12,18 @@ defined here. Components use semantic tokens.
 
 @layer base {
   :root {
-    /* Core Brand Colors - Scholarix Global (Professional) */
-    --deep-navy: 210 60% 12%;
-    --ocean-blue: 221 83% 26%;
-    --sky-blue: 199 89% 63%;
-    --ice-white: 200 67% 96%;
+    /* Core Brand Colors - Metallic Blue Tech */
+    --deep-navy: 220 70% 8%;
+    --ocean-blue: 215 80% 18%;
+    --sky-blue: 210 95% 55%;
+    --ice-white: 210 70% 98%;
     
-    /* SGC TECH AI Accent Colors (Cyberpunk Edge) */
-    --electric-cyan: 180 100% 50%;
-    --neon-green: 150 100% 50%;
-    --carbon-black: 0 0% 4%;
+    /* Electric Blue Accents */
+    --electric-cyan: 195 100% 60%;
+    --electric-blue: 210 100% 55%;
+    --metallic-blue: 215 85% 40%;
+    --neon-blue: 205 100% 65%;
+    --carbon-black: 220 20% 5%;
     
     /* Semantic UI Colors */
     --gold: 45 100% 50%;
@@ -30,27 +32,27 @@ defined here. Components use semantic tokens.
     --error: 0 84% 60%;
     
     /* Background System */
-    --background: var(--deep-navy);
-    --background-secondary: var(--ocean-blue);
-    --background-elevated: 217 32% 17%;
-    --background-glass: 210 60% 12% / 0.7;
+    --background: var(--carbon-black);
+    --background-secondary: var(--deep-navy);
+    --background-elevated: 220 50% 12%;
+    --background-glass: 220 60% 10% / 0.75;
     
     /* Foreground System */
     --foreground: var(--ice-white);
-    --foreground-muted: 200 20% 75%;
-    --foreground-subtle: 200 15% 60%;
+    --foreground-muted: 210 30% 80%;
+    --foreground-subtle: 210 20% 70%;
     
     /* Brand System */
-    --primary: var(--sky-blue);
-    --primary-foreground: 222 47% 11%;
-    --primary-glow: var(--electric-cyan);
+    --primary: var(--electric-blue);
+    --primary-foreground: var(--carbon-black);
+    --primary-glow: var(--neon-blue);
     
-    --secondary: var(--ocean-blue);
+    --secondary: var(--metallic-blue);
     --secondary-foreground: var(--ice-white);
     
     --accent: var(--electric-cyan);
     --accent-foreground: var(--carbon-black);
-    --accent-secondary: var(--neon-green);
+    --accent-secondary: var(--neon-blue);
     
     /* UI Components */
     --card: 217 32% 17%;
@@ -72,18 +74,18 @@ defined here. Components use semantic tokens.
     --destructive-foreground: 210 40% 98%;
     
     /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--ocean-blue)) 0%, hsl(var(--deep-navy)) 100%);
-    --gradient-accent: linear-gradient(135deg, hsl(var(--electric-cyan)) 0%, hsl(var(--sky-blue)) 100%);
-    --gradient-hero: linear-gradient(180deg, hsl(var(--carbon-black)) 0%, hsl(var(--deep-navy)) 50%, hsl(var(--ocean-blue)) 100%);
-    --gradient-glow: radial-gradient(circle at 50% 50%, hsl(var(--electric-cyan) / 0.2) 0%, transparent 70%);
+    --gradient-primary: linear-gradient(135deg, hsl(var(--metallic-blue)) 0%, hsl(var(--deep-navy)) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(var(--electric-cyan)) 0%, hsl(var(--electric-blue)) 50%, hsl(var(--neon-blue)) 100%);
+    --gradient-hero: linear-gradient(180deg, hsl(var(--carbon-black)) 0%, hsl(220 60% 10%) 50%, hsl(var(--deep-navy)) 100%);
+    --gradient-glow: radial-gradient(circle at 50% 50%, hsl(var(--electric-blue) / 0.3) 0%, transparent 70%);
     
     /* Shadows & Glows */
-    --shadow-sm: 0 1px 2px hsl(var(--carbon-black) / 0.3);
-    --shadow-md: 0 4px 6px -1px hsl(var(--carbon-black) / 0.4);
-    --shadow-lg: 0 10px 15px -3px hsl(var(--carbon-black) / 0.5);
-    --shadow-xl: 0 20px 25px -5px hsl(var(--carbon-black) / 0.6);
-    --shadow-glow: 0 0 30px hsl(var(--electric-cyan) / 0.4);
-    --shadow-glow-green: 0 0 30px hsl(var(--neon-green) / 0.4);
+    --shadow-sm: 0 1px 2px hsl(var(--carbon-black) / 0.5);
+    --shadow-md: 0 4px 6px -1px hsl(var(--carbon-black) / 0.6);
+    --shadow-lg: 0 10px 15px -3px hsl(var(--carbon-black) / 0.7);
+    --shadow-xl: 0 20px 25px -5px hsl(var(--carbon-black) / 0.8);
+    --shadow-glow: 0 0 40px hsl(var(--electric-blue) / 0.6), 0 0 20px hsl(var(--electric-cyan) / 0.4);
+    --shadow-glow-green: 0 0 40px hsl(var(--neon-blue) / 0.5);
     
     /* Spacing Scale */
     --spacing-xs: 0.25rem;
@@ -182,7 +184,9 @@ defined here. Components use semantic tokens.
   /* Gradient Text */
   .text-gradient {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(var(--sky-blue)), hsl(var(--electric-cyan)));
+    background-image: linear-gradient(135deg, hsl(var(--electric-blue)), hsl(var(--electric-cyan)), hsl(var(--neon-blue)));
+    background-size: 200% auto;
+    animation: shimmer 3s linear infinite;
   }
   
   .text-gradient-gold {
@@ -202,9 +206,10 @@ defined here. Components use semantic tokens.
   /* Glass Morphism */
   .glass {
     background: hsl(var(--background-glass));
-    backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
     border: 1px solid hsl(var(--border));
+    box-shadow: inset 0 0 20px hsl(var(--electric-blue) / 0.1);
   }
   
   /* Hover Lift Effect */
@@ -313,4 +318,185 @@ defined here. Components use semantic tokens.
   .stagger-3 { animation-delay: 0.3s; }
   .stagger-4 { animation-delay: 0.4s; }
   .stagger-5 { animation-delay: 0.5s; }
+  
+  /* Coming Soon Page Animations */
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+  
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  @keyframes pulse-slow {
+    0%, 100% {
+      opacity: 0.3;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.5;
+      transform: scale(1.05);
+    }
+  }
+  
+  .animate-pulse-slow {
+    animation: pulse-slow 8s ease-in-out infinite;
+  }
+  
+  .animate-pulse-slow-delayed {
+    animation: pulse-slow 8s ease-in-out infinite;
+    animation-delay: 2s;
+  }
+  
+  @keyframes progress-bar {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+  
+  .animate-progress-bar {
+    animation: progress-bar 2s ease-in-out infinite;
+  }
+  
+  @keyframes particle {
+    0% {
+      opacity: 0;
+      transform: translateY(0) scale(0);
+    }
+    50% {
+      opacity: 1;
+      transform: translateY(-50vh) scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-100vh) scale(0);
+    }
+  }
+  
+  .animate-particle {
+    animation: particle 5s linear infinite;
+  }
+  
+  /* Gradient Radial Background */
+  .bg-gradient-radial {
+    background: radial-gradient(circle, var(--tw-gradient-stops));
+  }
+  
+  /* Carbon Black Color */
+  .bg-carbon-black {
+    background-color: hsl(var(--carbon-black));
+  }
+  
+  /* Drop Shadow Glow */
+  .drop-shadow-glow {
+    filter: drop-shadow(0 0 30px hsl(var(--electric-blue) / 0.8)) drop-shadow(0 0 15px hsl(var(--neon-blue) / 0.6));
+  }
+  
+  /* Shimmer Animation for Metallic Effect */
+  @keyframes shimmer {
+    0% {
+      background-position: 0% center;
+    }
+    100% {
+      background-position: 200% center;
+    }
+  }
+  
+  .animate-shimmer {
+    animation: shimmer 3s linear infinite;
+  }
+  
+  /* Typewriter Animation */
+  @keyframes typewriter {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+  
+  @keyframes blink {
+    0%, 49% {
+      border-color: hsl(var(--electric-blue));
+    }
+    50%, 100% {
+      border-color: transparent;
+    }
+  }
+  
+  .typewriter {
+    overflow: hidden;
+    border-right: 0.2em solid hsl(var(--electric-blue));
+    white-space: nowrap;
+    animation: typewriter 3s steps(44, end) forwards, blink 0.75s step-end infinite;
+    display: inline-block;
+  }
+  
+  .typewriter-line {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 0.15em solid hsl(var(--electric-blue));
+    animation: typewriter 2.5s steps(11, end) forwards, blink 0.75s step-end infinite;
+    width: 0;
+  }
+  
+  /* Typewriter effect on demand */
+  .typewriter-effect {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 0;
+    animation: typewriter 3s steps(11, end) forwards;
+  }
+  
+  /* Electric Pulse Effect */
+  @keyframes electric-pulse {
+    0%, 100% {
+      box-shadow: 0 0 20px hsl(var(--electric-blue) / 0.4),
+                  0 0 40px hsl(var(--electric-blue) / 0.2),
+                  inset 0 0 20px hsl(var(--electric-blue) / 0.1);
+    }
+    50% {
+      box-shadow: 0 0 40px hsl(var(--electric-blue) / 0.6),
+                  0 0 80px hsl(var(--electric-blue) / 0.3),
+                  inset 0 0 30px hsl(var(--electric-blue) / 0.2);
+    }
+  }
+  
+  .electric-pulse {
+    animation: electric-pulse 2s ease-in-out infinite;
+  }
+  
+  /* Metallic Shine Effect */
+  @keyframes metallic-shine {
+    0% {
+      background-position: -200% center;
+    }
+    100% {
+      background-position: 200% center;
+    }
+  }
+  
+  .metallic-shine {
+    background: linear-gradient(
+      110deg,
+      hsl(var(--metallic-blue)) 0%,
+      hsl(var(--electric-blue)) 45%,
+      hsl(var(--neon-blue)) 50%,
+      hsl(var(--electric-blue)) 55%,
+      hsl(var(--metallic-blue)) 100%
+    );
+    background-size: 200% auto;
+    animation: metallic-shine 3s linear infinite;
+  }
 }

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin, Linkedin, Twitter, Youtube } from "lucide-react";
-import sgcLogo from "@/assets/sgc-logo.png";
+import scholarixLogo from "@/assets/scholarix-logo.png";
 
 const Footer = () => {
   const footerLinks = {
@@ -37,7 +37,7 @@ const Footer = () => {
           {/* Brand Column */}
           <div className="lg:col-span-2">
             <Link to="/" className="flex items-center gap-3 mb-6 group">
-              <img src={sgcLogo} alt="SGC TECH AI Logo" className="h-12 w-12 transition-transform group-hover:scale-110" />
+              <img src={scholarixLogo} alt="Scholarix Global Logo" className="h-12 w-12 transition-transform group-hover:scale-110" />
               <div className="flex flex-col">
                 <span className="font-display font-bold text-2xl text-gradient leading-none">SGC TECH AI</span>
                 <span className="text-xs text-foreground-subtle font-body">by Scholarix Global</span>
