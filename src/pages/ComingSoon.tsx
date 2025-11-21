@@ -36,18 +36,22 @@ const ComingSoon = () => {
     };
   }, []);
 
-  // Video carousel effect - switch videos every 10 seconds with crossfade
+  // Video carousel effect - switch videos every 10 seconds with crossfade and 1s gap
   useEffect(() => {
     const videoTransitionInterval = setInterval(() => {
       // Start fade out
       setFadeOut(true);
       
-      // After fade out, switch video and fade in
+      // After fade out, wait 1 second gap, then switch video and fade in
       setTimeout(() => {
         setCurrentVideoIndex((prev) => (prev + 1) % videos.length);
-        setFadeOut(false);
       }, 800); // 800ms fade out duration
-    }, 10000); // Switch every 10 seconds
+      
+      // Fade back in after 1 second gap
+      setTimeout(() => {
+        setFadeOut(false);
+      }, 1800); // 800ms fade + 1000ms gap
+    }, 11000); // Switch every 11 seconds (10s play + 1s gap)
 
     return () => clearInterval(videoTransitionInterval);
   }, [videos.length]);
