@@ -10,8 +10,7 @@ const ComingSoon = () => {
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [textVisible, setTextVisible] = useState(false);
   const [showTypewriter, setShowTypewriter] = useState(false);
-  const [audioPlaying, setAudioPlaying] = useState(false);
-  const [showUnmuteButton, setShowUnmuteButton] = useState(true);
+  const [audioMuted, setAudioMuted] = useState(false);
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [fadeOut, setFadeOut] = useState(false);
   
@@ -58,9 +57,19 @@ const ComingSoon = () => {
 
   const handleVideoLoadedData = () => {
     setVideoLoaded(true);
-    // Start audio when video loads
+    // Auto-start audio when video loads with volume
     if (audioRef.current) {
-      audioRef.current.play().catch(err => console.log('Audio autoplay prevented:', err));
+      audioRef.current.muted = false;
+      audioRef.current.volume = 1.0;
+      audioRef.current.play().catch(err => {
+        console.log('Audio autoplay prevented:', err);
+        // If autoplay is blocked, try again with user interaction
+        document.addEventListener('click', () => {
+          if (audioRef.current) {
+            audioRef.current.play().catch(e => console.log('Retry failed:', e));
+          }
+        }, { once: true });
+      });
     }
   };
 
@@ -78,14 +87,10 @@ const ComingSoon = () => {
     }
   };
 
-  const handleEnableAudio = () => {
+  const handleToggleMute = () => {
     if (audioRef.current) {
-      audioRef.current.play()
-        .then(() => {
-          setAudioPlaying(true);
-          setShowUnmuteButton(false);
-        })
-        .catch(err => console.log('Audio play error:', err));
+      audioRef.current.muted = !audioRef.current.muted;
+      setAudioMuted(!audioMuted);
     }
   };
 
@@ -111,9 +116,10 @@ const ComingSoon = () => {
           <source src={videos[currentVideoIndex]} type="video/mp4" />
         </video>
         
-        {/* Voiceover Audio - Synced with Video */}
+        {/* Voiceover Audio - Synced with Video - Auto-plays */}
         <audio
           ref={audioRef}
+          autoPlay
           loop
           preload="auto"
           playsInline
@@ -131,13 +137,32 @@ const ComingSoon = () => {
       {/* Animated Grid Pattern */}
       <div className="absolute inset-0 grid-pattern opacity-10 z-0"></div>
 
-      {/* Unmute Button - Appears when audio is not playing */}
-      {showUnmuteButton && (
-        <button
-          onClick={handleEnableAudio}
-          className="fixed bottom-8 right-8 z-50 bg-electric-cyan/20 hover:bg-electric-cyan/30 backdrop-blur-md border border-electric-cyan/50 rounded-full p-4 transition-all duration-300 hover:scale-110 electric-pulse group"
-          aria-label="Enable sound"
-        >
+      {/* Mute/Unmute Toggle Button - Always visible */}
+      <button
+        onClick={handleToggleMute}
+        className="fixed bottom-8 right-8 z-50 bg-electric-cyan/20 hover:bg-electric-cyan/30 backdrop-blur-md border border-electric-cyan/50 rounded-full p-4 transition-all duration-300 hover:scale-110 electric-pulse group"
+        aria-label={audioMuted ? "Unmute sound" : "Mute sound"}
+      >
+        {audioMuted ? (
+          // Muted icon
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="text-electric-cyan group-hover:text-neon-green transition-colors"
+          >
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15"></line>
+            <line x1="17" y1="9" x2="23" y2="15"></line>
+          </svg>
+        ) : (
+          // Unmuted icon
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -154,11 +179,11 @@ const ComingSoon = () => {
             <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
             <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
           </svg>
-          <span className="absolute -top-12 left-1/2 -translate-x-1/2 bg-carbon-black/90 text-electric-cyan text-xs px-3 py-1 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
-            Click to enable sound
-          </span>
-        </button>
-      )}
+        )}
+        <span className="absolute -top-12 left-1/2 -translate-x-1/2 bg-carbon-black/90 text-electric-cyan text-xs px-3 py-1 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
+          {audioMuted ? "Click to unmute" : "Click to mute"}
+        </span>
+      </button>
 
       {/* Glowing Orbs for Premium Metallic Blue Feel */}
       <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full blur-3xl animate-pulse-slow" style={{ backgroundColor: 'hsl(210 100% 55% / 0.25)' }}></div>
