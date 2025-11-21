@@ -1,6 +1,8 @@
 import { useEffect, useState, useRef } from "react";
 import { cn } from "@/lib/utils";
 import logoVideo from "@/assets/sgc-logo-video.mp4";
+import video2 from "@/assets/sgc-video-2.mp4";
+import video3 from "@/assets/sgc-video-3.mp4";
 import scholarixLogo from "@/assets/scholarix-logo.png";
 import voiceoverAudio from "@/assets/ElevenLabs_2025-11-21T23_10_26_Kal Jones_pvc_sp100_s50_sb75_se0_b_m2.mp3";
 
@@ -10,6 +12,10 @@ const ComingSoon = () => {
   const [showTypewriter, setShowTypewriter] = useState(false);
   const [audioPlaying, setAudioPlaying] = useState(false);
   const [showUnmuteButton, setShowUnmuteButton] = useState(true);
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const [fadeOut, setFadeOut] = useState(false);
+  
+  const videos = [logoVideo, video2, video3];
   const videoRef = useRef<HTMLVideoElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
 
@@ -29,6 +35,22 @@ const ComingSoon = () => {
       clearTimeout(typewriterTimer);
     };
   }, []);
+
+  // Video carousel effect - switch videos every 10 seconds with crossfade
+  useEffect(() => {
+    const videoTransitionInterval = setInterval(() => {
+      // Start fade out
+      setFadeOut(true);
+      
+      // After fade out, switch video and fade in
+      setTimeout(() => {
+        setCurrentVideoIndex((prev) => (prev + 1) % videos.length);
+        setFadeOut(false);
+      }, 800); // 800ms fade out duration
+    }, 10000); // Switch every 10 seconds
+
+    return () => clearInterval(videoTransitionInterval);
+  }, [videos.length]);
 
   const handleVideoLoadedData = () => {
     setVideoLoaded(true);
@@ -68,6 +90,7 @@ const ComingSoon = () => {
       {/* Video Background - KEPT CLEAN AND UNOBSTRUCTED */}
       <div className="absolute inset-0 z-0">
         <video
+          key={currentVideoIndex}
           ref={videoRef}
           autoPlay
           loop
@@ -77,11 +100,11 @@ const ComingSoon = () => {
           onPlay={handleVideoPlay}
           onPause={handleVideoPause}
           className={cn(
-            "absolute inset-0 w-full h-full object-cover transition-opacity duration-1000",
-            videoLoaded ? "opacity-100" : "opacity-0"
+            "absolute inset-0 w-full h-full object-cover transition-opacity duration-[800ms]",
+            videoLoaded && !fadeOut ? "opacity-100" : "opacity-0"
           )}
         >
-          <source src={logoVideo} type="video/mp4" />
+          <source src={videos[currentVideoIndex]} type="video/mp4" />
         </video>
         
         {/* Voiceover Audio - Synced with Video */}
