@@ -29,9 +29,21 @@ const ComingSoon = () => {
       setShowTypewriter(true);
     }, 1500);
 
+    // Try to play audio immediately on mount
+    const audioTimer = setTimeout(() => {
+      if (audioRef.current) {
+        audioRef.current.muted = false;
+        audioRef.current.volume = 1.0;
+        audioRef.current.play().catch(err => {
+          console.log('Initial autoplay prevented:', err);
+        });
+      }
+    }, 100);
+
     return () => {
       clearTimeout(timer);
       clearTimeout(typewriterTimer);
+      clearTimeout(audioTimer);
     };
   }, []);
 
@@ -119,7 +131,6 @@ const ComingSoon = () => {
         {/* Voiceover Audio - Synced with Video - Auto-plays */}
         <audio
           ref={audioRef}
-          autoPlay
           loop
           preload="auto"
           playsInline

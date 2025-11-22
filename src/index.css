@@ -448,6 +448,13 @@ defined here. Components use semantic tokens.
     border-right: 0.15em solid hsl(var(--electric-blue));
     animation: typewriter 2.5s steps(11, end) forwards, blink 0.75s step-end infinite;
     width: 0;
+    max-width: fit-content;
+  }
+  
+  @media (max-width: 768px) {
+    .typewriter-line {
+      animation: typewriter 2.5s steps(11, end) forwards, blink 0.75s step-end infinite;
+    }
   }
   
   /* Typewriter effect on demand */
