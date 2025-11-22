@@ -194,18 +194,41 @@ defined here. Components use semantic tokens.
     background-image: linear-gradient(135deg, hsl(var(--gold)), hsl(45 100% 60%));
   }
   
-  /* Neon Text - Solid color with glow for visibility */
+  /* Matrix Neon Text - Green neon with Matrix-style glow */
   .neon-text {
-    color: hsl(var(--electric-cyan)) !important;
+    color: #00ff41 !important; /* Matrix green */
     text-shadow: 
-      0 0 10px hsl(var(--electric-cyan) / 0.8),
-      0 0 20px hsl(var(--electric-cyan) / 0.6),
-      0 0 30px hsl(var(--electric-cyan) / 0.4),
-      0 0 40px hsl(var(--electric-blue) / 0.3),
-      0 0 70px hsl(var(--electric-blue) / 0.2);
+      0 0 10px #00ff41,
+      0 0 20px #00ff41,
+      0 0 30px #00ff41,
+      0 0 40px #00ff88,
+      0 0 70px #00ff88,
+      0 0 100px #00ff88,
+      0 0 150px #00cc33;
     display: inline-block !important;
     opacity: 1 !important;
     visibility: visible !important;
+    animation: matrix-flicker 3s infinite alternate;
+  }
+  
+  @keyframes matrix-flicker {
+    0%, 100% { 
+      text-shadow: 
+        0 0 10px #00ff41,
+        0 0 20px #00ff41,
+        0 0 30px #00ff41,
+        0 0 40px #00ff88,
+        0 0 70px #00ff88,
+        0 0 100px #00ff88,
+        0 0 150px #00cc33;
+    }
+    50% { 
+      text-shadow: 
+        0 0 5px #00ff41,
+        0 0 10px #00ff41,
+        0 0 15px #00ff88,
+        0 0 20px #00ff88;
+    }
   }
   
   /* Glow Effects */
