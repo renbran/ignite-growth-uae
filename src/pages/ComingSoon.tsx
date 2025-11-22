@@ -5,6 +5,7 @@ import video2 from "@/assets/sgc-video-2.mp4";
 import video3 from "@/assets/sgc-video-3.mp4";
 import scholarixLogo from "@/assets/scholarix-logo.png";
 import voiceoverAudio from "@/assets/ElevenLabs_2025-11-22T00_54_16_Liam_pre_sp100_s50_sb75_v3 (1).mp3";
+import backgroundMusic from "@/assets/Inspire Cinematic Trailer.mp3";
 
 const ComingSoon = () => {
   const [videoLoaded, setVideoLoaded] = useState(false);
@@ -17,6 +18,7 @@ const ComingSoon = () => {
   const videos = [logoVideo, video2, video3];
   const videoRef = useRef<HTMLVideoElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
+  const bgMusicRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
     // Trigger text animation shortly after component mounts
@@ -36,6 +38,14 @@ const ComingSoon = () => {
         audioRef.current.volume = 1.0;
         audioRef.current.play().catch(err => {
           console.log('Initial autoplay prevented:', err);
+        });
+      }
+      // Play background music at low volume
+      if (bgMusicRef.current) {
+        bgMusicRef.current.muted = false;
+        bgMusicRef.current.volume = 0.15; // 15% volume - subtle background
+        bgMusicRef.current.play().catch(err => {
+          console.log('Background music autoplay prevented:', err);
         });
       }
     }, 100);
@@ -80,8 +90,16 @@ const ComingSoon = () => {
           if (audioRef.current) {
             audioRef.current.play().catch(e => console.log('Retry failed:', e));
           }
+          if (bgMusicRef.current && bgMusicRef.current.paused) {
+            bgMusicRef.current.play().catch(e => console.log('BG music retry failed:', e));
+          }
         }, { once: true });
       });
+    }
+    // Start background music
+    if (bgMusicRef.current) {
+      bgMusicRef.current.volume = 0.15;
+      bgMusicRef.current.play().catch(err => console.log('BG music prevented:', err));
     }
   };
 
@@ -100,10 +118,14 @@ const ComingSoon = () => {
   };
 
   const handleToggleMute = () => {
+    const newMutedState = !audioMuted;
     if (audioRef.current) {
-      audioRef.current.muted = !audioRef.current.muted;
-      setAudioMuted(!audioMuted);
+      audioRef.current.muted = newMutedState;
     }
+    if (bgMusicRef.current) {
+      bgMusicRef.current.muted = newMutedState;
+    }
+    setAudioMuted(newMutedState);
   };
 
   return (
@@ -137,6 +159,18 @@ const ComingSoon = () => {
           style={{ display: 'none' }}
         >
           <source src={voiceoverAudio} type="audio/mpeg" />
+          Your browser does not support the audio element.
+        </audio>
+        
+        {/* Background Music - Low volume (15%) to not override voiceover */}
+        <audio
+          ref={bgMusicRef}
+          loop
+          preload="auto"
+          playsInline
+          style={{ display: 'none' }}
+        >
+          <source src={backgroundMusic} type="audio/mpeg" />
           Your browser does not support the audio element.
         </audio>
         
