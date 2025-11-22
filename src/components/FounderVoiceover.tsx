@@ -97,17 +97,18 @@ const FounderVoiceover = ({ onComplete, className }: FounderVoiceoverProps) => {
         ))}
       </div>
 
-      {/* Video container */}
-      <div className="relative w-full max-w-[1200px] z-10">
-        <video
-          ref={videoRef}
-          className="w-full h-auto shadow-[0_20px_60px_rgba(0,0,0,0.5)]"
-          controls
-          playsInline
-          preload="metadata"
-          poster="/images/hero/founder-video-poster.jpg"
-          aria-label="Founder's message about SGC TECH AI mission"
-        >
+      {/* Video container - responsive with proper aspect ratio */}
+      <div className="relative w-full max-w-[90vw] md:max-w-[80vw] lg:max-w-[1200px] px-4 md:px-8 z-10">
+        <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+          <video
+            ref={videoRef}
+            className="absolute top-0 left-0 w-full h-full object-contain shadow-[0_20px_60px_rgba(0,0,0,0.5)] rounded-lg"
+            controls
+            playsInline
+            preload="metadata"
+            poster="/images/hero/founder-video-poster.jpg"
+            aria-label="Founder's message about SGC TECH AI mission"
+          >
           <source src="/videos/founder-3am-truth-speech.mp4" type="video/mp4" />
           <track
             kind="captions"
@@ -122,6 +123,7 @@ const FounderVoiceover = ({ onComplete, className }: FounderVoiceoverProps) => {
           </p>
           Your browser does not support the video tag.
         </video>
+        </div>
       </div>
 
       {/* Progress bar */}
@@ -133,19 +135,17 @@ const FounderVoiceover = ({ onComplete, className }: FounderVoiceoverProps) => {
         }}
       />
 
-      {/* Skip button */}
+      {/* Skip button - responsive positioning */}
       <button
         onClick={handleSkip}
         className={cn(
-          "fixed bottom-10 right-10 z-[10001]",
+          "fixed bottom-4 right-4 md:bottom-10 md:right-10 z-[10001]",
           "bg-[rgba(79,195,247,0.2)] border-2 border-[#4fc3f7]",
-          "text-[#4fc3f7] px-6 py-3",
-          "font-mono text-sm uppercase tracking-wider",
+          "text-[#4fc3f7] px-4 py-2 md:px-6 md:py-3",
+          "font-mono text-xs md:text-sm uppercase tracking-wider",
           "transition-all duration-300",
           "hover:bg-[rgba(79,195,247,0.3)] hover:shadow-glow hover:-translate-y-0.5",
-          "focus:outline-none focus:ring-2 focus:ring-[#4fc3f7] focus:ring-offset-2 focus:ring-offset-black",
-          "md:bottom-10 md:right-10",
-          "max-md:bottom-5 max-md:right-5 max-md:px-5 max-md:py-2.5 max-md:text-xs"
+          "focus:outline-none focus:ring-2 focus:ring-[#4fc3f7] focus:ring-offset-2 focus:ring-offset-black"
         )}
         aria-label="Skip founder message"
       >

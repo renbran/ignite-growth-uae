@@ -30,10 +30,16 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
     video.addEventListener("ended", handleEnded);
     video.addEventListener("error", handleError);
 
-    // Auto-play the video
+    // Auto-play the video with sound
+    video.muted = false;
+    video.volume = 1.0;
     video.play().catch((error) => {
-      console.error("Autoplay failed:", error);
-      // If autoplay fails, show skip button more prominently
+      console.warn("Autoplay with sound failed, trying muted:", error);
+      // If autoplay with sound fails, try muted as fallback
+      video.muted = true;
+      video.play().catch((err) => {
+        console.error("All autoplay attempts failed:", err);
+      });
     });
 
     return () => {
@@ -64,7 +70,6 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
       <video
         ref={videoRef}
         className="w-full h-full object-cover"
-        muted
         playsInline
         preload="auto"
         aria-label="SGC TECH AI logo animation"
@@ -76,15 +81,13 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
       <button
         onClick={handleSkip}
         className={cn(
-          "fixed bottom-10 right-10 z-[10000]",
+          "fixed bottom-4 right-4 md:bottom-10 md:right-10 z-[10000]",
           "bg-[rgba(79,195,247,0.2)] border-2 border-[#4fc3f7]",
-          "text-[#4fc3f7] px-6 py-3",
-          "font-mono text-sm uppercase tracking-wider",
+          "text-[#4fc3f7] px-4 py-2 md:px-6 md:py-3",
+          "font-mono text-xs md:text-sm uppercase tracking-wider",
           "transition-all duration-300",
           "hover:bg-[rgba(79,195,247,0.3)] hover:shadow-glow hover:-translate-y-0.5",
-          "focus:outline-none focus:ring-2 focus:ring-[#4fc3f7] focus:ring-offset-2 focus:ring-offset-black",
-          "md:bottom-10 md:right-10",
-          "max-md:bottom-5 max-md:right-5 max-md:px-5 max-md:py-2.5 max-md:text-xs"
+          "focus:outline-none focus:ring-2 focus:ring-[#4fc3f7] focus:ring-offset-2 focus:ring-offset-black"
         )}
         aria-label="Skip logo introduction"
       >
