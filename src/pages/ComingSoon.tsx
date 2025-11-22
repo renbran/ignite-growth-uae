@@ -4,7 +4,7 @@ import logoVideo from "@/assets/sgc-logo-video.mp4";
 import video2 from "@/assets/sgc-video-2.mp4";
 import video3 from "@/assets/sgc-video-3.mp4";
 import scholarixLogo from "@/assets/scholarix-logo.png";
-import voiceoverAudio from "@/assets/ElevenLabs_2025-11-21T23_10_26_Kal Jones_pvc_sp100_s50_sb75_se0_b_m2.mp3";
+import voiceoverAudio from "@/assets/ElevenLabs_2025-11-22T00_54_16_Liam_pre_sp100_s50_sb75_v3 (1).mp3";
 
 const ComingSoon = () => {
   const [videoLoaded, setVideoLoaded] = useState(false);
@@ -228,14 +228,11 @@ const ComingSoon = () => {
         {/* COMING SOON - Main Text with Typewriter Animation */}
         <div className="relative">
           <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-none mb-4">
-            <span 
-              className={cn(
-                "text-gradient electric-pulse inline-block transition-all duration-500",
-                showTypewriter ? "animate-fade-in" : "opacity-0"
-              )}
-            >
-              COMING SOON
-            </span>
+            {showTypewriter && (
+              <span className="text-gradient electric-pulse typewriter-line">
+                COMING SOON
+              </span>
+            )}
           </h1>
 
           {/* Tech Lines Animation */}
