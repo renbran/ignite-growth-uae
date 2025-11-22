@@ -194,17 +194,10 @@ const ComingSoon = () => {
           onPlay={handleVideoPlay}
           onPause={handleVideoPause}
           className={cn(
-            "absolute transition-opacity duration-[800ms]",
-            "w-full h-full object-contain sm:object-cover",
+            "absolute inset-0 w-full h-full transition-opacity duration-[800ms]",
+            "object-cover",
             videoLoaded && !fadeOut ? "opacity-100" : "opacity-0"
           )}
-          style={{
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            maxWidth: '100vw',
-            maxHeight: '100vh'
-          }}
         >
           <source src={videos[currentVideoIndex]} type="video/mp4" />
         </video>
