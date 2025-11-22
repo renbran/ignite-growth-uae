@@ -59,22 +59,28 @@ const ComingSoon = () => {
 
   // Video carousel effect - switch videos every 10 seconds with crossfade and 1s gap
   useEffect(() => {
-    const videoTransitionInterval = setInterval(() => {
-      // Start fade out
-      setFadeOut(true);
-      
-      // After fade out, wait 1 second gap, then switch video and fade in
-      setTimeout(() => {
-        setCurrentVideoIndex((prev) => (prev + 1) % videos.length);
-      }, 800); // 800ms fade out duration
-      
-      // Fade back in after 1 second gap
-      setTimeout(() => {
-        setFadeOut(false);
-      }, 1800); // 800ms fade + 1000ms gap
-    }, 11000); // Switch every 11 seconds (10s play + 1s gap)
+    // Start the carousel after 5 seconds
+    const initialDelay = setTimeout(() => {
+      const videoTransitionInterval = setInterval(() => {
+        // Start fade out
+        setFadeOut(true);
+        
+        // After fade out, wait 1 second gap, then switch video and fade in
+        setTimeout(() => {
+          setCurrentVideoIndex((prev) => (prev + 1) % videos.length);
+        }, 800); // 800ms fade out duration
+        
+        // Fade back in after 1 second gap
+        setTimeout(() => {
+          setFadeOut(false);
+        }, 1800); // 800ms fade + 1000ms gap
+      }, 11000); // Switch every 11 seconds (10s play + 1s gap)
 
-    return () => clearInterval(videoTransitionInterval);
+      // Clean up interval when component unmounts
+      return () => clearInterval(videoTransitionInterval);
+    }, 5000); // Initial 5 second delay before starting carousel
+
+    return () => clearTimeout(initialDelay);
   }, [videos.length]);
 
   const handleVideoLoadedData = () => {
@@ -270,11 +276,11 @@ const ComingSoon = () => {
         <div className="container px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full pb-8 md:pb-12">
           <div className="max-w-5xl mx-auto text-center space-y-8 md:space-y-12">
 
-        {/* COMING SOON - Main Text with Typewriter Animation */}
+        {/* COMING SOON - Main Text with Neon Animation */}
         <div className="relative">
           <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-none mb-4">
             {showTypewriter && (
-              <span className="text-gradient electric-pulse typewriter-line">
+              <span key="neon-text" className="neon-text electric-pulse animate-fade-in">
                 COMING SOON
               </span>
             )}

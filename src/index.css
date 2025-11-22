@@ -194,6 +194,20 @@ defined here. Components use semantic tokens.
     background-image: linear-gradient(135deg, hsl(var(--gold)), hsl(45 100% 60%));
   }
   
+  /* Neon Text - Solid color with glow for visibility */
+  .neon-text {
+    color: hsl(var(--electric-cyan)) !important;
+    text-shadow: 
+      0 0 10px hsl(var(--electric-cyan) / 0.8),
+      0 0 20px hsl(var(--electric-cyan) / 0.6),
+      0 0 30px hsl(var(--electric-cyan) / 0.4),
+      0 0 40px hsl(var(--electric-blue) / 0.3),
+      0 0 70px hsl(var(--electric-blue) / 0.2);
+    display: inline-block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  
   /* Glow Effects */
   .glow-cyan {
     box-shadow: var(--shadow-glow);
@@ -442,13 +456,15 @@ defined here. Components use semantic tokens.
   }
   
   .typewriter-line {
-    display: inline-block;
+    display: inline-block !important;
     overflow: hidden;
     white-space: nowrap;
-    border-right: 0.15em solid hsl(var(--electric-blue));
-    animation: typewriter 2.5s steps(11, end) forwards, blink 0.75s step-end infinite;
+    border-right: 0.15em solid hsl(var(--electric-cyan));
+    animation: typewriter 2.5s steps(11, end) forwards, blink 0.75s step-end 0.5s infinite;
     width: 0;
     max-width: fit-content;
+    visibility: visible !important;
+    opacity: 1 !important;
   }
   
   @media (max-width: 768px) {
