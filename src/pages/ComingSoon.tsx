@@ -150,11 +150,13 @@ const ComingSoon = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          access_key: "3f8c4b5e-9d2a-4f6b-8e1c-7a3d9f2e5b8c",
+          access_key: "e8d5c2b1-4a7f-4e9c-8d3b-1f6a9e2c5b7d",
           subject: "New Coming Soon Notification - SGC Tech AI",
           from_name: "SGC Tech AI Website",
+          to_email: "sales@scholarixglobal.com",
           email: email,
           message: `New email signup for launch notifications: ${email}`,
+          redirect: false,
         }),
       });
 
