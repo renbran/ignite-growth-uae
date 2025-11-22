@@ -1,5 +1,5 @@
 import Header from "@/components/Header";
-import Hero from "@/components/Hero";
+import HeroOrchestrator from "@/components/HeroOrchestrator";
 import ValueProposition from "@/components/ValueProposition";
 import Industries from "@/components/Industries";
 import Footer from "@/components/Footer";
@@ -9,7 +9,7 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Header />
       <main>
-        <Hero />
+        <HeroOrchestrator />
         <ValueProposition />
         <Industries />
       </main>
