@@ -38,15 +38,15 @@ const ComingSoon = () => {
     const audioTimer = setTimeout(() => {
       if (audioRef.current) {
         audioRef.current.muted = false;
-        audioRef.current.volume = 1.0;
+        audioRef.current.volume = 0.7; // 70% volume - balanced voiceover
         audioRef.current.play().catch(err => {
           console.log('Initial autoplay prevented:', err);
         });
       }
-      // Play background music at low volume
+      // Play background music at balanced volume
       if (bgMusicRef.current) {
         bgMusicRef.current.muted = false;
-        bgMusicRef.current.volume = 0.15; // 15% volume - subtle background
+        bgMusicRef.current.volume = 0.25; // 25% volume - audible background music
         bgMusicRef.current.play().catch(err => {
           console.log('Background music autoplay prevented:', err);
         });
@@ -299,13 +299,13 @@ const ComingSoon = () => {
             <img 
               src={scholarixLogo} 
               alt="Scholarix Global Logo" 
-              className="h-16 w-16 md:h-20 md:w-20 animate-float drop-shadow-glow" 
+              className="h-12 w-12 sm:h-14 sm:w-14 md:h-16 md:w-16 animate-float-subtle drop-shadow-glow" 
             />
             <div className="flex flex-col items-start">
-              <span className="font-display font-bold text-2xl md:text-3xl text-gradient leading-none tracking-wide">
+              <span className="font-display font-bold text-xl sm:text-2xl md:text-3xl text-gradient leading-none tracking-wide">
                 SCHOLARIX GLOBAL
               </span>
-              <span className="text-xs md:text-sm text-sky-blue font-body tracking-wider mt-1">
+              <span className="text-[10px] sm:text-xs md:text-sm text-sky-blue font-body tracking-wider mt-1">
                 SGC TECH AI
               </span>
             </div>
@@ -323,7 +323,7 @@ const ComingSoon = () => {
 
         {/* COMING SOON - Main Text with Neon Animation */}
         <div className="relative">
-          <h1 className="font-display font-black text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-none mb-4">
+          <h1 className="font-display font-black text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-none mb-4">
             {showTypewriter && (
               <span key="neon-text" className="neon-text electric-pulse animate-fade-in">
                 COMING SOON
