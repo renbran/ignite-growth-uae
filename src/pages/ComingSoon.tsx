@@ -38,15 +38,15 @@ const ComingSoon = () => {
     const audioTimer = setTimeout(() => {
       if (audioRef.current) {
         audioRef.current.muted = false;
-        audioRef.current.volume = 0.7; // 70% volume - balanced voiceover
+        audioRef.current.volume = 0.85; // 85% volume - clear voiceover
         audioRef.current.play().catch(err => {
           console.log('Initial autoplay prevented:', err);
         });
       }
-      // Play background music at balanced volume
+      // Play background music at subtle volume
       if (bgMusicRef.current) {
         bgMusicRef.current.muted = false;
-        bgMusicRef.current.volume = 0.25; // 25% volume - audible background music
+        bgMusicRef.current.volume = 0.10; // 10% volume - subtle background music
         bgMusicRef.current.play().catch(err => {
           console.log('Background music autoplay prevented:', err);
         });
@@ -194,7 +194,9 @@ const ComingSoon = () => {
           onPlay={handleVideoPlay}
           onPause={handleVideoPause}
           className={cn(
-            "absolute inset-0 w-full h-full object-cover transition-opacity duration-[800ms]",
+            "absolute inset-0 w-full h-full transition-opacity duration-[800ms]",
+            "object-cover object-center",
+            "scale-100 sm:scale-110 md:scale-100",
             videoLoaded && !fadeOut ? "opacity-100" : "opacity-0"
           )}
         >
