@@ -143,27 +143,35 @@ const ComingSoon = () => {
     setSubmitStatus("idle");
 
     try {
-      const response = await fetch("https://formspree.io/f/YOUR_FORM_ID", {
+      // Using Web3Forms - Free, no signup required
+      const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          access_key: "3f8c4b5e-9d2a-4f6b-8e1c-7a3d9f2e5b8c",
+          subject: "New Coming Soon Notification - SGC Tech AI",
+          from_name: "SGC Tech AI Website",
           email: email,
-          _subject: "New Coming Soon Notification Request",
+          message: `New email signup for launch notifications: ${email}`,
         }),
       });
 
-      if (response.ok) {
+      const data = await response.json();
+
+      if (data.success) {
         setSubmitStatus("success");
         setEmail("");
         setTimeout(() => setSubmitStatus("idle"), 5000);
       } else {
         setSubmitStatus("error");
+        setTimeout(() => setSubmitStatus("idle"), 5000);
       }
     } catch (error) {
       console.error("Form submission error:", error);
       setSubmitStatus("error");
+      setTimeout(() => setSubmitStatus("idle"), 5000);
     } finally {
       setIsSubmitting(false);
     }
