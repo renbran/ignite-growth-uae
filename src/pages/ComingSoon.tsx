@@ -14,6 +14,9 @@ const ComingSoon = () => {
   const [audioMuted, setAudioMuted] = useState(false);
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [fadeOut, setFadeOut] = useState(false);
+  const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
   
   const videos = [logoVideo, video2, video3];
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -134,6 +137,38 @@ const ComingSoon = () => {
     setAudioMuted(newMutedState);
   };
 
+  const handleNotifySubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus("idle");
+
+    try {
+      const response = await fetch("https://formspree.io/f/YOUR_FORM_ID", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          _subject: "New Coming Soon Notification Request",
+        }),
+      });
+
+      if (response.ok) {
+        setSubmitStatus("success");
+        setEmail("");
+        setTimeout(() => setSubmitStatus("idle"), 5000);
+      } else {
+        setSubmitStatus("error");
+      }
+    } catch (error) {
+      console.error("Form submission error:", error);
+      setSubmitStatus("error");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-carbon-black">
       {/* Video Background - KEPT CLEAN AND UNOBSTRUCTED */}
@@ -191,22 +226,22 @@ const ComingSoon = () => {
       {/* Mute/Unmute Toggle Button - Always visible */}
       <button
         onClick={handleToggleMute}
-        className="fixed bottom-8 right-8 z-50 bg-electric-cyan/20 hover:bg-electric-cyan/30 backdrop-blur-md border border-electric-cyan/50 rounded-full p-4 transition-all duration-300 hover:scale-110 electric-pulse group"
+        className="fixed bottom-4 right-4 sm:bottom-8 sm:right-8 z-50 bg-electric-cyan/20 hover:bg-electric-cyan/30 backdrop-blur-md border border-electric-cyan/50 rounded-full p-3 sm:p-4 transition-all duration-300 hover:scale-110 active:scale-95 electric-pulse group touch-manipulation"
         aria-label={audioMuted ? "Unmute sound" : "Mute sound"}
       >
         {audioMuted ? (
           // Muted icon
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
+            width="20"
+            height="20"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="text-electric-cyan group-hover:text-neon-green transition-colors"
+            className="text-electric-cyan group-hover:text-neon-green transition-colors sm:w-6 sm:h-6"
           >
             <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
             <line x1="23" y1="9" x2="17" y2="15"></line>
@@ -216,15 +251,15 @@ const ComingSoon = () => {
           // Unmuted icon
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
+            width="20"
+            height="20"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="text-electric-cyan group-hover:text-neon-green transition-colors"
+            className="text-electric-cyan group-hover:text-neon-green transition-colors sm:w-6 sm:h-6"
           >
             <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
             <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
@@ -348,7 +383,7 @@ const ComingSoon = () => {
           </div>
         </div>
 
-        {/* Notification Sign-up (Optional - for future) */}
+        {/* Notification Sign-up with Formspree */}
         <div
           className={cn(
             "mt-16 md:mt-20 transition-all duration-1000 transform",
@@ -359,16 +394,31 @@ const ComingSoon = () => {
           <p className="text-xs sm:text-sm text-foreground-muted mb-3">
             Get notified when we launch
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 max-w-lg mx-auto">
+          <form onSubmit={handleNotifySubmit} className="flex flex-col sm:flex-row items-center justify-center gap-3 max-w-lg mx-auto">
             <input
               type="email"
+              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
-              className="w-full sm:flex-1 px-4 py-3 bg-background-glass backdrop-blur-md border-2 border-border rounded-sm text-sm text-foreground placeholder-foreground-subtle focus:border-electric-blue focus:ring-2 focus:ring-electric-blue/50 transition-all outline-none electric-pulse"
+              required
+              disabled={isSubmitting}
+              className="w-full sm:flex-1 px-4 py-3 bg-background-glass backdrop-blur-md border-2 border-border rounded-sm text-sm text-foreground placeholder-foreground-subtle focus:border-electric-blue focus:ring-2 focus:ring-electric-blue/50 transition-all outline-none electric-pulse disabled:opacity-50"
             />
-            <button className="w-full sm:w-auto px-6 py-3 metallic-shine text-carbon-black font-display font-bold text-sm rounded-sm electric-pulse transform hover:scale-105 transition-all uppercase tracking-wide">
-              Notify Me
+            <button 
+              type="submit"
+              disabled={isSubmitting || !email}
+              className="w-full sm:w-auto px-6 py-3 metallic-shine text-carbon-black font-display font-bold text-sm rounded-sm electric-pulse transform hover:scale-105 transition-all uppercase tracking-wide disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isSubmitting ? "Sending..." : "Notify Me"}
             </button>
-          </div>
+          </form>
+          {submitStatus === "success" && (
+            <p className="text-green-400 text-sm mt-3 animate-fade-in">✓ Thank you! We'll notify you at launch.</p>
+          )}
+          {submitStatus === "error" && (
+            <p className="text-red-400 text-sm mt-3 animate-fade-in">✗ Something went wrong. Please try again.</p>
+          )}
         </div>
 
         {/* Social Links */}

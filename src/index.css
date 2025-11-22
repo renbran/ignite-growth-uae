@@ -545,4 +545,78 @@ defined here. Components use semantic tokens.
     background-size: 200% auto;
     animation: metallic-shine 3s linear infinite;
   }
+  
+  /* Mobile Optimizations */
+  @media (max-width: 640px) {
+    /* Ensure touch targets are at least 44x44px */
+    button, a, input[type="submit"] {
+      min-height: 44px;
+      min-width: 44px;
+    }
+    
+    /* Reduce glow effects on mobile for performance */
+    .shadow-glow, .pulse-glow {
+      filter: blur(10px) !important;
+    }
+    
+    /* Optimize video for mobile */
+    video {
+      object-fit: cover;
+      transform: translateZ(0);
+      -webkit-transform: translateZ(0);
+    }
+    
+    /* Better text readability on small screens */
+    .neon-text {
+      text-shadow: 0 0 8px #00ff41, 0 0 16px #00ff41, 0 0 24px #00ff41,
+                   0 0 32px #00ff88, 0 0 48px #00ff88 !important;
+    }
+  }
+  
+  /* Landscape mobile optimization */
+  @media (max-width: 896px) and (orientation: landscape) {
+    .min-h-screen {
+      min-height: 100vh;
+    }
+    
+    /* Reduce vertical padding in landscape */
+    .container {
+      padding-top: 1rem !important;
+      padding-bottom: 1rem !important;
+    }
+  }
+  
+  /* Tablet optimizations */
+  @media (min-width: 641px) and (max-width: 1024px) {
+    /* Adjust grid layouts for tablets */
+    .grid-cols-1.md\:grid-cols-3 {
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+  }
+  
+  /* High-DPI screen optimization */
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    /* Sharper text rendering on retina displays */
+    body {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+  }
+  
+  /* Prevent horizontal scroll on mobile */
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
+  }
+  
+  /* Better video performance on mobile */
+  @supports (-webkit-touch-callout: none) {
+    /* iOS-specific fixes */
+    video {
+      -webkit-transform: translateZ(0);
+      -webkit-backface-visibility: hidden;
+      -webkit-perspective: 1000;
+    }
+  }
 }
