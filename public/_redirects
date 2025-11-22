@@ -1,0 +1,10 @@
+# Cloudflare Pages Redirects Configuration
+# Redirects sgctech.ai and www.sgctech.ai to the main site
+
+# Redirect root domain
+https://sgctech.ai/* https://ignite-growth-uae.pages.dev/:splat 301!
+https://www.sgctech.ai/* https://ignite-growth-uae.pages.dev/:splat 301!
+
+# Alternative: If you want to redirect to custom domain once set up
+# https://sgctech.ai/* https://landingpage.scholarxglobal.com/:splat 301!
+# https://www.sgctech.ai/* https://landingpage.scholarxglobal.com/:splat 301!
