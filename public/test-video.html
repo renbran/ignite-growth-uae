@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Test - SGC TECH AI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #000;
+            color: #fff;
+            font-family: system-ui, -apple-system, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        video {
+            max-width: 100%;
+            max-height: 80vh;
+            width: auto;
+            height: auto;
+            background: #000;
+        }
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        button {
+            padding: 10px 20px;
+            background: #4fc3f7;
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        button:hover {
+            background: #03a9f4;
+            transform: translateY(-2px);
+        }
+        .info {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            max-width: 600px;
+            width: 100%;
+        }
+        .info h2 {
+            color: #4fc3f7;
+            margin-bottom: 10px;
+        }
+        .info p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+        .status {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            margin-left: 5px;
+        }
+        .success { background: #4caf50; color: #fff; }
+        .error { background: #f44336; color: #fff; }
+        .warning { background: #ff9800; color: #000; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="margin-bottom: 20px; color: #4fc3f7;">Video Playback Test</h1>
+        
+        <video id="testVideo" controls playsInline muted>
+            <source src="/videos/logo-reveal.mp4" type="video/mp4">
+            Your browser doesn't support video playback.
+        </video>
+
+        <div class="controls">
+            <button onclick="playVideo()">▶ Play</button>
+            <button onclick="pauseVideo()">⏸ Pause</button>
+            <button onclick="restartVideo()">🔄 Restart</button>
+            <button onclick="toggleMute()">🔊 Toggle Mute</button>
+            <button onclick="setVolume(0.7)">Volume 70%</button>
+        </div>
+
+        <div class="info">
+            <h2>Video Information</h2>
+            <p><strong>Source:</strong> /videos/logo-reveal.mp4</p>
+            <p id="dimensions"><strong>Dimensions:</strong> <span class="status warning">Loading...</span></p>
+            <p id="duration"><strong>Duration:</strong> <span class="status warning">Loading...</span></p>
+            <p id="readyState"><strong>Ready State:</strong> <span class="status warning">0</span></p>
+            <p id="networkState"><strong>Network State:</strong> <span class="status warning">0</span></p>
+            <p id="currentTime"><strong>Current Time:</strong> 0.00s</p>
+            <p id="error"><strong>Error:</strong> <span class="status success">None</span></p>
+            <p id="autoplayTest"><strong>Autoplay:</strong> <span class="status warning">Testing...</span></p>
+        </div>
+    </div>
+
+    <script>
+        const video = document.getElementById('testVideo');
+        
+        // Update info display
+        function updateInfo() {
+            document.getElementById('currentTime').innerHTML = `<strong>Current Time:</strong> ${video.currentTime.toFixed(2)}s`;
+            document.getElementById('readyState').innerHTML = `<strong>Ready State:</strong> <span class="status ${video.readyState >= 2 ? 'success' : 'warning'}">${video.readyState}</span>`;
+            document.getElementById('networkState').innerHTML = `<strong>Network State:</strong> <span class="status ${video.networkState === 1 ? 'warning' : 'success'}">${video.networkState}</span>`;
+        }
+
+        video.addEventListener('loadedmetadata', () => {
+            console.log('Video metadata loaded');
+            document.getElementById('dimensions').innerHTML = `<strong>Dimensions:</strong> <span class="status success">${video.videoWidth} x ${video.videoHeight}</span>`;
+            document.getElementById('duration').innerHTML = `<strong>Duration:</strong> <span class="status success">${video.duration.toFixed(2)}s</span>`;
+            updateInfo();
+        });
+
+        video.addEventListener('error', (e) => {
+            console.error('Video error:', e);
+            const errorCode = video.error ? video.error.code : 'unknown';
+            const errorMsg = video.error ? video.error.message : 'Unknown error';
+            document.getElementById('error').innerHTML = `<strong>Error:</strong> <span class="status error">Code ${errorCode}: ${errorMsg}</span>`;
+        });
+
+        video.addEventListener('timeupdate', updateInfo);
+        video.addEventListener('play', () => console.log('Video playing'));
+        video.addEventListener('pause', () => console.log('Video paused'));
+
+        // Test autoplay
+        setTimeout(() => {
+            video.play()
+                .then(() => {
+                    console.log('Autoplay successful');
+                    document.getElementById('autoplayTest').innerHTML = `<strong>Autoplay:</strong> <span class="status success">Supported</span>`;
+                })
+                .catch((err) => {
+                    console.warn('Autoplay failed:', err);
+                    document.getElementById('autoplayTest').innerHTML = `<strong>Autoplay:</strong> <span class="status error">Blocked (${err.name})</span>`;
+                });
+        }, 500);
+
+        // Control functions
+        function playVideo() {
+            video.play().catch(err => alert('Play failed: ' + err.message));
+        }
+
+        function pauseVideo() {
+            video.pause();
+        }
+
+        function restartVideo() {
+            video.currentTime = 0;
+            video.play().catch(err => alert('Restart failed: ' + err.message));
+        }
+
+        function toggleMute() {
+            video.muted = !video.muted;
+            console.log('Muted:', video.muted);
+        }
+
+        function setVolume(level) {
+            video.volume = level;
+            console.log('Volume set to:', level);
+        }
+    </script>
+</body>
+</html>
