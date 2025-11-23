@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import HeroVideoIntro from "./HeroVideoIntro";
 import FounderVoiceover from "./FounderVoiceover";
-import HeroContentStage from "./HeroContentStage";
+import InteractiveEducation from "./InteractiveEducation";
 
-type HeroStage = "intro" | "voiceover" | "content";
+type HeroStage = "intro" | "voiceover" | "education";
 
 const HeroOrchestrator = () => {
   const [currentStage, setCurrentStage] = useState<HeroStage>("intro");
@@ -14,9 +14,9 @@ const HeroOrchestrator = () => {
     const seenIntro = localStorage.getItem("sgc_seen_intro");
     
     if (seenIntro === "true") {
-      // Skip directly to hero content for return visitors
+      // Skip directly to education section for return visitors
       setHasSeenIntro(true);
-      setCurrentStage("content");
+      setCurrentStage("education");
     }
   }, []);
 
@@ -30,12 +30,12 @@ const HeroOrchestrator = () => {
   };
 
   const handleVoiceoverComplete = () => {
-    setCurrentStage("content");
+    setCurrentStage("education");
   };
 
-  // If return visitor, only show content stage
-  if (hasSeenIntro && currentStage === "content") {
-    return <HeroContentStage isActive={true} />;
+  // If return visitor, only show education stage
+  if (hasSeenIntro && currentStage === "education") {
+    return <InteractiveEducation isActive={true} />;
   }
 
   return (
@@ -50,9 +50,9 @@ const HeroOrchestrator = () => {
         <FounderVoiceover onComplete={handleVoiceoverComplete} />
       )}
 
-      {/* Stage 3: Hero Content */}
-      {currentStage === "content" && (
-        <HeroContentStage isActive={true} />
+      {/* Stage 3: Interactive Education Section */}
+      {currentStage === "education" && (
+        <InteractiveEducation isActive={true} />
       )}
     </div>
   );

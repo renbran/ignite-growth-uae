@@ -805,6 +805,59 @@ defined here. Components use semantic tokens.
       repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(79, 195, 247, 0.03) 50px, rgba(79, 195, 247, 0.03) 51px);
   }
   
+  /* Title glitch animation */
+  @keyframes title-glitch {
+    0%, 96%, 100% {
+      text-shadow: 
+        0 0 20px rgba(79, 195, 247, 0.8),
+        0 0 40px rgba(79, 195, 247, 0.6);
+    }
+    97% {
+      text-shadow: 
+        -2px 0 #FF6B6B,
+        2px 0 #4fc3f7,
+        0 0 20px rgba(79, 195, 247, 0.8);
+    }
+    98% {
+      text-shadow: 
+        2px 0 #00FFF0,
+        -2px 0 #4fc3f7,
+        0 0 20px rgba(79, 195, 247, 0.8);
+    }
+  }
+  
+  .animate-title-glitch {
+    animation: title-glitch 5s ease-in-out infinite;
+  }
+  
+  /* Number pulse animation */
+  @keyframes number-pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+  
+  .animate-number-pulse {
+    animation: number-pulse 2s ease-in-out infinite;
+  }
+  
+  /* Pattern slide animation */
+  @keyframes pattern-slide {
+    0% {
+      background-position: 0 0, 0 0;
+    }
+    100% {
+      background-position: 100px 100px, -100px 100px;
+    }
+  }
+  
+  .animate-pattern-slide {
+    animation: pattern-slide 20s linear infinite;
+  }
+  
   /* Reduced motion for accessibility */
   @media (prefers-reduced-motion: reduce) {
     *,
@@ -820,7 +873,10 @@ defined here. Components use semantic tokens.
     .animate-pulse-glow-delayed,
     .animate-fade-in-up,
     .animate-scroll-dot,
-    .animate-bounce-slow {
+    .animate-bounce-slow,
+    .animate-title-glitch,
+    .animate-number-pulse,
+    .animate-pattern-slide {
       animation: none !important;
     }
   }
