@@ -28,38 +28,53 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
       handleEnded();
     };
 
-    const handleCanPlay = () => {
-      // Try to play with sound first
-      video.volume = 0.7; // Set to 70% volume
-      video.muted = false;
-      
-      video.play().catch((error) => {
+    const attemptAutoplay = async () => {
+      try {
+        // First attempt: Play with sound at 70% volume
+        video.volume = 0.7;
+        video.muted = false;
+        await video.play();
+        setAudioEnabled(true);
+        console.log("Playing with audio at 70% volume");
+      } catch (error) {
         console.warn("Autoplay with sound blocked, trying muted:", error);
-        // If autoplay with sound fails, start muted and enable sound after
-        video.muted = true;
-        video.play().then(() => {
-          // Unmute after a brief delay
+        try {
+          // Second attempt: Start muted
+          video.muted = true;
+          await video.play();
+          console.log("Playing muted, will unmute shortly");
+          
+          // Unmute after video starts playing
           setTimeout(() => {
             video.muted = false;
             video.volume = 0.7;
             setAudioEnabled(true);
-          }, 100);
-        }).catch((err) => {
+            console.log("Audio enabled after muted start");
+          }, 500);
+        } catch (err) {
           console.error("All autoplay attempts failed:", err);
-          // Last resort: show play button overlay
+          // Last resort: skip to next section
           handleEnded();
-        });
-      });
+        }
+      }
     };
+
+    // Try to start playback as soon as possible
+    if (video.readyState >= 2) {
+      // Video has enough data to start playing
+      attemptAutoplay();
+    } else {
+      // Wait for video to be ready
+      video.addEventListener("canplay", attemptAutoplay, { once: true });
+    }
 
     video.addEventListener("ended", handleEnded);
     video.addEventListener("error", handleError);
-    video.addEventListener("canplay", handleCanPlay);
 
     return () => {
       video.removeEventListener("ended", handleEnded);
       video.removeEventListener("error", handleError);
-      video.removeEventListener("canplay", handleCanPlay);
+      video.removeEventListener("canplay", attemptAutoplay);
     };
   }, [onComplete]);
 
@@ -88,6 +103,8 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
         className="w-full h-full object-contain"
         playsInline
         preload="auto"
+        autoPlay
+        muted
         aria-label="SGC TECH AI Logo Reveal and CEO Message"
       >
         <source src="/videos/logo-reveal.mp4" type="video/mp4" />
