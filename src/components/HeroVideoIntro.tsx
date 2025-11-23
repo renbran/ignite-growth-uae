@@ -7,51 +7,71 @@ interface HeroVideoIntroProps {
 }
 
 const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
   const [isVisible, setIsVisible] = useState(true);
+  const [player, setPlayer] = useState<any>(null);
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
+    // Load YouTube IFrame API
+    const tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
+
+    // Initialize YouTube player when API is ready
+    (window as any).onYouTubeIframeAPIReady = () => {
+      const ytPlayer = new (window as any).YT.Player(iframeRef.current, {
+        videoId: 'ja5Gb_MrtvQ',
+        playerVars: {
+          autoplay: 1,
+          controls: 0,
+          modestbranding: 1,
+          rel: 0,
+          showinfo: 0,
+          fs: 0,
+          cc_load_policy: 0,
+          iv_load_policy: 3,
+          disablekb: 1,
+          playsinline: 1,
+          mute: 0,
+          enablejsapi: 1,
+        },
+        events: {
+          onReady: (event: any) => {
+            event.target.setVolume(70); // Safe volume at 70%
+            event.target.playVideo();
+          },
+          onStateChange: (event: any) => {
+            if (event.data === (window as any).YT.PlayerState.ENDED) {
+              handleEnded();
+            }
+          },
+          onError: () => {
+            console.error("YouTube video failed to load - skipping to next stage");
+            handleEnded();
+          }
+        }
+      });
+      setPlayer(ytPlayer);
+    };
 
     const handleEnded = () => {
-      // Fade out before transitioning
       setIsVisible(false);
       setTimeout(() => {
         onComplete();
       }, 1000);
     };
 
-    const handleError = () => {
-      console.error("Logo intro video failed to load - skipping to next stage");
-      handleEnded();
-    };
-
-    video.addEventListener("ended", handleEnded);
-    video.addEventListener("error", handleError);
-
-    // Auto-play the video with sound
-    video.muted = false;
-    video.volume = 1.0;
-    video.play().catch((error) => {
-      console.warn("Autoplay with sound failed, trying muted:", error);
-      // If autoplay with sound fails, try muted as fallback
-      video.muted = true;
-      video.play().catch((err) => {
-        console.error("All autoplay attempts failed:", err);
-      });
-    });
-
     return () => {
-      video.removeEventListener("ended", handleEnded);
-      video.removeEventListener("error", handleError);
+      if (player) {
+        player.destroy();
+      }
     };
   }, [onComplete]);
 
   const handleSkip = () => {
-    const video = videoRef.current;
-    if (video) {
-      video.pause();
+    if (player) {
+      player.stopVideo();
     }
     setIsVisible(false);
     setTimeout(() => {
@@ -67,16 +87,22 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
         className
       )}
     >
-      <video
-        ref={videoRef}
-        className="w-full h-full object-cover"
-        playsInline
-        preload="auto"
-        aria-label="SGC TECH AI logo animation"
-      >
-        <source src="/videos/sgc-tech-ai-logo-intro.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
+      {/* YouTube IFrame - Fullscreen without branding */}
+      <div className="relative w-full h-full overflow-hidden">
+        <iframe
+          ref={iframeRef}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+          style={{
+            width: '100vw',
+            height: '100vh',
+            border: 'none',
+            pointerEvents: 'none',
+          }}
+          title="SGC TECH AI Logo Reveal and CEO Message"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        />
+      </div>
 
       <button
         onClick={handleSkip}
@@ -89,7 +115,7 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
           "hover:bg-[rgba(79,195,247,0.3)] hover:shadow-glow hover:-translate-y-0.5",
           "focus:outline-none focus:ring-2 focus:ring-[#4fc3f7] focus:ring-offset-2 focus:ring-offset-black"
         )}
-        aria-label="Skip logo introduction"
+        aria-label="Skip introduction"
       >
         Skip Intro →
       </button>

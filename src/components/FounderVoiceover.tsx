@@ -97,12 +97,12 @@ const FounderVoiceover = ({ onComplete, className }: FounderVoiceoverProps) => {
         ))}
       </div>
 
-      {/* Video container - responsive with proper aspect ratio */}
-      <div className="relative w-full max-w-[90vw] md:max-w-[80vw] lg:max-w-[1200px] px-4 md:px-8 z-10">
-        <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+      {/* Video container - responsive with proper aspect ratio and fit to screen */}
+      <div className="relative w-full max-w-[95vw] sm:max-w-[90vw] md:max-w-[85vw] lg:max-w-[75vw] xl:max-w-[1400px] px-2 sm:px-4 md:px-6 lg:px-8 z-10">
+        <div className="relative w-full bg-black/30 rounded-lg overflow-hidden" style={{ paddingBottom: '56.25%' }}>
           <video
             ref={videoRef}
-            className="absolute top-0 left-0 w-full h-full object-contain shadow-[0_20px_60px_rgba(0,0,0,0.5)] rounded-lg"
+            className="absolute top-0 left-0 w-full h-full object-contain shadow-[0_20px_60px_rgba(0,0,0,0.5)]"
             controls
             playsInline
             preload="metadata"

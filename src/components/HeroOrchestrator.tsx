@@ -3,7 +3,7 @@ import HeroVideoIntro from "./HeroVideoIntro";
 import FounderVoiceover from "./FounderVoiceover";
 import InteractiveEducation from "./InteractiveEducation";
 
-type HeroStage = "intro" | "voiceover" | "education";
+type HeroStage = "intro" | "education";
 
 const HeroOrchestrator = () => {
   const [currentStage, setCurrentStage] = useState<HeroStage>("intro");
@@ -21,16 +21,12 @@ const HeroOrchestrator = () => {
   }, []);
 
   const handleIntroComplete = () => {
-    setCurrentStage("voiceover");
+    setCurrentStage("education");
     // Mark as seen after first visit
     if (!hasSeenIntro) {
       localStorage.setItem("sgc_seen_intro", "true");
       setHasSeenIntro(true);
     }
-  };
-
-  const handleVoiceoverComplete = () => {
-    setCurrentStage("education");
   };
 
   // If return visitor, only show education stage
@@ -40,17 +36,12 @@ const HeroOrchestrator = () => {
 
   return (
     <div className="hero-orchestrator-wrapper">
-      {/* Stage 1: Logo Intro Animation */}
+      {/* Stage 1: Logo Reveal + CEO Message (Merged) */}
       {currentStage === "intro" && (
         <HeroVideoIntro onComplete={handleIntroComplete} />
       )}
 
-      {/* Stage 2: Founder Voiceover */}
-      {currentStage === "voiceover" && (
-        <FounderVoiceover onComplete={handleVoiceoverComplete} />
-      )}
-
-      {/* Stage 3: Interactive Education Section */}
+      {/* Stage 2: Interactive Education Section */}
       {currentStage === "education" && (
         <InteractiveEducation isActive={true} />
       )}
