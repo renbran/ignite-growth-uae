@@ -100,22 +100,11 @@ const CEOMessageModal = ({ isOpen, onClose }: CEOMessageModalProps) => {
         {/* Video Content */}
         <div className="p-4 md:p-6">
           {/* Header */}
-          <div className="text-center mb-4">
+          <div className="text-center mb-6">
             <h2 className="font-display text-2xl md:text-3xl text-gradient mb-2">
-              A Message from Our Founder
+              A Message from SGC TECH AI
             </h2>
             <div className="w-20 h-1 bg-gradient-to-r from-[#4fc3f7] to-[#39ff14] mx-auto"></div>
-          </div>
-
-          {/* CEO Info */}
-          <div className="flex items-center gap-3 mb-4 pb-4 border-b border-[#4fc3f7] border-opacity-30">
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#4fc3f7] to-[#39ff14] flex items-center justify-center text-black font-display text-xl font-bold">
-              SG
-            </div>
-            <div>
-              <h3 className="text-lg font-display text-white">Shaik Gouse</h3>
-              <p className="text-[#4fc3f7] text-xs">Founder & CEO, SGC TECH AI</p>
-            </div>
           </div>
 
           {/* Video Player */}
