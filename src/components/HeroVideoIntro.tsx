@@ -36,33 +36,66 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
       }, 2000);
     };
 
-    // Try to unmute after video starts playing
-    const attemptUnmute = () => {
+    const handlePlaying = () => {
+      console.log("Video is now playing");
+      setIsPlaying(true);
+      // Try to unmute after video starts playing
       setTimeout(() => {
-        if (video.paused) return; // Don't unmute if video isn't playing
-        
-        video.muted = false;
-        video.volume = 0.7;
-        setAudioEnabled(true);
-        console.log("Audio enabled at 70% volume");
+        if (!video.paused) {
+          video.muted = false;
+          video.volume = 0.7;
+          setAudioEnabled(true);
+          console.log("Audio enabled at 70% volume");
+        }
       }, 500);
     };
 
-    const handlePlaying = () => {
-      setIsPlaying(true);
-      attemptUnmute();
+    const handleLoadedMetadata = () => {
+      console.log("Video metadata loaded, duration:", video.duration);
+    };
+
+    const handleCanPlay = () => {
+      console.log("Video can play");
+      // Force play if not already playing
+      if (video.paused) {
+        video.play().catch(err => {
+          console.warn("Autoplay failed:", err);
+          setIsPlaying(false);
+        });
+      }
     };
 
     video.addEventListener("ended", handleEnded);
     video.addEventListener("error", handleError);
     video.addEventListener("playing", handlePlaying);
+    video.addEventListener("loadedmetadata", handleLoadedMetadata);
+    video.addEventListener("canplay", handleCanPlay);
 
     return () => {
       video.removeEventListener("ended", handleEnded);
       video.removeEventListener("error", handleError);
       video.removeEventListener("playing", handlePlaying);
+      video.removeEventListener("loadedmetadata", handleLoadedMetadata);
+      video.removeEventListener("canplay", handleCanPlay);
     };
   }, [onComplete]);
+
+  const handleVideoClick = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    
+    if (video.paused) {
+      video.muted = false;
+      video.volume = 0.7;
+      video.play().then(() => {
+        setIsPlaying(true);
+        setAudioEnabled(true);
+        console.log("Manual play with audio");
+      }).catch(err => {
+        console.error("Manual play failed:", err);
+      });
+    }
+  };
 
   const handleSkip = () => {
     const video = videoRef.current;
@@ -87,11 +120,12 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
       <div className="absolute inset-0 flex items-center justify-center">
         <video
           ref={videoRef}
-          className="w-full h-full object-contain"
+          className="w-full h-full object-contain cursor-pointer"
           playsInline
           preload="auto"
           autoPlay
           muted
+          onClick={handleVideoClick}
           aria-label="SGC TECH AI Logo Reveal and CEO Message"
         >
           <source src="/videos/logo-reveal.mp4" type="video/mp4" />
@@ -106,6 +140,22 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
           </p>
         </video>
 
+        {/* Click to play overlay when video is paused */}
+        {!isPlaying && (
+          <div 
+            className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 cursor-pointer"
+            onClick={handleVideoClick}
+          >
+            <div className="text-center">
+              <div className="w-20 h-20 rounded-full bg-[#4fc3f7] flex items-center justify-center mb-4 mx-auto hover:bg-[#03a9f4] transition-all transform hover:scale-110">
+                <svg className="w-10 h-10 text-black ml-1" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </div>
+              <p className="text-white text-lg font-semibold">Click to Play</p>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Error Message */}
