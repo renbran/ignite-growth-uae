@@ -11,7 +11,6 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
   const [isVisible, setIsVisible] = useState(true);
   const [audioEnabled, setAudioEnabled] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const [showPlayButton, setShowPlayButton] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
@@ -22,107 +21,48 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
       return;
     }
 
-    console.log("Video element created, src:", video.src);
-
     const handleEnded = () => {
-      console.log("Video ended");
       setIsVisible(false);
       setTimeout(() => {
         onComplete();
       }, 1000);
     };
 
-    const handleError = (e: Event) => {
-      console.error("Video error:", e);
-      console.error("Video error code:", video.error?.code);
-      console.error("Video error message:", video.error?.message);
+    const handleError = () => {
+      console.error("Video failed to load - skipping to next stage");
       setHasError(true);
-      // Skip to next section on error
       setTimeout(() => {
         onComplete();
       }, 2000);
     };
 
-    const handleLoadedData = () => {
-      console.log("Video data loaded, duration:", video.duration);
-      console.log("Video dimensions:", video.videoWidth, "x", video.videoHeight);
-      video.volume = 0.7;
-      
-      // Try to play
-      video.play()
-        .then(() => {
-          console.log("Video playing successfully");
-          setIsPlaying(true);
-          setShowPlayButton(false);
-          // Try to unmute after a short delay
-          setTimeout(() => {
-            video.muted = false;
-            video.volume = 0.7;
-            setAudioEnabled(true);
-            console.log("Audio unmuted");
-          }, 1000);
-        })
-        .catch((err) => {
-          console.warn("Autoplay failed, showing play button:", err);
-          setShowPlayButton(true);
-          setAudioEnabled(false);
-        });
+    // Try to unmute after video starts playing
+    const attemptUnmute = () => {
+      setTimeout(() => {
+        if (video.paused) return; // Don't unmute if video isn't playing
+        
+        video.muted = false;
+        video.volume = 0.7;
+        setAudioEnabled(true);
+        console.log("Audio enabled at 70% volume");
+      }, 500);
     };
 
-    const handlePlay = () => {
-      console.log("Video play event");
+    const handlePlaying = () => {
       setIsPlaying(true);
-    };
-
-    const handlePause = () => {
-      console.log("Video pause event");
-      setIsPlaying(false);
-    };
-
-    const handleCanPlayThrough = () => {
-      console.log("Video can play through");
+      attemptUnmute();
     };
 
     video.addEventListener("ended", handleEnded);
     video.addEventListener("error", handleError);
-    video.addEventListener("loadeddata", handleLoadedData);
-    video.addEventListener("canplaythrough", handleCanPlayThrough);
-    video.addEventListener("play", handlePlay);
-    video.addEventListener("pause", handlePause);
-
-    // Load the video
-    video.load();
+    video.addEventListener("playing", handlePlaying);
 
     return () => {
       video.removeEventListener("ended", handleEnded);
       video.removeEventListener("error", handleError);
-      video.removeEventListener("loadeddata", handleLoadedData);
-      video.removeEventListener("canplaythrough", handleCanPlayThrough);
-      video.removeEventListener("play", handlePlay);
-      video.removeEventListener("pause", handlePause);
+      video.removeEventListener("playing", handlePlaying);
     };
   }, [onComplete]);
-
-  const handleManualPlay = () => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    video.muted = false;
-    video.volume = 0.7;
-    video.play()
-      .then(() => {
-        console.log("Manual play successful");
-        setShowPlayButton(false);
-        setIsPlaying(true);
-        setAudioEnabled(true);
-      })
-      .catch((err) => {
-        console.error("Manual play failed:", err);
-        // Try muted playback
-        video.muted = true;
-        video.play().catch(console.error);
-      });
-  };
 
   const handleSkip = () => {
     const video = videoRef.current;
@@ -144,10 +84,10 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
       )}
     >
       {/* Video Container - Full screen with proper aspect ratio handling */}
-      <div className="absolute inset-0 flex items-center justify-center p-4 md:p-0">
+      <div className="absolute inset-0 flex items-center justify-center">
         <video
           ref={videoRef}
-          className="w-full h-full object-cover md:object-contain"
+          className="w-full h-full object-contain"
           playsInline
           preload="auto"
           autoPlay
@@ -166,27 +106,6 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
           </p>
         </video>
 
-        {/* Manual Play Button Overlay */}
-        {showPlayButton && !isPlaying && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
-            <button
-              onClick={handleManualPlay}
-              className={cn(
-                "bg-[#4fc3f7] hover:bg-[#03a9f4]",
-                "text-black px-8 py-4 rounded-full",
-                "font-bold text-lg uppercase tracking-wider",
-                "transition-all duration-300 transform hover:scale-110",
-                "shadow-glow flex items-center gap-3"
-              )}
-              aria-label="Play video"
-            >
-              <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z" />
-              </svg>
-              Play Video
-            </button>
-          </div>
-        )}
       </div>
 
       {/* Error Message */}
