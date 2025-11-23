@@ -7,71 +7,121 @@ interface HeroVideoIntroProps {
 }
 
 const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
-  const iframeRef = useRef<HTMLIFrameElement>(null);
   const [isVisible, setIsVisible] = useState(true);
-  const [player, setPlayer] = useState<any>(null);
+  const [playerReady, setPlayerReady] = useState(false);
+  const playerRef = useRef<any>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Load YouTube IFrame API
-    const tag = document.createElement('script');
-    tag.src = 'https://www.youtube.com/iframe_api';
-    const firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
+    let player: any = null;
+    let checkInterval: NodeJS.Timeout;
 
-    // Initialize YouTube player when API is ready
-    (window as any).onYouTubeIframeAPIReady = () => {
-      const ytPlayer = new (window as any).YT.Player(iframeRef.current, {
-        videoId: 'ja5Gb_MrtvQ',
-        playerVars: {
-          autoplay: 1,
-          controls: 0,
-          modestbranding: 1,
-          rel: 0,
-          showinfo: 0,
-          fs: 0,
-          cc_load_policy: 0,
-          iv_load_policy: 3,
-          disablekb: 1,
-          playsinline: 1,
-          mute: 0,
-          enablejsapi: 1,
-        },
-        events: {
-          onReady: (event: any) => {
-            event.target.setVolume(70); // Safe volume at 70%
-            event.target.playVideo();
-          },
-          onStateChange: (event: any) => {
-            if (event.data === (window as any).YT.PlayerState.ENDED) {
-              handleEnded();
-            }
-          },
-          onError: () => {
-            console.error("YouTube video failed to load - skipping to next stage");
-            handleEnded();
-          }
+    const initPlayer = () => {
+      // Check if YouTube API is already loaded
+      if ((window as any).YT && (window as any).YT.Player) {
+        createPlayer();
+      } else {
+        // Load YouTube IFrame API if not already loaded
+        if (!document.querySelector('script[src*="youtube.com/iframe_api"]')) {
+          const tag = document.createElement('script');
+          tag.src = 'https://www.youtube.com/iframe_api';
+          const firstScriptTag = document.getElementsByTagName('script')[0];
+          firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
         }
-      });
-      setPlayer(ytPlayer);
+        
+        // Wait for API to load
+        (window as any).onYouTubeIframeAPIReady = createPlayer;
+      }
     };
 
-    const handleEnded = () => {
+    const createPlayer = () => {
+      if (!containerRef.current) return;
+
+      try {
+        player = new (window as any).YT.Player('youtube-player', {
+          videoId: 'ja5Gb_MrtvQ',
+          playerVars: {
+            autoplay: 1,
+            controls: 0,
+            modestbranding: 1,
+            rel: 0,
+            showinfo: 0,
+            fs: 0,
+            cc_load_policy: 0,
+            iv_load_policy: 3,
+            disablekb: 1,
+            playsinline: 1,
+            mute: 1, // Start muted for autoplay, will unmute after
+            enablejsapi: 1,
+            origin: window.location.origin,
+          },
+          events: {
+            onReady: handlePlayerReady,
+            onStateChange: handleStateChange,
+            onError: handleError,
+          }
+        });
+        playerRef.current = player;
+      } catch (error) {
+        console.error('Error creating YouTube player:', error);
+        handleError();
+      }
+    };
+
+    const handlePlayerReady = (event: any) => {
+      setPlayerReady(true);
+      try {
+        // Unmute and set volume after player is ready
+        event.target.unMute();
+        event.target.setVolume(70);
+        event.target.playVideo();
+      } catch (error) {
+        console.warn('Could not unmute, playing muted:', error);
+      }
+    };
+
+    const handleStateChange = (event: any) => {
+      if (event.data === (window as any).YT?.PlayerState?.ENDED) {
+        handleVideoEnd();
+      }
+    };
+
+    const handleError = () => {
+      console.error("YouTube video failed to load - skipping to next stage");
+      handleVideoEnd();
+    };
+
+    const handleVideoEnd = () => {
       setIsVisible(false);
       setTimeout(() => {
         onComplete();
       }, 1000);
     };
 
+    // Start initialization
+    initPlayer();
+
     return () => {
-      if (player) {
-        player.destroy();
+      if (checkInterval) {
+        clearInterval(checkInterval);
+      }
+      if (playerRef.current && playerRef.current.destroy) {
+        try {
+          playerRef.current.destroy();
+        } catch (e) {
+          console.warn('Error destroying player:', e);
+        }
       }
     };
   }, [onComplete]);
 
   const handleSkip = () => {
-    if (player) {
-      player.stopVideo();
+    if (playerRef.current && playerRef.current.stopVideo) {
+      try {
+        playerRef.current.stopVideo();
+      } catch (e) {
+        console.warn('Error stopping video:', e);
+      }
     }
     setIsVisible(false);
     setTimeout(() => {
@@ -81,27 +131,25 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
 
   return (
     <div
+      ref={containerRef}
       className={cn(
         "fixed inset-0 z-[9999] flex items-center justify-center bg-black transition-opacity duration-1000",
         !isVisible && "opacity-0 pointer-events-none",
         className
       )}
     >
-      {/* YouTube IFrame - Fullscreen without branding */}
+      {/* YouTube Player Container - Fullscreen without branding */}
       <div className="relative w-full h-full overflow-hidden">
-        <iframe
-          ref={iframeRef}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+        <div 
+          id="youtube-player"
+          className="absolute top-0 left-0 w-full h-full"
           style={{
-            width: '100vw',
-            height: '100vh',
-            border: 'none',
-            pointerEvents: 'none',
+            width: '100%',
+            height: '100%',
           }}
-          title="SGC TECH AI Logo Reveal and CEO Message"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
         />
+        {/* Overlay to prevent clicks on video */}
+        <div className="absolute inset-0 pointer-events-none z-10" />
       </div>
 
       <button
