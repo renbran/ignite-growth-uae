@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { X } from "lucide-react";
 
@@ -9,6 +9,8 @@ interface CEOMessageModalProps {
 
 const CEOMessageModal = ({ isOpen, onClose }: CEOMessageModalProps) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     if (isOpen) {
@@ -19,11 +21,55 @@ const CEOMessageModal = ({ isOpen, onClose }: CEOMessageModalProps) => {
     }
   }, [isOpen]);
 
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !isOpen) return;
+
+    const handleEnded = () => {
+      // Auto-close modal when video ends
+      handleClose();
+    };
+
+    const handlePlaying = () => {
+      setIsPlaying(true);
+      // Try to enable audio
+      setTimeout(() => {
+        video.muted = false;
+        video.volume = 0.8;
+      }, 100);
+    };
+
+    video.addEventListener("ended", handleEnded);
+    video.addEventListener("playing", handlePlaying);
+
+    return () => {
+      video.removeEventListener("ended", handleEnded);
+      video.removeEventListener("playing", handlePlaying);
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   const handleClose = () => {
+    const video = videoRef.current;
+    if (video) {
+      video.pause();
+    }
     setIsVisible(false);
     setTimeout(onClose, 300);
+  };
+
+  const handleVideoClick = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    
+    if (video.paused) {
+      video.muted = false;
+      video.volume = 0.8;
+      video.play().then(() => {
+        setIsPlaying(true);
+      }).catch(console.error);
+    }
   };
 
   return (
@@ -51,74 +97,72 @@ const CEOMessageModal = ({ isOpen, onClose }: CEOMessageModalProps) => {
           <X className="w-5 h-5" />
         </button>
 
-        {/* Content */}
-        <div className="p-8 md:p-12">
+        {/* Video Content */}
+        <div className="p-4 md:p-6">
           {/* Header */}
-          <div className="text-center mb-8">
-            <h2 className="font-display text-3xl md:text-4xl text-gradient mb-3">
+          <div className="text-center mb-4">
+            <h2 className="font-display text-2xl md:text-3xl text-gradient mb-2">
               A Message from Our Founder
             </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-[#4fc3f7] to-[#39ff14] mx-auto"></div>
+            <div className="w-20 h-1 bg-gradient-to-r from-[#4fc3f7] to-[#39ff14] mx-auto"></div>
           </div>
 
           {/* CEO Info */}
-          <div className="flex items-center gap-4 mb-6 pb-6 border-b border-[#4fc3f7] border-opacity-30">
-            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#4fc3f7] to-[#39ff14] flex items-center justify-center text-black font-display text-2xl font-bold">
+          <div className="flex items-center gap-3 mb-4 pb-4 border-b border-[#4fc3f7] border-opacity-30">
+            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#4fc3f7] to-[#39ff14] flex items-center justify-center text-black font-display text-xl font-bold">
               SG
             </div>
             <div>
-              <h3 className="text-xl font-display text-white">Shaik Gouse</h3>
-              <p className="text-[#4fc3f7] text-sm">Founder & CEO, SGC TECH AI</p>
+              <h3 className="text-lg font-display text-white">Shaik Gouse</h3>
+              <p className="text-[#4fc3f7] text-xs">Founder & CEO, SGC TECH AI</p>
             </div>
           </div>
 
-          {/* Message Content */}
-          <div className="space-y-4 text-gray-300 leading-relaxed">
-            <p className="text-lg">
-              Welcome to <span className="text-[#4fc3f7] font-semibold">SGC TECH AI</span> – where innovation meets transformation.
-            </p>
-            
-            <p>
-              For over a decade, I've witnessed businesses struggle with outdated systems, inefficient processes, and missed opportunities. That's why I founded SGC TECH AI – to bridge the gap between traditional business operations and AI-powered excellence.
-            </p>
+          {/* Video Player */}
+          <div className="relative aspect-video bg-black rounded-lg overflow-hidden mb-4">
+            <video
+              ref={videoRef}
+              className="w-full h-full object-contain cursor-pointer"
+              playsInline
+              preload="auto"
+              autoPlay
+              muted
+              onClick={handleVideoClick}
+              aria-label="CEO Founder Message Video"
+            >
+              <source src="/videos/founder-3am-truth-speech.mp4" type="video/mp4" />
+              <p className="text-center text-white p-4">
+                Your browser does not support the video tag.
+              </p>
+            </video>
 
-            <p>
-              Our mission is simple yet powerful: <span className="text-[#39ff14] font-semibold">Transform your business in 14 days</span> with guaranteed 150-200% ROI. We don't just promise results – we deliver them through our proven, battle-tested AI implementation framework.
-            </p>
-
-            <p>
-              Whether you're in manufacturing, healthcare, retail, or finance, we've helped companies like yours achieve:
-            </p>
-
-            <ul className="list-disc list-inside space-y-2 pl-4 text-gray-400">
-              <li>40% reduction in operational costs</li>
-              <li>60% faster decision-making</li>
-              <li>99.9% accuracy in AI-powered insights</li>
-              <li>Complete digital transformation in under 2 weeks</li>
-            </ul>
-
-            <p className="text-white font-semibold">
-              The future of business is AI-native. The question isn't <em>if</em> you'll transform – it's <em>when</em>.
-            </p>
-
-            <p className="text-[#4fc3f7] italic">
-              Let's build the future together.
-            </p>
+            {/* Click to play overlay when video is paused */}
+            {!isPlaying && (
+              <div 
+                className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 cursor-pointer"
+                onClick={handleVideoClick}
+              >
+                <div className="w-16 h-16 rounded-full bg-[#4fc3f7] flex items-center justify-center hover:bg-[#03a9f4] transition-all transform hover:scale-110">
+                  <svg className="w-8 h-8 text-black ml-1" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                </div>
+              </div>
+            )}
           </div>
 
-          {/* CTA Button */}
-          <div className="mt-8 text-center">
+          {/* Skip/Close Button */}
+          <div className="text-center">
             <button
               onClick={handleClose}
               className={cn(
-                "bg-gradient-to-r from-[#4fc3f7] to-[#39ff14]",
-                "text-black px-8 py-4 rounded-full",
-                "font-display text-lg font-bold uppercase tracking-wider",
-                "transition-all duration-300 transform hover:scale-105",
-                "shadow-glow hover:shadow-[0_0_30px_rgba(79,195,247,0.6)]"
+                "text-[#4fc3f7] px-6 py-2 rounded-full",
+                "font-mono text-sm uppercase tracking-wider",
+                "border border-[#4fc3f7] bg-[rgba(79,195,247,0.1)]",
+                "transition-all duration-300 hover:bg-[rgba(79,195,247,0.2)]"
               )}
             >
-              Let's Transform Your Business
+              Skip Message →
             </button>
           </div>
         </div>
