@@ -150,6 +150,7 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
           className="w-full h-full object-cover md:object-contain"
           playsInline
           preload="auto"
+          autoPlay
           muted
           aria-label="SGC TECH AI Logo Reveal and CEO Message"
         >
