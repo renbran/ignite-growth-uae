@@ -128,19 +128,18 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
         className
       )}
     >
-      {/* Portrait-Optimized Video Container */}
-      <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-8 md:p-12">
-        <div className="relative w-full h-full flex items-center justify-center">
-          <video
-            ref={videoRef}
-            className="max-w-[90vw] max-h-[60vh] sm:max-h-[70vh] md:max-h-[75vh] lg:max-h-[80vh] w-auto h-auto object-contain cursor-pointer"
-            playsInline
-            preload="auto"
-            autoPlay
-            muted
-            onClick={handleVideoClick}
-            aria-label="SGC TECH AI Logo Reveal"
-          >
+      {/* Mobile-First Video Container - Starts at 320px screens */}
+      <div className="absolute inset-0 flex items-center justify-center p-3 sm:p-6 md:p-8">
+        <video
+          ref={videoRef}
+          className="w-[85vw] max-w-[280px] sm:max-w-[400px] md:max-w-[500px] lg:max-w-[600px] xl:max-w-[700px] h-auto object-contain cursor-pointer"
+          playsInline
+          preload="auto"
+          autoPlay
+          muted
+          onClick={handleVideoClick}
+          aria-label="SGC TECH AI Logo Reveal"
+        >
           <source src="/videos/logo-reveal.mp4" type="video/mp4" />
           <p className="text-center text-white p-4 text-sm">
             Your browser does not support the video tag.
@@ -153,24 +152,23 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
           </p>
         </video>
 
-        {/* Play Button Overlay - Professional Design */}
+        {/* Mobile-First Play Overlay */}
         {!isPlaying && (
           <div 
-            className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-b from-black/60 to-black/80 cursor-pointer touch-manipulation backdrop-blur-sm"
+            className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-b from-black/70 to-black/90 cursor-pointer touch-manipulation"
             onClick={handleVideoClick}
           >
-            {/* Play Button - Modern Professional */}
-            <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center mb-3 sm:mb-4 active:scale-95 transition-all shadow-lg shadow-blue-500/50 hover:shadow-blue-500/80">
+            {/* Play Button - Optimized for Mobile Touch */}
+            <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center mb-2 sm:mb-3 active:scale-95 transition-transform shadow-xl">
               <svg className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M8 5v14l11-7z" />
               </svg>
             </div>
-            {/* Text - Clear CTA */}
-            <p className="text-white text-base sm:text-lg md:text-xl font-semibold tracking-wide">Tap to Begin</p>
-            <p className="text-white/70 text-xs sm:text-sm mt-1">Experience the transformation</p>
+            {/* CTA Text - Concise for Mobile */}
+            <p className="text-white text-sm sm:text-base md:text-lg font-semibold">Tap to Begin</p>
+            <p className="text-white/60 text-xs sm:text-sm mt-1 px-4 text-center">Watch the transformation</p>
           </div>
         )}
-        </div>
       </div>
 
       {/* Error Message */}
@@ -190,20 +188,17 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
         </div>
       )}
 
-      {/* Skip Button - Professional Modern */}
+      {/* Skip Button - Mobile-First Simple */}
       <button
         onClick={handleSkip}
         className={cn(
-          "fixed bottom-5 right-5 z-[10000]",
-          "min-w-[90px] min-h-[40px] sm:min-w-[110px] sm:min-h-[44px]",
-          "bg-white/10 backdrop-blur-md border border-white/30 hover:bg-white/20",
-          "text-white px-5 py-2.5 sm:px-6 sm:py-3",
+          "fixed bottom-4 right-4 z-[10000]",
+          "min-w-[70px] min-h-[44px] px-4 py-2.5",
+          "bg-white/10 backdrop-blur-sm border border-white/20",
+          "text-white text-sm font-medium",
           "rounded-full",
-          "font-sans text-sm sm:text-base font-medium",
-          "transition-all duration-300",
-          "active:scale-95 touch-manipulation",
-          "shadow-lg hover:shadow-xl",
-          "focus:outline-none focus:ring-2 focus:ring-white/50"
+          "active:scale-95 transition-transform touch-manipulation",
+          "shadow-lg"
         )}
         aria-label="Skip introduction"
       >
