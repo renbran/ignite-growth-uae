@@ -49,17 +49,17 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
         window.trackVideoEvent('video_start', 'Logo Reveal Video');
       }
       
-      // Sync audio with video
+      // Sync sound effect with video
       const audio = audioRef.current;
       if (audio) {
         setTimeout(() => {
           if (!video.paused) {
             // Sync audio to video timeline
             audio.currentTime = video.currentTime;
-            audio.volume = 0.6; // Background music volume
+            audio.volume = 0.8; // Sound effect volume for impact
             audio.play().then(() => {
               setAudioEnabled(true);
-              console.log("Audio synced and playing");
+              console.log("Sound effect synced and playing");
             }).catch(err => {
               console.warn("Audio play failed:", err);
             });
@@ -106,13 +106,13 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
     if (video.paused) {
       video.play().then(() => {
         setIsPlaying(true);
-        // Sync audio with video
+        // Sync sound effect with video
         if (audio) {
           audio.currentTime = video.currentTime;
-          audio.volume = 0.6;
+          audio.volume = 0.8; // Sound effect volume
           audio.play().then(() => {
             setAudioEnabled(true);
-            console.log("Manual play with synced audio");
+            console.log("Manual play with synced sound effect");
           }).catch(err => {
             console.warn("Audio play failed:", err);
           });
@@ -147,7 +147,7 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
     <div
       className={cn(
         "fixed inset-0 z-[9999] transition-opacity duration-1000",
-        "bg-gradient-to-br from-slate-950 via-blue-950 to-slate-950",
+        "bg-black",
         !isVisible && "opacity-0 pointer-events-none",
         className
       )}
@@ -208,13 +208,13 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
         </div>
       )}
 
-      {/* Hidden Audio Element - Synced with Video */}
+      {/* Hidden Audio Element - Sound Effect Synced with Video */}
       <audio
         ref={audioRef}
         preload="auto"
         loop={false}
       >
-        <source src="/audio/logo-reveal-music.mp3" type="audio/mpeg" />
+        <source src="/audio/logo-sound-effect.mp3" type="audio/mpeg" />
       </audio>
 
       {/* Audio Indicator - Compact on Mobile */}
