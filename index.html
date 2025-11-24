@@ -16,6 +16,36 @@
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="manifest" href="/site.webmanifest" />
     
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX', {
+        page_title: 'SGC TECH AI',
+        page_location: window.location.href,
+        page_path: window.location.pathname
+      });
+      
+      // Custom event tracking for video interactions
+      window.trackVideoEvent = function(action, label) {
+        gtag('event', action, {
+          event_category: 'Video',
+          event_label: label,
+          value: 1
+        });
+      };
+      
+      // Track conversion events
+      window.trackConversion = function(eventName, value) {
+        gtag('event', eventName, {
+          event_category: 'Conversion',
+          value: value || 0
+        });
+      };
+    </script>
+    
     <!-- Single Page Apps for GitHub Pages -->
     <script type="text/javascript">
       (function(l) {

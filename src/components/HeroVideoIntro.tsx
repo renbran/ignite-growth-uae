@@ -22,6 +22,10 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
     }
 
     const handleEnded = () => {
+      // Track video completion
+      if (window.trackVideoEvent) {
+        window.trackVideoEvent('video_complete', 'Logo Reveal Video');
+      }
       setIsVisible(false);
       setTimeout(() => {
         onComplete();
@@ -39,6 +43,10 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
     const handlePlaying = () => {
       console.log("Video is now playing");
       setIsPlaying(true);
+      // Track video start
+      if (window.trackVideoEvent) {
+        window.trackVideoEvent('video_start', 'Logo Reveal Video');
+      }
       // Try to unmute after video starts playing
       setTimeout(() => {
         if (!video.paused) {
@@ -98,6 +106,10 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
   };
 
   const handleSkip = () => {
+    // Track skip action
+    if (window.trackVideoEvent) {
+      window.trackVideoEvent('video_skip', 'Logo Reveal Video');
+    }
     const video = videoRef.current;
     if (video) {
       video.pause();
@@ -116,18 +128,19 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
         className
       )}
     >
-      {/* Mobile-First Video Container */}
-      <div className="absolute inset-0 flex items-center justify-center px-3 py-6 sm:p-8 md:p-12">
-        <video
-          ref={videoRef}
-          className="w-full max-w-[280px] h-auto sm:max-w-md md:max-w-xl lg:max-w-2xl xl:max-w-3xl object-contain cursor-pointer"
-          playsInline
-          preload="auto"
-          autoPlay
-          muted
-          onClick={handleVideoClick}
-          aria-label="SGC TECH AI Logo Reveal"
-        >
+      {/* Portrait-Optimized Video Container */}
+      <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-8 md:p-12">
+        <div className="relative w-full h-full flex items-center justify-center">
+          <video
+            ref={videoRef}
+            className="max-w-[90vw] max-h-[60vh] sm:max-h-[70vh] md:max-h-[75vh] lg:max-h-[80vh] w-auto h-auto object-contain cursor-pointer"
+            playsInline
+            preload="auto"
+            autoPlay
+            muted
+            onClick={handleVideoClick}
+            aria-label="SGC TECH AI Logo Reveal"
+          >
           <source src="/videos/logo-reveal.mp4" type="video/mp4" />
           <p className="text-center text-white p-4 text-sm">
             Your browser does not support the video tag.
@@ -140,22 +153,24 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
           </p>
         </video>
 
-        {/* Play Button Overlay - Mobile First */}
+        {/* Play Button Overlay - Professional Design */}
         {!isPlaying && (
           <div 
-            className="absolute inset-0 flex flex-col items-center justify-center bg-black/50 cursor-pointer touch-manipulation"
+            className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-b from-black/60 to-black/80 cursor-pointer touch-manipulation backdrop-blur-sm"
             onClick={handleVideoClick}
           >
-            {/* Play Button */}
-            <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full bg-[#4fc3f7] flex items-center justify-center mb-2 sm:mb-3 active:scale-95 transition-transform">
-              <svg className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 text-black ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+            {/* Play Button - Modern Professional */}
+            <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center mb-3 sm:mb-4 active:scale-95 transition-all shadow-lg shadow-blue-500/50 hover:shadow-blue-500/80">
+              <svg className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M8 5v14l11-7z" />
               </svg>
             </div>
-            {/* Text */}
-            <p className="text-white text-sm sm:text-base md:text-lg font-medium">Tap to Play</p>
+            {/* Text - Clear CTA */}
+            <p className="text-white text-base sm:text-lg md:text-xl font-semibold tracking-wide">Tap to Begin</p>
+            <p className="text-white/70 text-xs sm:text-sm mt-1">Experience the transformation</p>
           </div>
         )}
+        </div>
       </div>
 
       {/* Error Message */}
@@ -175,21 +190,22 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
         </div>
       )}
 
-      {/* Skip Button - Mobile First with Larger Touch Target */}
+      {/* Skip Button - Professional Modern */}
       <button
         onClick={handleSkip}
         className={cn(
-          "fixed bottom-4 right-4 z-[10000]",
-          "min-w-[80px] min-h-[36px] sm:min-w-[100px] sm:min-h-[40px] md:min-w-[120px] md:min-h-[44px]",
-          "bg-[rgba(79,195,247,0.2)] border border-[#4fc3f7] sm:border-2",
-          "text-[#4fc3f7] px-4 py-2 sm:px-5 sm:py-2.5 md:px-6 md:py-3",
-          "rounded-md sm:rounded-lg",
-          "font-mono text-xs sm:text-sm md:text-base uppercase tracking-wide",
-          "transition-all duration-200",
+          "fixed bottom-5 right-5 z-[10000]",
+          "min-w-[90px] min-h-[40px] sm:min-w-[110px] sm:min-h-[44px]",
+          "bg-white/10 backdrop-blur-md border border-white/30 hover:bg-white/20",
+          "text-white px-5 py-2.5 sm:px-6 sm:py-3",
+          "rounded-full",
+          "font-sans text-sm sm:text-base font-medium",
+          "transition-all duration-300",
           "active:scale-95 touch-manipulation",
-          "focus:outline-none focus:ring-2 focus:ring-[#4fc3f7]"
+          "shadow-lg hover:shadow-xl",
+          "focus:outline-none focus:ring-2 focus:ring-white/50"
         )}
-        aria-label="Skip logo introduction"
+        aria-label="Skip introduction"
       >
         Skip
       </button>
