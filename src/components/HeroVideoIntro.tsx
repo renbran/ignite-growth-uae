@@ -8,6 +8,7 @@ interface HeroVideoIntroProps {
 
 const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
   const [isVisible, setIsVisible] = useState(true);
   const [audioEnabled, setAudioEnabled] = useState(false);
   const [hasError, setHasError] = useState(false);
@@ -47,15 +48,24 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
       if (window.trackVideoEvent) {
         window.trackVideoEvent('video_start', 'Logo Reveal Video');
       }
-      // Try to unmute after video starts playing
-      setTimeout(() => {
-        if (!video.paused) {
-          video.muted = false;
-          video.volume = 0.7;
-          setAudioEnabled(true);
-          console.log("Audio enabled at 70% volume");
-        }
-      }, 500);
+      
+      // Sync audio with video
+      const audio = audioRef.current;
+      if (audio) {
+        setTimeout(() => {
+          if (!video.paused) {
+            // Sync audio to video timeline
+            audio.currentTime = video.currentTime;
+            audio.volume = 0.6; // Background music volume
+            audio.play().then(() => {
+              setAudioEnabled(true);
+              console.log("Audio synced and playing");
+            }).catch(err => {
+              console.warn("Audio play failed:", err);
+            });
+          }
+        }, 100);
+      }
     };
 
     const handleLoadedMetadata = () => {
@@ -90,15 +100,23 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
 
   const handleVideoClick = () => {
     const video = videoRef.current;
+    const audio = audioRef.current;
     if (!video) return;
     
     if (video.paused) {
-      video.muted = false;
-      video.volume = 0.7;
       video.play().then(() => {
         setIsPlaying(true);
-        setAudioEnabled(true);
-        console.log("Manual play with audio");
+        // Sync audio with video
+        if (audio) {
+          audio.currentTime = video.currentTime;
+          audio.volume = 0.6;
+          audio.play().then(() => {
+            setAudioEnabled(true);
+            console.log("Manual play with synced audio");
+          }).catch(err => {
+            console.warn("Audio play failed:", err);
+          });
+        }
       }).catch(err => {
         console.error("Manual play failed:", err);
       });
@@ -111,8 +129,13 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
       window.trackVideoEvent('video_skip', 'Logo Reveal Video');
     }
     const video = videoRef.current;
+    const audio = audioRef.current;
     if (video) {
       video.pause();
+    }
+    if (audio) {
+      audio.pause();
+      audio.currentTime = 0;
     }
     setIsVisible(false);
     setTimeout(() => {
@@ -185,10 +208,19 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
         </div>
       )}
 
+      {/* Hidden Audio Element - Synced with Video */}
+      <audio
+        ref={audioRef}
+        preload="auto"
+        loop={false}
+      >
+        <source src="/audio/logo-reveal-music.mp3" type="audio/mpeg" />
+      </audio>
+
       {/* Audio Indicator - Compact on Mobile */}
       {audioEnabled && (
-        <div className="fixed top-3 left-3 sm:top-4 sm:left-4 z-[10001] bg-[rgba(79,195,247,0.2)] border border-[#4fc3f7] px-2 py-1 sm:px-3 sm:py-1.5 rounded text-[10px] sm:text-xs text-[#4fc3f7] animate-fade-in">
-          🔊 Audio
+        <div className="fixed top-3 left-3 sm:top-4 sm:left-4 z-[10001] bg-blue-500/20 border border-blue-400 px-2 py-1 sm:px-3 sm:py-1.5 rounded text-[10px] sm:text-xs text-blue-300 animate-fade-in backdrop-blur-sm">
+          🎵 Audio
         </div>
       )}
 
