@@ -15,110 +15,21 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video) {
-      console.error("Video element not found");
-      onComplete();
-      return;
-    }
-
-    const handleEnded = () => {
-      // Track video completion
-      if (window.trackVideoEvent) {
-        window.trackVideoEvent('video_complete', 'Logo Reveal Video');
-      }
-      setIsVisible(false);
-      setTimeout(() => {
-        onComplete();
-      }, 1000);
-    };
-
-    const handleError = () => {
-      console.error("Video failed to load - skipping to next stage");
-      setHasError(true);
-      setTimeout(() => {
-        onComplete();
-      }, 2000);
-    };
-
-    const handlePlaying = () => {
-      console.log("Video is now playing");
-      setIsPlaying(true);
-      // Track video start
-      if (window.trackVideoEvent) {
-        window.trackVideoEvent('video_start', 'Logo Reveal Video');
-      }
-      
-      // Sync sound effect with video
-      const audio = audioRef.current;
-      if (audio) {
-        setTimeout(() => {
-          if (!video.paused) {
-            // Sync audio to video timeline
-            audio.currentTime = video.currentTime;
-            audio.volume = 0.8; // Sound effect volume for impact
-            audio.play().then(() => {
-              setAudioEnabled(true);
-              console.log("Sound effect synced and playing");
-            }).catch(err => {
-              console.warn("Audio play failed:", err);
-            });
-          }
-        }, 100);
-      }
-    };
-
-    const handleLoadedMetadata = () => {
-      console.log("Video metadata loaded, duration:", video.duration);
-    };
-
-    const handleCanPlay = () => {
-      console.log("Video can play");
-      // Try to auto-play video (audio will sync on 'playing' event)
-      if (video.paused) {
-        video.play().catch(err => {
-          console.warn("Autoplay failed (user interaction needed):", err);
-          setIsPlaying(false);
-        });
-      }
-    };
-
-    video.addEventListener("ended", handleEnded);
-    video.addEventListener("error", handleError);
-    video.addEventListener("playing", handlePlaying);
-    video.addEventListener("loadedmetadata", handleLoadedMetadata);
-    video.addEventListener("canplay", handleCanPlay);
-
-    return () => {
-      video.removeEventListener("ended", handleEnded);
-      video.removeEventListener("error", handleError);
-      video.removeEventListener("playing", handlePlaying);
-      video.removeEventListener("loadedmetadata", handleLoadedMetadata);
-      video.removeEventListener("canplay", handleCanPlay);
-    };
+    // GIF-based logo animation - no video event listeners needed
+    // Audio and animation handled in onLoad callback
   }, [onComplete]);
 
   const handleVideoClick = () => {
-    const video = videoRef.current;
     const audio = audioRef.current;
-    if (!video) return;
-    
-    if (video.paused) {
-      video.play().then(() => {
-        setIsPlaying(true);
-        // Sync sound effect with video
-        if (audio) {
-          audio.currentTime = video.currentTime;
-          audio.volume = 0.8; // Sound effect volume
-          audio.play().then(() => {
-            setAudioEnabled(true);
-            console.log("Manual play with synced sound effect");
-          }).catch(err => {
-            console.warn("Audio play failed:", err);
-          });
-        }
+    // For GIF-based animation, just play audio on click
+    if (!isPlaying && audio) {
+      setIsPlaying(true);
+      audio.volume = 0.8;
+      audio.play().then(() => {
+        setAudioEnabled(true);
+        console.log("Manual play with sound effect");
       }).catch(err => {
-        console.error("Manual play failed:", err);
+        console.warn("Audio play failed:", err);
       });
     }
   };
@@ -126,13 +37,9 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
   const handleSkip = () => {
     // Track skip action
     if (window.trackVideoEvent) {
-      window.trackVideoEvent('video_skip', 'Logo Reveal Video');
+      window.trackVideoEvent('video_skip', 'Logo Reveal Animation');
     }
-    const video = videoRef.current;
     const audio = audioRef.current;
-    if (video) {
-      video.pause();
-    }
     if (audio) {
       audio.pause();
       audio.currentTime = 0;
@@ -152,30 +59,39 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
         className
       )}
     >
-      {/* Mobile-First Video Container - Responsive to all screens */}
+      {/* Mobile-First Logo Container - Responsive to all screens */}
       <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-6 md:p-8 lg:p-10">
-        <video
-          ref={videoRef}
+        <img
+          ref={videoRef as any}
+          src="/images/com--unscreen.gif"
+          alt="SGC TECH AI Logo Reveal"
           className="w-full max-w-[90vw] sm:max-w-[80vw] md:max-w-[70vw] lg:max-w-[60vw] xl:max-w-[50vw] 2xl:max-w-[800px] h-auto max-h-[70vh] object-contain cursor-pointer"
-          playsInline
-          preload="auto"
           onClick={handleVideoClick}
-          aria-label="SGC TECH AI Logo Reveal"
-        >
-          {/* WebM with alpha channel for transparent background */}
-          <source src="/videos/logo-reveal-transparent.webm" type="video/webm" />
-          {/* Fallback to MP4 for browsers that don't support WebM */}
-          <source src="/videos/logo-reveal.mp4" type="video/mp4" />
-          <p className="text-center text-white p-4 text-sm">
-            Your browser does not support the video tag.
-            <button
-              onClick={handleSkip}
-              className="block mt-2 mx-auto text-[#4fc3f7] underline text-xs"
-            >
-              Skip to content
-            </button>
-          </p>
-        </video>
+          onLoad={() => {
+            setIsPlaying(true);
+            // Play audio when GIF loads
+            const audio = audioRef.current;
+            if (audio) {
+              audio.volume = 0.8;
+              audio.play().then(() => {
+                setAudioEnabled(true);
+                console.log("Sound effect playing with logo animation");
+              }).catch(err => {
+                console.warn("Audio play failed:", err);
+              });
+            }
+            // Auto-complete after GIF duration (estimate 5 seconds)
+            setTimeout(() => {
+              if (window.trackVideoEvent) {
+                window.trackVideoEvent('video_complete', 'Logo Reveal Animation');
+              }
+              setIsVisible(false);
+              setTimeout(() => {
+                onComplete();
+              }, 1000);
+            }, 5000);
+          }}
+        />
 
         {/* Mobile-First Play Overlay */}
         {!isPlaying && (
@@ -206,13 +122,13 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
         </div>
       )}
 
-      {/* Hidden Audio Element - Sound Effect Synced with Video */}
+      {/* Hidden Audio Element - Sound Effect Synced with Logo Animation */}
       <audio
         ref={audioRef}
         preload="auto"
         loop={false}
       >
-        <source src="/audio/logo-sound-effect.mp3" type="audio/mpeg" />
+        <source src="/audio/(Audio) download (38).m4a" type="audio/mp4" />
       </audio>
 
       {/* Audio Indicator - Compact on Mobile */}
