@@ -74,10 +74,21 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
 
     const handleCanPlay = () => {
       console.log("Video can play");
-      // Force play if not already playing
+      // Auto-play video and audio together
       if (video.paused) {
-        video.play().catch(err => {
-          console.warn("Autoplay failed:", err);
+        const audio = audioRef.current;
+        Promise.all([
+          video.play(),
+          audio?.play() || Promise.resolve()
+        ]).then(() => {
+          setIsPlaying(true);
+          if (audio) {
+            audio.volume = 0.8;
+            setAudioEnabled(true);
+            console.log("Video and audio auto-playing together");
+          }
+        }).catch(err => {
+          console.warn("Autoplay failed (may need user interaction):", err);
           setIsPlaying(false);
         });
       }
@@ -152,15 +163,13 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
         className
       )}
     >
-      {/* Mobile-First Video Container - Starts at 320px screens */}
-      <div className="absolute inset-0 flex items-center justify-center p-3 sm:p-6 md:p-8">
+      {/* Mobile-First Video Container - Responsive to all screens */}
+      <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-6 md:p-8 lg:p-10">
         <video
           ref={videoRef}
-          className="w-[85vw] max-w-[280px] sm:max-w-[400px] md:max-w-[500px] lg:max-w-[600px] xl:max-w-[700px] h-auto object-contain cursor-pointer"
+          className="w-full max-w-[90vw] sm:max-w-[80vw] md:max-w-[70vw] lg:max-w-[60vw] xl:max-w-[50vw] 2xl:max-w-[800px] h-auto max-h-[70vh] object-contain cursor-pointer"
           playsInline
           preload="auto"
-          autoPlay
-          muted
           onClick={handleVideoClick}
           aria-label="SGC TECH AI Logo Reveal"
         >
