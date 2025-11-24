@@ -74,21 +74,10 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
 
     const handleCanPlay = () => {
       console.log("Video can play");
-      // Auto-play video and audio together
+      // Try to auto-play video (audio will sync on 'playing' event)
       if (video.paused) {
-        const audio = audioRef.current;
-        Promise.all([
-          video.play(),
-          audio?.play() || Promise.resolve()
-        ]).then(() => {
-          setIsPlaying(true);
-          if (audio) {
-            audio.volume = 0.8;
-            setAudioEnabled(true);
-            console.log("Video and audio auto-playing together");
-          }
-        }).catch(err => {
-          console.warn("Autoplay failed (may need user interaction):", err);
+        video.play().catch(err => {
+          console.warn("Autoplay failed (user interaction needed):", err);
           setIsPlaying(false);
         });
       }
@@ -223,7 +212,7 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
         preload="auto"
         loop={false}
       >
-        <source src="/audio/sound-effect-38.m4a" type="audio/mp4" />
+        <source src="/audio/logo-sound-effect.mp3" type="audio/mpeg" />
       </audio>
 
       {/* Audio Indicator - Compact on Mobile */}
