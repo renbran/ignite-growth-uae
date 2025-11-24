@@ -116,11 +116,15 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
         className
       )}
     >
-      {/* Video Container - Full screen with proper aspect ratio handling */}
-      <div className="absolute inset-0 flex items-center justify-center">
+      {/* Video Container - Mobile optimized with proper scaling */}
+      <div className="absolute inset-0 flex items-center justify-center p-2 sm:p-4">
         <video
           ref={videoRef}
-          className="w-full h-full object-contain cursor-pointer"
+          className="max-w-full max-h-full w-auto h-auto object-contain cursor-pointer"
+          style={{
+            maxWidth: '95vw',
+            maxHeight: '95vh'
+          }}
           playsInline
           preload="auto"
           autoPlay
@@ -146,13 +150,13 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
             className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 cursor-pointer"
             onClick={handleVideoClick}
           >
-            <div className="text-center">
-              <div className="w-20 h-20 rounded-full bg-[#4fc3f7] flex items-center justify-center mb-4 mx-auto hover:bg-[#03a9f4] transition-all transform hover:scale-110">
-                <svg className="w-10 h-10 text-black ml-1" fill="currentColor" viewBox="0 0 24 24">
+            <div className="text-center px-4">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-[#4fc3f7] flex items-center justify-center mb-3 sm:mb-4 mx-auto hover:bg-[#03a9f4] transition-all transform hover:scale-110 active:scale-95">
+                <svg className="w-8 h-8 sm:w-10 sm:h-10 text-black ml-1" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M8 5v14l11-7z" />
                 </svg>
               </div>
-              <p className="text-white text-lg font-semibold">Click to Play</p>
+              <p className="text-white text-base sm:text-lg font-semibold">Tap to Play</p>
             </div>
           </div>
         )}
@@ -175,21 +179,22 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
         </div>
       )}
 
-      {/* Skip button */}
+      {/* Skip button - Mobile optimized */}
       <button
         onClick={handleSkip}
         className={cn(
-          "fixed bottom-4 right-4 md:bottom-10 md:right-10 z-[10000]",
+          "fixed bottom-3 right-3 sm:bottom-4 sm:right-4 md:bottom-10 md:right-10 z-[10000]",
           "bg-[rgba(79,195,247,0.2)] border-2 border-[#4fc3f7]",
-          "text-[#4fc3f7] px-4 py-2 md:px-6 md:py-3",
-          "font-mono text-xs md:text-sm uppercase tracking-wider",
+          "text-[#4fc3f7] px-3 py-1.5 sm:px-4 sm:py-2 md:px-6 md:py-3",
+          "font-mono text-[10px] sm:text-xs md:text-sm uppercase tracking-wider",
           "transition-all duration-300",
           "hover:bg-[rgba(79,195,247,0.3)] hover:shadow-glow hover:-translate-y-0.5",
+          "active:scale-95 touch-manipulation",
           "focus:outline-none focus:ring-2 focus:ring-[#4fc3f7] focus:ring-offset-2 focus:ring-offset-black"
         )}
         aria-label="Skip logo introduction"
       >
-        Skip Intro →
+        Skip →
       </button>
     </div>
   );

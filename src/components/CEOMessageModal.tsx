@@ -75,15 +75,20 @@ const CEOMessageModal = ({ isOpen, onClose }: CEOMessageModalProps) => {
   return (
     <div
       className={cn(
-        "fixed inset-0 z-[10000] flex items-center justify-center p-4 transition-all duration-300",
+        "fixed inset-0 z-[10000] flex items-center justify-center p-2 sm:p-4 md:p-6 transition-all duration-300",
+        "overflow-y-auto",
         isVisible ? "bg-black bg-opacity-80 backdrop-blur-sm" : "bg-transparent"
       )}
       onClick={handleClose}
     >
       <div
         className={cn(
-          "relative max-w-4xl w-full bg-gradient-to-br from-[#0A1628] to-[#1e3a8a] rounded-2xl shadow-2xl transition-all duration-500 transform",
-          "border-2 border-[#4fc3f7] shadow-glow",
+          "relative max-w-4xl w-full mx-auto my-auto",
+          "bg-gradient-to-br from-[#0A1628] to-[#1e3a8a]",
+          "rounded-lg sm:rounded-xl md:rounded-2xl",
+          "shadow-2xl transition-all duration-500 transform",
+          "border border-[#4fc3f7] sm:border-2 shadow-glow",
+          "max-h-[95vh] overflow-y-auto",
           isVisible ? "scale-100 opacity-100" : "scale-95 opacity-0"
         )}
         onClick={(e) => e.stopPropagation()}
@@ -91,36 +96,37 @@ const CEOMessageModal = ({ isOpen, onClose }: CEOMessageModalProps) => {
         {/* Close Button */}
         <button
           onClick={handleClose}
-          className="absolute top-4 right-4 z-10 p-2 rounded-full bg-[rgba(79,195,247,0.2)] border border-[#4fc3f7] text-[#4fc3f7] hover:bg-[rgba(79,195,247,0.3)] transition-all"
+          className="absolute top-2 right-2 sm:top-4 sm:right-4 z-10 p-1.5 sm:p-2 rounded-full bg-[rgba(79,195,247,0.2)] border border-[#4fc3f7] text-[#4fc3f7] hover:bg-[rgba(79,195,247,0.3)] active:scale-95 transition-all touch-manipulation"
           aria-label="Close CEO message"
         >
-          <X className="w-5 h-5" />
+          <X className="w-4 h-4 sm:w-5 sm:h-5" />
         </button>
 
         {/* Video Content */}
-        <div className="p-4 md:p-6">
+        <div className="p-3 sm:p-4 md:p-6">
           {/* Header */}
-          <div className="text-center mb-6">
-            <h2 className="font-display text-2xl md:text-3xl text-gradient mb-2">
+          <div className="text-center mb-3 sm:mb-4 md:mb-6">
+            <h2 className="font-display text-lg sm:text-xl md:text-2xl lg:text-3xl text-gradient mb-2 px-2">
               A Message from SGC TECH AI
             </h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-[#4fc3f7] to-[#39ff14] mx-auto"></div>
+            <div className="w-16 sm:w-20 h-0.5 sm:h-1 bg-gradient-to-r from-[#4fc3f7] to-[#39ff14] mx-auto"></div>
           </div>
 
           {/* Video Player */}
-          <div className="relative aspect-video bg-black rounded-lg overflow-hidden mb-4">
+          <div className="relative aspect-video bg-black rounded-md sm:rounded-lg overflow-hidden mb-3 sm:mb-4">
             <video
               ref={videoRef}
-              className="w-full h-full object-contain cursor-pointer"
+              className="w-full h-full object-contain cursor-pointer touch-manipulation"
               playsInline
               preload="auto"
               autoPlay
               muted
               onClick={handleVideoClick}
               aria-label="CEO Founder Message Video"
+              controlsList="nodownload"
             >
               <source src="/videos/founder-3am-truth-speech.mp4" type="video/mp4" />
-              <p className="text-center text-white p-4">
+              <p className="text-center text-white p-2 sm:p-4 text-xs sm:text-base">
                 Your browser does not support the video tag.
               </p>
             </video>
@@ -128,11 +134,11 @@ const CEOMessageModal = ({ isOpen, onClose }: CEOMessageModalProps) => {
             {/* Click to play overlay when video is paused */}
             {!isPlaying && (
               <div 
-                className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 cursor-pointer"
+                className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 cursor-pointer touch-manipulation"
                 onClick={handleVideoClick}
               >
-                <div className="w-16 h-16 rounded-full bg-[#4fc3f7] flex items-center justify-center hover:bg-[#03a9f4] transition-all transform hover:scale-110">
-                  <svg className="w-8 h-8 text-black ml-1" fill="currentColor" viewBox="0 0 24 24">
+                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#4fc3f7] flex items-center justify-center hover:bg-[#03a9f4] active:scale-95 transition-all transform hover:scale-110">
+                  <svg className="w-7 h-7 sm:w-8 sm:h-8 text-black ml-1" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M8 5v14l11-7z" />
                   </svg>
                 </div>
@@ -145,13 +151,14 @@ const CEOMessageModal = ({ isOpen, onClose }: CEOMessageModalProps) => {
             <button
               onClick={handleClose}
               className={cn(
-                "text-[#4fc3f7] px-6 py-2 rounded-full",
-                "font-mono text-sm uppercase tracking-wider",
+                "text-[#4fc3f7] px-4 py-1.5 sm:px-6 sm:py-2 rounded-full",
+                "font-mono text-xs sm:text-sm uppercase tracking-wider",
                 "border border-[#4fc3f7] bg-[rgba(79,195,247,0.1)]",
-                "transition-all duration-300 hover:bg-[rgba(79,195,247,0.2)]"
+                "transition-all duration-300 hover:bg-[rgba(79,195,247,0.2)]",
+                "active:scale-95 touch-manipulation"
               )}
             >
-              Skip Message →
+              Skip →
             </button>
           </div>
         </div>
