@@ -75,20 +75,22 @@ const CEOMessageModal = ({ isOpen, onClose }: CEOMessageModalProps) => {
   return (
     <div
       className={cn(
-        "fixed inset-0 z-[10000] flex items-center justify-center p-2 sm:p-4 md:p-6 transition-all duration-300",
-        "overflow-y-auto",
-        isVisible ? "bg-black bg-opacity-80 backdrop-blur-sm" : "bg-transparent"
+        "fixed inset-0 z-[10000] flex items-center justify-center transition-all duration-300",
+        "p-3 sm:p-4 md:p-6",
+        isVisible ? "bg-black bg-opacity-90 backdrop-blur-sm" : "bg-transparent pointer-events-none"
       )}
       onClick={handleClose}
     >
       <div
         className={cn(
-          "relative max-w-4xl w-full mx-auto my-auto",
+          "relative w-full mx-auto",
+          "max-w-[90vw] sm:max-w-2xl md:max-w-3xl lg:max-w-4xl",
+          "max-h-[85vh] sm:max-h-[90vh]",
           "bg-gradient-to-br from-[#0A1628] to-[#1e3a8a]",
           "rounded-lg sm:rounded-xl md:rounded-2xl",
           "shadow-2xl transition-all duration-500 transform",
           "border border-[#4fc3f7] sm:border-2 shadow-glow",
-          "max-h-[95vh] overflow-y-auto",
+          "overflow-hidden",
           isVisible ? "scale-100 opacity-100" : "scale-95 opacity-0"
         )}
         onClick={(e) => e.stopPropagation()}
@@ -102,18 +104,19 @@ const CEOMessageModal = ({ isOpen, onClose }: CEOMessageModalProps) => {
           <X className="w-4 h-4 sm:w-5 sm:h-5" />
         </button>
 
-        {/* Video Content */}
-        <div className="p-3 sm:p-4 md:p-6">
-          {/* Header */}
-          <div className="text-center mb-3 sm:mb-4 md:mb-6">
-            <h2 className="font-display text-lg sm:text-xl md:text-2xl lg:text-3xl text-gradient mb-2 px-2">
-              A Message from SGC TECH AI
-            </h2>
-            <div className="w-16 sm:w-20 h-0.5 sm:h-1 bg-gradient-to-r from-[#4fc3f7] to-[#39ff14] mx-auto"></div>
-          </div>
+        {/* Scrollable Content Wrapper */}
+        <div className="overflow-y-auto max-h-[85vh] sm:max-h-[90vh]">
+          <div className="p-3 sm:p-4 md:p-6">
+            {/* Header */}
+            <div className="text-center mb-3 sm:mb-4 md:mb-6">
+              <h2 className="font-display text-base sm:text-lg md:text-xl lg:text-2xl text-gradient mb-2 px-2">
+                A Message from SGC TECH AI
+              </h2>
+              <div className="w-12 sm:w-16 md:w-20 h-0.5 sm:h-1 bg-gradient-to-r from-[#4fc3f7] to-[#39ff14] mx-auto"></div>
+            </div>
 
-          {/* Video Player */}
-          <div className="relative aspect-video bg-black rounded-md sm:rounded-lg overflow-hidden mb-3 sm:mb-4">
+            {/* Video Player */}
+            <div className="relative aspect-video bg-black rounded-md sm:rounded-lg overflow-hidden mb-3 sm:mb-4">
             <video
               ref={videoRef}
               className="w-full h-full object-contain cursor-pointer touch-manipulation"
@@ -146,20 +149,21 @@ const CEOMessageModal = ({ isOpen, onClose }: CEOMessageModalProps) => {
             )}
           </div>
 
-          {/* Skip/Close Button */}
-          <div className="text-center">
-            <button
-              onClick={handleClose}
-              className={cn(
-                "text-[#4fc3f7] px-4 py-1.5 sm:px-6 sm:py-2 rounded-full",
-                "font-mono text-xs sm:text-sm uppercase tracking-wider",
-                "border border-[#4fc3f7] bg-[rgba(79,195,247,0.1)]",
-                "transition-all duration-300 hover:bg-[rgba(79,195,247,0.2)]",
-                "active:scale-95 touch-manipulation"
-              )}
-            >
-              Skip →
-            </button>
+            {/* Skip/Close Button */}
+            <div className="text-center">
+              <button
+                onClick={handleClose}
+                className={cn(
+                  "text-[#4fc3f7] px-4 py-1.5 sm:px-6 sm:py-2 rounded-full",
+                  "font-mono text-xs sm:text-sm uppercase tracking-wider",
+                  "border border-[#4fc3f7] bg-[rgba(79,195,247,0.1)]",
+                  "transition-all duration-300 hover:bg-[rgba(79,195,247,0.2)]",
+                  "active:scale-95 touch-manipulation"
+                )}
+              >
+                Skip →
+              </button>
+            </div>
           </div>
         </div>
       </div>

@@ -117,13 +117,13 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
       )}
     >
       {/* Video Container - Mobile optimized with proper scaling */}
-      <div className="absolute inset-0 flex items-center justify-center p-2 sm:p-4">
+      <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-6 md:p-8">
         <video
           ref={videoRef}
-          className="max-w-full max-h-full w-auto h-auto object-contain cursor-pointer"
+          className="w-full h-auto object-contain cursor-pointer"
           style={{
-            maxWidth: '95vw',
-            maxHeight: '95vh'
+            maxWidth: '85vw',
+            maxHeight: '70vh'
           }}
           playsInline
           preload="auto"
