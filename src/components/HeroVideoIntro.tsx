@@ -214,7 +214,7 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
         preload="auto"
         loop={false}
       >
-        <source src="/audio/logo-sound-effect.mp3" type="audio/mpeg" />
+        <source src="/audio/sound-effect-38.m4a" type="audio/mp4" />
       </audio>
 
       {/* Audio Indicator - Compact on Mobile */}
