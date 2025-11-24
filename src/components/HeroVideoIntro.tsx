@@ -123,7 +123,8 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
   return (
     <div
       className={cn(
-        "fixed inset-0 z-[9999] bg-black transition-opacity duration-1000",
+        "fixed inset-0 z-[9999] transition-opacity duration-1000",
+        "bg-gradient-to-br from-slate-950 via-blue-950 to-slate-950",
         !isVisible && "opacity-0 pointer-events-none",
         className
       )}
@@ -140,6 +141,9 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
           onClick={handleVideoClick}
           aria-label="SGC TECH AI Logo Reveal"
         >
+          {/* WebM with alpha channel for transparent background */}
+          <source src="/videos/logo-reveal-transparent.webm" type="video/webm" />
+          {/* Fallback to MP4 for browsers that don't support WebM */}
           <source src="/videos/logo-reveal.mp4" type="video/mp4" />
           <p className="text-center text-white p-4 text-sm">
             Your browser does not support the video tag.
