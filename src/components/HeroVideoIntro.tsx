@@ -71,7 +71,7 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
       <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-6 md:p-8 lg:p-10">
         <video
           ref={videoRef}
-          src="/videos/logo-reveal.mp4"
+          src="/videos/logo-reveal-v2.mp4"
           className="w-full max-w-[90vw] sm:max-w-[80vw] md:max-w-[70vw] lg:max-w-[60vw] xl:max-w-[50vw] 2xl:max-w-[800px] h-auto max-h-[70vh] object-contain cursor-pointer"
           playsInline
           preload="auto"
