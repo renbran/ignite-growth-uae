@@ -72,7 +72,7 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
         <div className="relative w-full max-w-[90vw] sm:max-w-[80vw] md:max-w-[70vw] lg:max-w-[60vw] xl:max-w-[50vw] 2xl:max-w-[800px]">
           <video
             ref={videoRef}
-            src="/videos/logo-reveal-final.mp4?v=20251125"
+            src="/videos/logo-reveal-final.mp4?v=20251125b"
             className="w-full h-auto object-contain cursor-pointer"
             playsInline
             preload="auto"
