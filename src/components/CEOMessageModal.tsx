@@ -135,8 +135,6 @@ const CEOMessageModal = ({ isOpen, onClose }: CEOMessageModalProps) => {
                 className="absolute inset-0 w-full h-full object-contain cursor-pointer"
                 playsInline
                 preload="auto"
-                autoPlay
-                muted
                 onClick={handleVideoClick}
                 aria-label="CEO Message"
                 controlsList="nodownload"
