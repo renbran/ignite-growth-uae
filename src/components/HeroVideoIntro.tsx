@@ -26,44 +26,69 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
     const audio2 = audio2Ref.current;
     const audio3 = audio3Ref.current;
 
+    console.log("playAudioSequence called");
+    console.log("Audio refs:", { audio1: !!audio1, audio2: !!audio2, audio3: !!audio3 });
+
     if (audio1 && audio2 && audio3) {
+      // Set volume for all audio elements
       audio1.volume = 0.8;
       audio2.volume = 0.8;
       audio3.volume = 0.8;
 
+      console.log("Playing audio sequence...");
+
       // Play first sound immediately
       audio1.play().then(() => {
         setAudioEnabled(true);
-        console.log("Sound effect 1 playing");
+        console.log("✅ Sound effect 1 playing");
       }).catch(err => {
-        console.warn("Audio 1 play failed:", err);
+        console.error("❌ Audio 1 play failed:", err);
       });
 
       // Play second sound after 1.5 seconds
       setTimeout(() => {
         audio2.play().then(() => {
-          console.log("Sound effect 2 playing");
+          console.log("✅ Sound effect 2 playing");
         }).catch(err => {
-          console.warn("Audio 2 play failed:", err);
+          console.error("❌ Audio 2 play failed:", err);
         });
       }, 1500);
 
       // Play third sound after 3 seconds
       setTimeout(() => {
         audio3.play().then(() => {
-          console.log("Sound effect 3 playing");
+          console.log("✅ Sound effect 3 playing");
         }).catch(err => {
-          console.warn("Audio 3 play failed:", err);
+          console.error("❌ Audio 3 play failed:", err);
         });
       }, 3000);
+    } else {
+      console.error("❌ Audio elements not found!");
     }
   };
 
   const handleVideoClick = () => {
     // For GIF-based animation, play audio sequence on click
     if (!isPlaying) {
+      console.log("User clicked - starting logo reveal with audio");
       setIsPlaying(true);
       playAudioSequence();
+      
+      // Track video start
+      if (window.trackVideoEvent) {
+        window.trackVideoEvent('video_start', 'Logo Reveal Animation');
+      }
+      
+      // Auto-complete after GIF duration (5 seconds)
+      setTimeout(() => {
+        if (window.trackVideoEvent) {
+          window.trackVideoEvent('video_complete', 'Logo Reveal Animation');
+        }
+        setIsVisible(false);
+        setTimeout(() => {
+          onComplete();
+        }, 1000);
+      }, 5000);
     }
   };
 
@@ -103,19 +128,7 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
           className="w-full max-w-[90vw] sm:max-w-[80vw] md:max-w-[70vw] lg:max-w-[60vw] xl:max-w-[50vw] 2xl:max-w-[800px] h-auto max-h-[70vh] object-contain cursor-pointer"
           onClick={handleVideoClick}
           onLoad={() => {
-            setIsPlaying(true);
-            // Play synced audio sequence when GIF loads
-            playAudioSequence();
-            // Auto-complete after GIF duration (estimate 5 seconds)
-            setTimeout(() => {
-              if (window.trackVideoEvent) {
-                window.trackVideoEvent('video_complete', 'Logo Reveal Animation');
-              }
-              setIsVisible(false);
-              setTimeout(() => {
-                onComplete();
-              }, 1000);
-            }, 5000);
+            console.log("Logo GIF loaded and ready");
           }}
         />
 
