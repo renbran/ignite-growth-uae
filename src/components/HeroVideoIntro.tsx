@@ -69,36 +69,59 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
     >
       {/* Mobile-First Video Container - Responsive to all screens */}
       <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-6 md:p-8 lg:p-10">
-        <video
-          ref={videoRef}
-          src="/videos/logo-reveal-final.mp4"
-          className="w-full max-w-[90vw] sm:max-w-[80vw] md:max-w-[70vw] lg:max-w-[60vw] xl:max-w-[50vw] 2xl:max-w-[800px] h-auto max-h-[70vh] object-contain cursor-pointer"
-          playsInline
-          preload="auto"
-          onClick={handleVideoClick}
-          onLoadedMetadata={() => {
-            const video = videoRef.current;
-            if (video) {
-              console.log("✅ Logo video loaded. Duration:", video.duration, "seconds");
-            }
-          }}
-          onEnded={() => {
-            console.log("✅ Video ended");
-            if (window.trackVideoEvent) {
-              window.trackVideoEvent('video_complete', 'Logo Reveal Video');
-            }
-            setIsVisible(false);
-            setTimeout(() => {
-              onComplete();
-            }, 1000);
-          }}
-          aria-label="SGC TECH AI Logo Reveal"
-        />
+        <div className="relative w-full max-w-[90vw] sm:max-w-[80vw] md:max-w-[70vw] lg:max-w-[60vw] xl:max-w-[50vw] 2xl:max-w-[800px]">
+          <video
+            ref={videoRef}
+            src="/videos/logo-reveal-final.mp4"
+            className="w-full h-auto object-contain cursor-pointer"
+            playsInline
+            preload="auto"
+            onClick={handleVideoClick}
+            onLoadedMetadata={() => {
+              const video = videoRef.current;
+              if (video) {
+                console.log("✅ Logo video loaded. Duration:", video.duration, "seconds");
+              }
+            }}
+            onEnded={() => {
+              console.log("✅ Video ended");
+              if (window.trackVideoEvent) {
+                window.trackVideoEvent('video_complete', 'Logo Reveal Video');
+              }
+              setIsVisible(false);
+              setTimeout(() => {
+                onComplete();
+              }, 1000);
+            }}
+            aria-label="SGC TECH AI Logo Reveal"
+          />
+          
+          {/* Decorative Frame Border to Cover Watermark */}
+          <div className="absolute inset-0 pointer-events-none">
+            {/* Top border with gradient */}
+            <div className="absolute top-0 left-0 right-0 h-8 sm:h-10 md:h-12 bg-gradient-to-b from-black via-black/80 to-transparent" />
+            
+            {/* Bottom border with gradient - covers watermark area */}
+            <div className="absolute bottom-0 left-0 right-0 h-12 sm:h-16 md:h-20 bg-gradient-to-t from-black via-black/90 to-transparent" />
+            
+            {/* Left border */}
+            <div className="absolute top-0 bottom-0 left-0 w-6 sm:w-8 md:w-10 bg-gradient-to-r from-black via-black/80 to-transparent" />
+            
+            {/* Right border - extra coverage for watermark */}
+            <div className="absolute top-0 bottom-0 right-0 w-8 sm:w-12 md:w-16 bg-gradient-to-l from-black via-black/90 to-transparent" />
+            
+            {/* Corner accents for professional look */}
+            <div className="absolute top-4 left-4 w-8 h-8 sm:w-10 sm:h-10 border-l-2 border-t-2 border-blue-500/30" />
+            <div className="absolute top-4 right-4 w-8 h-8 sm:w-10 sm:h-10 border-r-2 border-t-2 border-blue-500/30" />
+            <div className="absolute bottom-4 left-4 w-8 h-8 sm:w-10 sm:h-10 border-l-2 border-b-2 border-blue-500/30" />
+            <div className="absolute bottom-4 right-4 w-8 h-8 sm:w-10 sm:h-10 border-r-2 border-b-2 border-blue-500/30" />
+          </div>
+        </div>
 
         {/* Mobile-First Play Overlay */}
         {!isPlaying && (
           <div 
-            className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-b from-black/70 to-black/90 cursor-pointer touch-manipulation"
+            className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-b from-black/70 to-black/90 cursor-pointer touch-manipulation z-10"
             onClick={handleVideoClick}
           >
             {/* Play Button - Optimized for Mobile Touch */}
