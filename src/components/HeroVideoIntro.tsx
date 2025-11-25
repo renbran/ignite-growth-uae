@@ -8,7 +8,9 @@ interface HeroVideoIntroProps {
 
 const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const audioRef = useRef<HTMLAudioElement>(null);
+  const audio1Ref = useRef<HTMLAudioElement>(null);
+  const audio2Ref = useRef<HTMLAudioElement>(null);
+  const audio3Ref = useRef<HTMLAudioElement>(null);
   const [isVisible, setIsVisible] = useState(true);
   const [audioEnabled, setAudioEnabled] = useState(false);
   const [hasError, setHasError] = useState(false);
@@ -19,18 +21,49 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
     // Audio and animation handled in onLoad callback
   }, [onComplete]);
 
-  const handleVideoClick = () => {
-    const audio = audioRef.current;
-    // For GIF-based animation, just play audio on click
-    if (!isPlaying && audio) {
-      setIsPlaying(true);
-      audio.volume = 0.8;
-      audio.play().then(() => {
+  const playAudioSequence = () => {
+    const audio1 = audio1Ref.current;
+    const audio2 = audio2Ref.current;
+    const audio3 = audio3Ref.current;
+
+    if (audio1 && audio2 && audio3) {
+      audio1.volume = 0.8;
+      audio2.volume = 0.8;
+      audio3.volume = 0.8;
+
+      // Play first sound immediately
+      audio1.play().then(() => {
         setAudioEnabled(true);
-        console.log("Manual play with sound effect");
+        console.log("Sound effect 1 playing");
       }).catch(err => {
-        console.warn("Audio play failed:", err);
+        console.warn("Audio 1 play failed:", err);
       });
+
+      // Play second sound after 1.5 seconds
+      setTimeout(() => {
+        audio2.play().then(() => {
+          console.log("Sound effect 2 playing");
+        }).catch(err => {
+          console.warn("Audio 2 play failed:", err);
+        });
+      }, 1500);
+
+      // Play third sound after 3 seconds
+      setTimeout(() => {
+        audio3.play().then(() => {
+          console.log("Sound effect 3 playing");
+        }).catch(err => {
+          console.warn("Audio 3 play failed:", err);
+        });
+      }, 3000);
+    }
+  };
+
+  const handleVideoClick = () => {
+    // For GIF-based animation, play audio sequence on click
+    if (!isPlaying) {
+      setIsPlaying(true);
+      playAudioSequence();
     }
   };
 
@@ -39,11 +72,13 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
     if (window.trackVideoEvent) {
       window.trackVideoEvent('video_skip', 'Logo Reveal Animation');
     }
-    const audio = audioRef.current;
-    if (audio) {
-      audio.pause();
-      audio.currentTime = 0;
-    }
+    // Stop all audio
+    [audio1Ref, audio2Ref, audio3Ref].forEach(ref => {
+      if (ref.current) {
+        ref.current.pause();
+        ref.current.currentTime = 0;
+      }
+    });
     setIsVisible(false);
     setTimeout(() => {
       onComplete();
@@ -69,17 +104,8 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
           onClick={handleVideoClick}
           onLoad={() => {
             setIsPlaying(true);
-            // Play audio when GIF loads
-            const audio = audioRef.current;
-            if (audio) {
-              audio.volume = 0.8;
-              audio.play().then(() => {
-                setAudioEnabled(true);
-                console.log("Sound effect playing with logo animation");
-              }).catch(err => {
-                console.warn("Audio play failed:", err);
-              });
-            }
+            // Play synced audio sequence when GIF loads
+            playAudioSequence();
             // Auto-complete after GIF duration (estimate 5 seconds)
             setTimeout(() => {
               if (window.trackVideoEvent) {
@@ -122,13 +148,15 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
         </div>
       )}
 
-      {/* Hidden Audio Element - Sound Effect Synced with Logo Animation */}
-      <audio
-        ref={audioRef}
-        preload="auto"
-        loop={false}
-      >
-        <source src="/audio/(Audio) download (38).m4a" type="audio/mp4" />
+      {/* Hidden Audio Elements - 3 Sound Effects Synced with Logo Animation */}
+      <audio ref={audio1Ref} preload="auto" loop={false}>
+        <source src="/audio/1-c6d18217.mp3" type="audio/mpeg" />
+      </audio>
+      <audio ref={audio2Ref} preload="auto" loop={false}>
+        <source src="/audio/2-c6d18217.mp3" type="audio/mpeg" />
+      </audio>
+      <audio ref={audio3Ref} preload="auto" loop={false}>
+        <source src="/audio/3-c6d18217.mp3" type="audio/mpeg" />
       </audio>
 
       {/* Audio Indicator - Compact on Mobile */}
