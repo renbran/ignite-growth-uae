@@ -5,28 +5,28 @@ import sgcLogo from "@/assets/sgc-logo.png";
 const Footer = () => {
   const footerLinks = {
     company: [
-      { name: "About Us", href: "#about" },
-      { name: "Our Team", href: "#team" },
-      { name: "Careers", href: "#careers" },
-      { name: "Contact", href: "#contact" },
+      { name: "About Us", href: "/about" },
+      { name: "Our Team", href: "/about#team" },
+      { name: "Careers", href: "/#contact" },
+      { name: "Contact", href: "/#contact" },
     ],
     solutions: [
-      { name: "Intelligent Operations Platform", href: "#operations" },
-      { name: "AI Accelerator", href: "#accelerator" },
-      { name: "Rapid Rescue", href: "#rescue" },
-      { name: "All Solutions", href: "#solutions" },
+      { name: "Intelligent Operations Platform", href: "/solutions" },
+      { name: "AI Accelerator", href: "/solutions" },
+      { name: "Rapid Rescue", href: "/solutions" },
+      { name: "All Solutions", href: "/solutions" },
     ],
     industries: [
-      { name: "Healthcare", href: "#healthcare" },
-      { name: "Hospitality", href: "#hospitality" },
-      { name: "Construction", href: "#construction" },
-      { name: "Real Estate", href: "#real-estate" },
+      { name: "Healthcare", href: "/industries" },
+      { name: "Hospitality", href: "/industries" },
+      { name: "Construction", href: "/industries" },
+      { name: "Real Estate", href: "/industries" },
     ],
     resources: [
-      { name: "Blog", href: "#blog" },
-      { name: "Case Studies", href: "#case-studies" },
-      { name: "Whitepapers", href: "#whitepapers" },
-      { name: "Webinars", href: "#webinars" },
+      { name: "Blog", href: "/resources" },
+      { name: "Case Studies", href: "/resources" },
+      { name: "Whitepapers", href: "/resources" },
+      { name: "Webinars", href: "/resources" },
     ],
   };
 
@@ -70,9 +70,9 @@ const Footer = () => {
             <ul className="space-y-2">
               {footerLinks.company.map((link) => (
                 <li key={link.name}>
-                  <a href={link.href} className="text-sm text-foreground-muted hover:text-accent transition-colors">
+                  <Link to={link.href} className="text-sm text-foreground-muted hover:text-accent transition-colors">
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -83,9 +83,9 @@ const Footer = () => {
             <ul className="space-y-2">
               {footerLinks.solutions.map((link) => (
                 <li key={link.name}>
-                  <a href={link.href} className="text-sm text-foreground-muted hover:text-accent transition-colors">
+                  <Link to={link.href} className="text-sm text-foreground-muted hover:text-accent transition-colors">
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -96,9 +96,9 @@ const Footer = () => {
             <ul className="space-y-2">
               {footerLinks.industries.map((link) => (
                 <li key={link.name}>
-                  <a href={link.href} className="text-sm text-foreground-muted hover:text-accent transition-colors">
+                  <Link to={link.href} className="text-sm text-foreground-muted hover:text-accent transition-colors">
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -109,9 +109,9 @@ const Footer = () => {
             <ul className="space-y-2">
               {footerLinks.resources.map((link) => (
                 <li key={link.name}>
-                  <a href={link.href} className="text-sm text-foreground-muted hover:text-accent transition-colors">
+                  <Link to={link.href} className="text-sm text-foreground-muted hover:text-accent transition-colors">
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -138,9 +138,9 @@ const Footer = () => {
           </div>
           
           <div className="flex items-center gap-4 text-sm">
-            <a href="#privacy" className="text-foreground-muted hover:text-accent transition-colors">Privacy Policy</a>
+            <a href="/#privacy" className="text-foreground-muted hover:text-accent transition-colors">Privacy Policy</a>
             <span className="text-border">|</span>
-            <a href="#terms" className="text-foreground-muted hover:text-accent transition-colors">Terms of Service</a>
+            <a href="/#terms" className="text-foreground-muted hover:text-accent transition-colors">Terms of Service</a>
           </div>
         </div>
       </div>
