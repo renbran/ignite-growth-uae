@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BackgroundAnimation from "@/components/BackgroundAnimation";
+import BackgroundPatterns from "@/components/BackgroundPatterns";
 import { Button } from "@/components/ui/button";
 import { Check, Zap, Shield, TrendingUp, Clock, Users, Database, Bot } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -79,6 +80,7 @@ const Solutions = () => {
   return (
     <div className="min-h-screen bg-background relative">
       <BackgroundAnimation />
+      <BackgroundPatterns pattern="hexagon" opacity={0.12} position="top" className="left-0 z-0" />
       <Header />
       <main className="pt-32 pb-4xl">
         {/* Hero Section */}

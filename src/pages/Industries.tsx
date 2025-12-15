@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BackgroundAnimation from "@/components/BackgroundAnimation";
+import BackgroundPatterns from "@/components/BackgroundPatterns";
 import { Button } from "@/components/ui/button";
 import { Building2, Home, ShoppingCart, Factory, Briefcase, Package, TrendingUp, Users } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -75,6 +76,7 @@ const Industries = () => {
   return (
     <div className="min-h-screen bg-background relative">
       <BackgroundAnimation />
+      <BackgroundPatterns pattern="circuit" opacity={0.1} position="top" className="left-0 z-0" />
       <Header />
       <main className="pt-32 pb-4xl">
         {/* Hero Section */}
