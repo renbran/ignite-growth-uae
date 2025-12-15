@@ -190,6 +190,7 @@ export default {
         float: "float 3s ease-in-out infinite",
         glow: "glow 2s ease-in-out infinite",
         "spin-reverse": "spin-reverse 3s linear infinite",
+        "spin-slow": "spin 4s linear infinite",
         "glow-pulse": "glow-pulse 2s ease-in-out infinite",
         "float-up": "float-up 3s ease-in-out infinite",
         shimmer: "shimmer 2s infinite",

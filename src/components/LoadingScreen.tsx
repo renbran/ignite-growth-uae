@@ -15,19 +15,25 @@ const LoadingScreen = () => {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 opacity-100 transition-opacity duration-500 pointer-events-none loading-screen">
-      <div className="relative w-24 h-24">
-        {/* Outer rotating ring */}
-        <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-cyan-400 border-r-blue-400 animate-spin" />
+    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 opacity-100 transition-opacity duration-500 pointer-events-none loading-screen">
+      {/* Logo container with animated glow and rotation */}
+      <div className="relative w-32 h-32 flex items-center justify-center">
+        {/* Outer glow rings */}
+        <div className="absolute inset-0 rounded-full border-2 border-cyan-400/30 animate-pulse" />
+        <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-cyan-400 border-r-blue-400 animate-spin opacity-60" />
+        <div className="absolute inset-0 rounded-full border border-transparent border-b-emerald-400 border-l-purple-400 animate-spin-reverse opacity-40" />
 
-        {/* Middle rotating ring (reverse) */}
-        <div className="absolute inset-2 rounded-full border-3 border-transparent border-b-emerald-400 border-l-purple-400 animate-spin-reverse" />
+        {/* Logo with rotation */}
+        <div className="relative w-24 h-24 animate-spin-slow">
+          <img
+            src="/sgc-tech-ai-logo-full-color.png"
+            alt="Loading"
+            className="w-full h-full object-contain drop-shadow-lg drop-shadow-cyan-500/50"
+          />
+        </div>
 
-        {/* Inner pulsing core */}
-        <div className="absolute inset-4 rounded-full bg-gradient-to-r from-cyan-400 to-blue-400 animate-pulse shadow-lg shadow-cyan-400/50" />
-
-        {/* Center glow */}
-        <div className="absolute inset-6 rounded-full bg-blue-500 blur-sm opacity-50" />
+        {/* Center glow effect */}
+        <div className="absolute inset-6 rounded-full bg-gradient-to-r from-cyan-400/20 to-blue-400/20 blur-xl opacity-60 animate-glow-pulse" />
       </div>
 
       {/* Loading text with animation */}
