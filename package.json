@@ -10,7 +10,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "cf:login": "wrangler login",
-    "deploy:cf": "wrangler pages deploy ./dist --project-name ignite-growth-uae --commit-dirty=true"
+    "deploy:cf": "wrangler pages deploy ./dist --project-name ignite-growth-uae --commit-dirty=true",
+    "deploy:fresh": "npm run build && npm run deploy:cf"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

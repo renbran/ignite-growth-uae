@@ -4,10 +4,11 @@ const LoadingScreen = () => {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
-    // Hide loading screen after 2 seconds
+    // Hide loading screen after a longer delay to allow video to start loading
+    // This ensures the video has time to begin loading before we show the page
     const timer = setTimeout(() => {
       setIsVisible(false);
-    }, 2000);
+    }, 3500);
 
     return () => clearTimeout(timer);
   }, []);

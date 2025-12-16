@@ -7,27 +7,67 @@ import logoVideo from "@/assets/sgc-logo-video.mp4";
 const Hero = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isMuted, setIsMuted] = useState(false);
+  const [videoReady, setVideoReady] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    // Try unmuted autoplay; if blocked, keep sound preference and let user tap mute/unmute button
+    // Set video attributes
     video.muted = false;
     video.volume = 0.7;
+    video.preload = "metadata";
 
-    const playPromise = video.play();
-    if (playPromise !== undefined) {
-      playPromise.catch((err) => {
-        console.warn("Autoplay with sound was blocked:", err);
-      });
-    }
+    // Handle when metadata is loaded
+    const handleLoadedMetadata = () => {
+      setVideoReady(true);
+      // Attempt to play
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            setIsPlaying(true);
+          })
+          .catch((err) => {
+            console.warn("Autoplay was blocked:", err);
+            // Set muted and try again
+            video.muted = true;
+            video.play().catch((e) => console.warn("Play failed:", e));
+          });
+      }
+    };
+
+    // Handle when video can play through
+    const handleCanPlayThrough = () => {
+      setVideoReady(true);
+      setIsPlaying(true);
+    };
+
+    // Handle play/pause state
+    const handlePlay = () => setIsPlaying(true);
+    const handlePause = () => setIsPlaying(false);
+
+    video.addEventListener("loadedmetadata", handleLoadedMetadata);
+    video.addEventListener("canplaythrough", handleCanPlayThrough);
+    video.addEventListener("play", handlePlay);
+    video.addEventListener("pause", handlePause);
+
+    // Try to load video
+    video.load();
+
+    return () => {
+      video.removeEventListener("loadedmetadata", handleLoadedMetadata);
+      video.removeEventListener("canplaythrough", handleCanPlayThrough);
+      video.removeEventListener("play", handlePlay);
+      video.removeEventListener("pause", handlePause);
+    };
   }, []);
 
   const toggleMute = () => {
     if (videoRef.current) {
       videoRef.current.muted = !videoRef.current.muted;
-      setIsMuted(!isMuted);
+      setIsMuted(!videoRef.current.muted);
     }
   };
 
@@ -36,17 +76,29 @@ const Hero = () => {
       {/* Background Video with Overlay */}
       <div className="absolute inset-0 z-0">
         <video
-          autoPlay
-          loop
           ref={videoRef}
+          className="absolute inset-0 w-full h-full object-cover"
+          loop
           playsInline
-          preload="auto"
           poster={heroBg}
           aria-hidden
-          className="absolute inset-0 w-full h-full object-cover"
+          controlsList="nodownload"
+          style={{ 
+            opacity: videoReady ? 1 : 0,
+            transition: 'opacity 0.5s ease-in-out'
+          }}
         >
           <source src={logoVideo} type="video/mp4" />
         </video>
+        
+        {/* Fallback background while video loads */}
+        {!videoReady && (
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${heroBg})` }}
+          />
+        )}
+        
         <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/80 to-background"></div>
         
         {/* Mute/Unmute Button */}
@@ -104,13 +156,13 @@ const Hero = () => {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 animate-fade-in stagger-7">
             <Button variant="hero" size="xl" className="group interactive-button" asChild>
-              <a href="#book-consultation">
+              <a href="#contact">
                 Book Free Consultation
                 <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </a>
             </Button>
             <Button variant="outline" size="xl" className="interactive-button" asChild>
-              <a href="#how-it-works">
+              <a href="/resources">
                 See How It Works
               </a>
             </Button>

@@ -50,7 +50,7 @@ const Header = () => {
               <a href="#contact">Contact</a>
             </Button>
             <Button variant="hero" size="default" className="pulse-glow" asChild>
-              <a href="#book-consultation">Book Free Consultation</a>
+              <a href="/book-consultation">Book Free Consultation</a>
             </Button>
           </div>
 
@@ -89,7 +89,7 @@ const Header = () => {
                 <a href="#contact">Contact</a>
               </Button>
               <Button variant="hero" size="default" className="w-full" asChild>
-                <a href="#book-consultation">Book Free Consultation</a>
+                <a href="/book-consultation">Book Free Consultation</a>
               </Button>
             </div>
           </div>
