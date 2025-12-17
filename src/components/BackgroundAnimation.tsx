@@ -16,13 +16,29 @@ const BackgroundAnimation = () => {
     const height = canvas.height;
     let time = 0;
 
-    // Cyan/electric blue palette only
+    // Magenta-purple-blue-cyan gradient palette (from reference image)
     const smokeColors = [
-      { r: 0, g: 255, b: 240 },     // electric-cyan
-      { r: 79, g: 195, b: 247 },    // sky-blue
-      { r: 0, g: 200, b: 255 },     // bright cyan
-      { r: 100, g: 220, b: 255 },   // light electric blue
+      { r: 200, g: 0, b: 180 },     // magenta/pink
+      { r: 148, g: 0, b: 211 },     // violet purple
+      { r: 75, g: 0, b: 130 },      // indigo
+      { r: 65, g: 105, b: 225 },    // royal blue
+      { r: 0, g: 150, b: 255 },     // bright blue
+      { r: 0, g: 220, b: 220 },     // cyan/turquoise
     ];
+
+    // Particle trail for cursor
+    interface CursorParticle {
+      x: number;
+      y: number;
+      radius: number;
+      color: typeof smokeColors[0];
+      alpha: number;
+      vx: number;
+      vy: number;
+    }
+
+    const cursorParticles: CursorParticle[] = [];
+    const maxCursorParticles = 40;
 
     interface SmokeTrail {
       x: number;
@@ -70,15 +86,60 @@ const BackgroundAnimation = () => {
       
       ctx.clearRect(0, 0, width, height);
 
+      // Add cursor particle trail
+      if (mouseRef.current.active && cursorParticles.length < maxCursorParticles) {
+        const color = smokeColors[Math.floor(Math.random() * smokeColors.length)];
+        cursorParticles.push({
+          x: mouseRef.current.x + (Math.random() - 0.5) * 10,
+          y: mouseRef.current.y + (Math.random() - 0.5) * 10,
+          radius: 2 + Math.random() * 4,
+          color,
+          alpha: 0.8 + Math.random() * 0.2,
+          vx: (Math.random() - 0.5) * 2,
+          vy: (Math.random() - 0.5) * 2 - 1,
+        });
+      }
+
+      // Update and draw cursor particles
+      for (let i = cursorParticles.length - 1; i >= 0; i--) {
+        const p = cursorParticles[i];
+        
+        p.x += p.vx;
+        p.y += p.vy;
+        p.alpha -= 0.025;
+        p.radius *= 0.98;
+
+        if (p.alpha <= 0 || p.radius < 0.5) {
+          cursorParticles.splice(i, 1);
+          continue;
+        }
+
+        const { r, g, b } = p.color;
+        ctx.globalCompositeOperation = "screen";
+        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${p.alpha})`;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Particle glow
+        const particleGlow = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius * 3);
+        particleGlow.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${p.alpha * 0.4})`);
+        particleGlow.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`);
+        ctx.fillStyle = particleGlow;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius * 3, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
       // Add smoke trails on hover (reduced intensity)
       if (mouseRef.current.active && trails.length < maxTrails) {
         const color = smokeColors[Math.floor(Math.random() * smokeColors.length)];
         trails.push({
           x: mouseRef.current.x + (Math.random() - 0.5) * 50,
           y: mouseRef.current.y + (Math.random() - 0.5) * 50,
-          radius: 40 + Math.random() * 60, // 50% smaller
+          radius: 40 + Math.random() * 60,
           color,
-          alpha: 0.2 + Math.random() * 0.15, // Reduced intensity
+          alpha: 0.2 + Math.random() * 0.15,
           decay: 0.012 + Math.random() * 0.01,
           vx: (Math.random() - 0.5) * 1.5,
           vy: (Math.random() - 0.5) * 1.5 - 0.5,
@@ -151,19 +212,20 @@ const BackgroundAnimation = () => {
         ctx.fill();
       }
 
-      // Subtle cursor glow
+      // Cursor glow with gradient colors
       if (mouseRef.current.active) {
         const cursorGlow = ctx.createRadialGradient(
           mouseRef.current.x, mouseRef.current.y, 0,
-          mouseRef.current.x, mouseRef.current.y, 100
+          mouseRef.current.x, mouseRef.current.y, 80
         );
-        cursorGlow.addColorStop(0, "rgba(0, 255, 240, 0.08)");
-        cursorGlow.addColorStop(0.5, "rgba(79, 195, 247, 0.04)");
-        cursorGlow.addColorStop(1, "rgba(0, 255, 240, 0)");
+        cursorGlow.addColorStop(0, "rgba(200, 0, 180, 0.1)");
+        cursorGlow.addColorStop(0.4, "rgba(75, 0, 130, 0.06)");
+        cursorGlow.addColorStop(0.7, "rgba(0, 150, 255, 0.04)");
+        cursorGlow.addColorStop(1, "rgba(0, 220, 220, 0)");
         
         ctx.fillStyle = cursorGlow;
         ctx.beginPath();
-        ctx.arc(mouseRef.current.x, mouseRef.current.y, 100, 0, Math.PI * 2);
+        ctx.arc(mouseRef.current.x, mouseRef.current.y, 80, 0, Math.PI * 2);
         ctx.fill();
       }
 
