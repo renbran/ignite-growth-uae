@@ -1,53 +1,77 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import scholarixLogo from "@/assets/scholarix-logo.png";
+import sgcLogo from "@/assets/sgc-logo.png";
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const navigation = [
-    { name: "Solutions", href: "#solutions" },
-    { name: "Industries", href: "#industries" },
-    { name: "Pricing", href: "#pricing" },
-    { name: "About", href: "#about" },
-    { name: "Resources", href: "#resources" },
+    { name: "Solutions", href: "/solutions" },
+    { name: "Industries", href: "/industries" },
+    { name: "Pricing", href: "/pricing" },
+    { name: "About", href: "/about" },
+    { name: "Resources", href: "/resources" },
   ];
 
+  // Handle navigation to section (works cross-page)
+  const handleSectionNavigation = (sectionId: string) => {
+    setMobileMenuOpen(false);
+    if (location.pathname === "/") {
+      // Already on home page - scroll to section
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    } else {
+      // Navigate to home page with hash
+      navigate(`/#${sectionId}`);
+    }
+  };
+
   return (
-    <header className="fixed top-0 left-0 right-0 z-fixed bg-background/95 backdrop-blur-md border-b border-border">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border/50 shadow-lg">
       <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
-            <img src={scholarixLogo} alt="Scholarix Global Logo" className="h-10 w-10 transition-transform group-hover:scale-110" />
-            <div className="flex flex-col">
-              <span className="font-display font-bold text-xl text-gradient leading-none">SGC TECH AI</span>
-              <span className="text-xs text-foreground-subtle font-body">by Scholarix Global</span>
-            </div>
+            <img src={sgcLogo} alt="SGC TECH AI Logo" className="h-10 w-10 transition-transform group-hover:scale-110" />
+            <span className="font-display font-bold text-xl text-gradient whitespace-nowrap">SGC TECH AI</span>
           </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-8">
+            <Link
+              to="/"
+              className="text-foreground hover:text-accent transition-colors font-semibold link-underline"
+            >
+              Home
+            </Link>
             {navigation.map((item) => (
-              <a
+              <Link
                 key={item.name}
-                href={item.href}
+                to={item.href}
                 className="text-foreground-muted hover:text-foreground transition-colors font-medium link-underline"
               >
                 {item.name}
-              </a>
+              </Link>
             ))}
           </div>
 
           {/* CTA Buttons */}
           <div className="hidden lg:flex items-center gap-4">
-            <Button variant="ghost" size="sm" asChild>
-              <a href="#contact">Contact</a>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => handleSectionNavigation("contact")}
+            >
+              Contact
             </Button>
             <Button variant="hero" size="default" className="pulse-glow" asChild>
-              <a href="#book-consultation">Book Free Consultation</a>
+              <Link to="/book-consultation">Book Free Consultation</Link>
             </Button>
           </div>
 
@@ -64,22 +88,36 @@ const Header = () => {
         {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div className="lg:hidden py-4 space-y-4 animate-fade-in">
+            <Link
+              to="/"
+              className="block py-2 text-foreground hover:text-accent transition-colors font-semibold"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Home
+            </Link>
             {navigation.map((item) => (
-              <a
+              <Link
                 key={item.name}
-                href={item.href}
+                to={item.href}
                 className="block py-2 text-foreground-muted hover:text-foreground transition-colors"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {item.name}
-              </a>
+              </Link>
             ))}
             <div className="pt-4 space-y-2 border-t border-border">
-              <Button variant="outline" size="default" className="w-full" asChild>
-                <a href="#contact">Contact</a>
+              <Button
+                variant="outline"
+                size="default"
+                className="w-full"
+                onClick={() => handleSectionNavigation("contact")}
+              >
+                Contact
               </Button>
               <Button variant="hero" size="default" className="w-full" asChild>
-                <a href="#book-consultation">Book Free Consultation</a>
+                <Link to="/book-consultation" onClick={() => setMobileMenuOpen(false)}>
+                  Book Free Consultation
+                </Link>
               </Button>
             </div>
           </div>

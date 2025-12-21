@@ -1,32 +1,51 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Mail, Phone, MapPin, Linkedin, Twitter, Youtube } from "lucide-react";
 import scholarixLogo from "@/assets/scholarix-logo.png";
 
 const Footer = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Handle navigation to section (works cross-page)
+  const handleSectionNavigation = (path: string, sectionId?: string) => {
+    if (sectionId) {
+      if (location.pathname === path || (path === "/" && location.pathname === "/")) {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      } else {
+        navigate(`${path}#${sectionId}`);
+      }
+    } else {
+      navigate(path);
+    }
+  };
+
   const footerLinks = {
     company: [
-      { name: "About Us", href: "#about" },
-      { name: "Our Team", href: "#team" },
-      { name: "Careers", href: "#careers" },
-      { name: "Contact", href: "#contact" },
+      { name: "About Us", href: "/about" },
+      { name: "Our Team", href: "/about", section: "team" },
+      { name: "Careers", href: "/", section: "contact" },
+      { name: "Contact", href: "/", section: "contact" },
     ],
     solutions: [
-      { name: "Intelligent Operations Platform", href: "#operations" },
-      { name: "AI Accelerator", href: "#accelerator" },
-      { name: "Rapid Rescue", href: "#rescue" },
-      { name: "All Solutions", href: "#solutions" },
+      { name: "Intelligent Operations Platform", href: "/solutions" },
+      { name: "AI Accelerator", href: "/solutions" },
+      { name: "Rapid Rescue", href: "/solutions" },
+      { name: "All Solutions", href: "/solutions" },
     ],
     industries: [
-      { name: "Healthcare", href: "#healthcare" },
-      { name: "Hospitality", href: "#hospitality" },
-      { name: "Construction", href: "#construction" },
-      { name: "Real Estate", href: "#real-estate" },
+      { name: "Healthcare", href: "/industries" },
+      { name: "Hospitality", href: "/industries" },
+      { name: "Construction", href: "/industries" },
+      { name: "Real Estate", href: "/industries" },
     ],
     resources: [
-      { name: "Blog", href: "#blog" },
-      { name: "Case Studies", href: "#case-studies" },
-      { name: "Whitepapers", href: "#whitepapers" },
-      { name: "Webinars", href: "#webinars" },
+      { name: "Blog", href: "/resources" },
+      { name: "Case Studies", href: "/resources" },
+      { name: "Whitepapers", href: "/resources" },
+      { name: "Webinars", href: "/resources" },
     ],
   };
 
@@ -55,11 +74,11 @@ const Footer = () => {
               </div>
               <div className="flex items-center gap-2 text-foreground-muted">
                 <Phone size={16} className="text-accent" />
-                <a href="tel:+971XXXXXXXXX" className="hover:text-accent transition-colors">+971 XX XXX XXXX</a>
+                <a href="tel:+971509675518" className="hover:text-accent transition-colors">+971 50 967 5518</a>
               </div>
               <div className="flex items-center gap-2 text-foreground-muted">
                 <Mail size={16} className="text-accent" />
-                <a href="mailto:contact@sgctech.ai" className="hover:text-accent transition-colors">contact@sgctech.ai</a>
+                <a href="mailto:info@sgctech.ai" className="hover:text-accent transition-colors">info@sgctech.ai</a>
               </div>
             </div>
           </div>
@@ -70,9 +89,12 @@ const Footer = () => {
             <ul className="space-y-2">
               {footerLinks.company.map((link) => (
                 <li key={link.name}>
-                  <a href={link.href} className="text-sm text-foreground-muted hover:text-accent transition-colors">
+                  <button
+                    onClick={() => handleSectionNavigation(link.href, link.section)}
+                    className="text-sm text-foreground-muted hover:text-accent transition-colors text-left"
+                  >
                     {link.name}
-                  </a>
+                  </button>
                 </li>
               ))}
             </ul>
@@ -83,9 +105,9 @@ const Footer = () => {
             <ul className="space-y-2">
               {footerLinks.solutions.map((link) => (
                 <li key={link.name}>
-                  <a href={link.href} className="text-sm text-foreground-muted hover:text-accent transition-colors">
+                  <Link to={link.href} className="text-sm text-foreground-muted hover:text-accent transition-colors">
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -96,9 +118,9 @@ const Footer = () => {
             <ul className="space-y-2">
               {footerLinks.industries.map((link) => (
                 <li key={link.name}>
-                  <a href={link.href} className="text-sm text-foreground-muted hover:text-accent transition-colors">
+                  <Link to={link.href} className="text-sm text-foreground-muted hover:text-accent transition-colors">
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -109,9 +131,9 @@ const Footer = () => {
             <ul className="space-y-2">
               {footerLinks.resources.map((link) => (
                 <li key={link.name}>
-                  <a href={link.href} className="text-sm text-foreground-muted hover:text-accent transition-colors">
+                  <Link to={link.href} className="text-sm text-foreground-muted hover:text-accent transition-colors">
                     {link.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -126,21 +148,31 @@ const Footer = () => {
           
           {/* Social Links */}
           <div className="flex items-center gap-4">
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-foreground-muted hover:text-accent transition-colors">
+            <a href="https://linkedin.com/company/sgctechai" target="_blank" rel="noopener noreferrer" className="text-foreground-muted hover:text-accent transition-colors" aria-label="LinkedIn">
               <Linkedin size={20} />
             </a>
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="text-foreground-muted hover:text-accent transition-colors">
+            <a href="https://twitter.com/sgctechai" target="_blank" rel="noopener noreferrer" className="text-foreground-muted hover:text-accent transition-colors" aria-label="Twitter">
               <Twitter size={20} />
             </a>
-            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="text-foreground-muted hover:text-accent transition-colors">
+            <a href="https://youtube.com/@sgctechai" target="_blank" rel="noopener noreferrer" className="text-foreground-muted hover:text-accent transition-colors" aria-label="YouTube">
               <Youtube size={20} />
             </a>
           </div>
           
           <div className="flex items-center gap-4 text-sm">
-            <a href="#privacy" className="text-foreground-muted hover:text-accent transition-colors">Privacy Policy</a>
+            <button
+              onClick={() => handleSectionNavigation("/", "contact")}
+              className="text-foreground-muted hover:text-accent transition-colors"
+            >
+              Privacy Policy
+            </button>
             <span className="text-border">|</span>
-            <a href="#terms" className="text-foreground-muted hover:text-accent transition-colors">Terms of Service</a>
+            <button
+              onClick={() => handleSectionNavigation("/", "contact")}
+              className="text-foreground-muted hover:text-accent transition-colors"
+            >
+              Terms of Service
+            </button>
           </div>
         </div>
       </div>

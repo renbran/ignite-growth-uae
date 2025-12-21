@@ -1,23 +1,133 @@
+import { useEffect, useRef, useState } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Zap, TrendingUp, Shield } from "lucide-react";
+import { ArrowRight, Zap, TrendingUp, Shield, Volume2, VolumeX } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
 import logoVideo from "@/assets/sgc-logo-video.mp4";
 
 const Hero = () => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isMuted, setIsMuted] = useState(false);
+  const [videoReady, setVideoReady] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    // Set video attributes
+    video.muted = false;
+    video.volume = 0.7;
+    video.preload = "metadata";
+
+    // Handle when metadata is loaded
+    const handleLoadedMetadata = () => {
+      setVideoReady(true);
+      // Attempt to play
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            setIsPlaying(true);
+          })
+          .catch((err) => {
+            console.warn("Autoplay was blocked:", err);
+            // Set muted and try again
+            video.muted = true;
+            video.play().catch((e) => console.warn("Play failed:", e));
+          });
+      }
+    };
+
+    // Handle when video can play through
+    const handleCanPlayThrough = () => {
+      setVideoReady(true);
+      setIsPlaying(true);
+    };
+
+    // Handle play/pause state
+    const handlePlay = () => setIsPlaying(true);
+    const handlePause = () => setIsPlaying(false);
+
+    video.addEventListener("loadedmetadata", handleLoadedMetadata);
+    video.addEventListener("canplaythrough", handleCanPlayThrough);
+    video.addEventListener("play", handlePlay);
+    video.addEventListener("pause", handlePause);
+
+    // Try to load video
+    video.load();
+
+    return () => {
+      video.removeEventListener("loadedmetadata", handleLoadedMetadata);
+      video.removeEventListener("canplaythrough", handleCanPlayThrough);
+      video.removeEventListener("play", handlePlay);
+      video.removeEventListener("pause", handlePause);
+    };
+  }, []);
+
+  const toggleMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !videoRef.current.muted;
+      setIsMuted(!videoRef.current.muted);
+    }
+  };
+
+  // Handle navigation to section (works cross-page)
+  const handleSectionNavigation = (sectionId: string) => {
+    if (location.pathname === "/") {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    } else {
+      navigate(`/#${sectionId}`);
+    }
+  };
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       {/* Background Video with Overlay */}
       <div className="absolute inset-0 z-0">
-        <video 
-          autoPlay 
-          loop 
-          muted={false}
-          playsInline
+        <video
+          ref={videoRef}
           className="absolute inset-0 w-full h-full object-cover"
+          loop
+          playsInline
+          poster={heroBg}
+          aria-hidden
+          controlsList="nodownload"
+          style={{ 
+            opacity: videoReady ? 1 : 0,
+            transition: 'opacity 0.5s ease-in-out'
+          }}
         >
           <source src={logoVideo} type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/85 to-background"></div>
+        
+        {/* Fallback background while video loads */}
+        {!videoReady && (
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${heroBg})` }}
+          />
+        )}
+        
+        <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/80 to-background"></div>
+        
+        {/* Mute/Unmute Button */}
+        <button
+          onClick={toggleMute}
+          className="absolute top-6 right-6 z-20 p-3 glass rounded-full hover-lift interactive-button group"
+          aria-label={isMuted ? "Unmute video" : "Mute video"}
+        >
+          {isMuted ? (
+            <VolumeX className="w-5 h-5 text-foreground-muted group-hover:text-accent transition-colors" />
+          ) : (
+            <Volume2 className="w-5 h-5 text-accent group-hover:text-accent-secondary transition-colors" />
+          )}
+        </button>
       </div>
 
       {/* Animated Grid Pattern Overlay */}
@@ -26,27 +136,24 @@ const Hero = () => {
       {/* Content */}
       <div className="container relative z-10 px-4 sm:px-6 lg:px-8 py-20">
         <div className="max-w-5xl mx-auto text-center space-y-8">
-          {/* Launch Partner Badge */}
-          <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full glass border border-accent/50 text-sm font-semibold text-accent animate-fade-in stagger-1">
-            <Zap size={16} className="animate-glow" />
-            <span>Launch Partner Program: <span className="text-gold">8 of 50 spots remaining</span></span>
+
+          {/* Main Headline with Typewriter Effect */}
+          <div className="space-y-4 animate-fade-in stagger-3">
+            <h1 className="font-display font-black text-4xl md:text-6xl lg:text-7xl leading-tight">
+              <span className="typewriter-line text-gradient block" style={{ animationDelay: '0s' }}>
+                UAE's Fastest ERP Implementation
+              </span>
+            </h1>
+            <p className="typewriter-line text-xl md:text-2xl lg:text-3xl text-foreground-muted font-display" style={{ animationDelay: '1.5s' }}>
+              Intelligent Infrastructure Deployed in 14 Days.
+            </p>
+            <p className="typewriter-line text-xl md:text-2xl lg:text-3xl font-display" style={{ animationDelay: '3s' }}>
+              <span className="text-success font-bold">Guaranteed ROI in 6 Months.</span>
+            </p>
           </div>
 
-          {/* Main Headline */}
-          <h1 className="font-display font-black text-5xl md:text-7xl lg:text-8xl leading-tight animate-fade-in stagger-2">
-            <span className="text-gradient block mb-4 animate-glow">Intelligent Infrastructure.</span>
-            <span className="text-foreground animate-fade-in stagger-3">Instant Impact.</span>
-          </h1>
-
-          {/* Subheadline */}
-          <p className="text-xl md:text-2xl text-foreground-muted max-w-3xl mx-auto leading-relaxed animate-fade-in stagger-4">
-            Transform your enterprise in <span className="text-accent font-bold animate-glow">14 days</span> with AI-native technology. 
-            Guaranteed <span className="text-success font-bold animate-glow">150-200% ROI</span>. 
-            No PowerPoint. No delays. Just production-ready intelligent systems.
-          </p>
-
           {/* Value Props */}
-          <div className="flex flex-wrap items-center justify-center gap-6 text-sm md:text-base animate-fade-in stagger-5">
+          <div className="flex flex-wrap items-center justify-center gap-6 text-sm md:text-base animate-fade-in stagger-6">
             <div className="flex items-center gap-2 text-foreground-muted">
               <Zap size={20} className="text-accent" />
               <span>14-Day Deployments</span>
@@ -62,22 +169,25 @@ const Hero = () => {
           </div>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 animate-fade-in stagger-6">
-            <Button variant="hero" size="xl" className="group" asChild>
-              <a href="#book-consultation">
-                Book Free Consultation
-                <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-              </a>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 animate-fade-in stagger-7">
+            <Button
+              variant="hero"
+              size="xl"
+              className="group interactive-button"
+              onClick={() => handleSectionNavigation("contact")}
+            >
+              Book Free Consultation
+              <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
             </Button>
-            <Button variant="outline" size="xl" asChild>
-              <a href="#how-it-works">
+            <Button variant="outline" size="xl" className="interactive-button" asChild>
+              <Link to="/resources">
                 See How It Works
-              </a>
+              </Link>
             </Button>
           </div>
 
           {/* Trust Indicators */}
-          <div className="pt-8 animate-fade-in stagger-7">
+          <div className="pt-8 animate-fade-in stagger-8">
             <p className="text-xs text-foreground-subtle mb-4 uppercase tracking-wider">
               Trusted by Enterprise Leaders in UAE
             </p>

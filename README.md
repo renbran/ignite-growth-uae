@@ -1,69 +1,45 @@
-# Scholarix Global Website
+# Ignite Growth UAE — Vite + React + Tailwind
 
-## Project info
+## Development
 
-**Company**: Scholarix Global / SGC TECH AI
-
-## How can I edit this code?
-
-**Use your preferred IDE**
-
-You can work locally using your own IDE. Clone this repo and push changes.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+Requirements: Node.js LTS and npm.
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
+# Clone the repository
 git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
 cd <YOUR_PROJECT_NAME>
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Install dependencies
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start the dev server
 npm run dev
-```
 
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Build the project and deploy to your preferred hosting platform:
-
-```bash
+# Build production assets
 npm run build
+
+# Preview the production build locally
+npm run preview
 ```
 
-The `dist` folder will contain your production-ready files.
+Tech stack:
+- Vite, React, TypeScript
+- Tailwind CSS, shadcn/ui
 
-## Deployment Options
+## Deployment (Cloudflare with Wrangler)
 
-- **Vercel**: Connect your GitHub repo for automatic deployments
-- **Netlify**: Drag and drop the `dist` folder or connect via Git
-- **Custom Server**: Upload the `dist` folder to your web server
+See deployment steps in DEPLOYMENT_CLOUDFLARE.md (Wrangler-focused). TL;DR:
+
+```sh
+# Install wrangler (if not already)
+npm i -g wrangler
+
+# Authenticate
+wrangler login
+
+# Build and publish to Cloudflare Pages via Wrangler
+npm run build
+wrangler pages publish ./dist --project-name <your-project-name>
+```
+
+For DNS, SSL/TLS, caching, and security configuration details, refer to DEPLOYMENT_CLOUDFLARE.md.

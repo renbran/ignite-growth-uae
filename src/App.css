@@ -1,42 +1,256 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  width: 100%;
+  min-height: 100vh;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* ========== DXB INTERACT STYLE ANIMATIONS ========== */
+
+/* Smooth global transitions */
+* {
+  transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+/* ========== HOVER ANIMATIONS ========== */
+
+/* Interactive buttons - DXB style */
+button, [role="button"] {
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+button:hover, [role="button"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px hsl(var(--electric-cyan) / 0.25);
+}
+
+button:active, [role="button"]:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px hsl(var(--electric-cyan) / 0.2);
+}
+
+/* Link hover effects - DXB style underline */
+a {
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+a:hover {
+  color: hsl(var(--electric-cyan));
+}
+
+/* Card hover effects - subtle lift with glow */
+.card, [class*="card"], .bg-card {
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover, [class*="card"]:hover, .bg-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 
+    0 20px 40px hsl(var(--electric-cyan) / 0.12),
+    0 0 0 1px hsl(var(--electric-cyan) / 0.1);
+}
+
+/* Card shimmer effect on hover */
+.card::before, [class*="card"]::before, .bg-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg, 
+    transparent, 
+    hsl(var(--electric-cyan) / 0.08), 
+    transparent
+  );
+  transition: left 0.6s ease;
+  pointer-events: none;
+}
+
+.card:hover::before, [class*="card"]:hover::before, .bg-card:hover::before {
+  left: 150%;
+}
+
+/* Text elements hover */
+h1, h2, h3, h4, h5, h6 {
+  transition: all 0.3s ease;
+}
+
+/* Form elements - DXB style focus */
+input, textarea, select {
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: hsl(var(--electric-cyan));
+  box-shadow: 
+    0 0 0 3px hsl(var(--electric-cyan) / 0.1),
+    0 0 20px hsl(var(--electric-cyan) / 0.1);
+  outline: none;
+}
+
+/* ========== CLICK/RIPPLE EFFECTS ========== */
+
+/* Ripple effect for buttons */
+.ripple-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple-effect::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: hsl(var(--electric-cyan) / 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.4s ease, height 0.4s ease, opacity 0.4s ease;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.ripple-effect:active::after {
+  width: 300px;
+  height: 300px;
+  opacity: 0;
+}
+
+/* ========== GLOW EFFECTS ========== */
+
+/* Cyan glow on hover */
+.hover-glow:hover {
+  box-shadow: 
+    0 0 20px hsl(var(--electric-cyan) / 0.4),
+    0 0 40px hsl(var(--electric-cyan) / 0.2);
+}
+
+/* Border glow effect */
+.border-glow-hover:hover {
+  border-color: hsl(var(--electric-cyan));
+  box-shadow: 
+    0 0 0 1px hsl(var(--electric-cyan) / 0.5),
+    0 0 20px hsl(var(--electric-cyan) / 0.3);
+}
+
+/* ========== ICON ANIMATIONS ========== */
+
+/* Icon bounce on hover */
+.icon-bounce:hover svg,
+.icon-bounce:hover [class*="lucide"] {
+  animation: iconBounce 0.4s ease;
+}
+
+@keyframes iconBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* Icon scale on hover */
+.icon-scale:hover svg,
+.icon-scale:hover [class*="lucide"] {
+  transform: scale(1.15);
+  transition: transform 0.2s ease;
+}
+
+/* ========== NAV LINK EFFECTS ========== */
+
+/* Navigation link underline animation */
+.nav-link-effect {
+  position: relative;
+}
+
+.nav-link-effect::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, hsl(var(--electric-cyan)), hsl(var(--sky-blue)));
+  transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.nav-link-effect:hover::after {
+  width: 100%;
+}
+
+/* ========== SCALE EFFECTS ========== */
+
+/* Subtle scale on hover */
+.hover-scale-sm:hover {
+  transform: scale(1.02);
+}
+
+.hover-scale-md:hover {
+  transform: scale(1.05);
+}
+
+.hover-scale-lg:hover {
+  transform: scale(1.08);
+}
+
+/* ========== BACKGROUND EFFECTS ========== */
+
+/* Background color transition */
+.bg-hover-fill {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.bg-hover-fill::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: hsl(var(--electric-cyan) / 0.1);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  z-index: -1;
+}
+
+.bg-hover-fill:hover::before {
+  transform: scaleX(1);
+}
+
+/* ========== SMOOTH SCROLL ========== */
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* ========== FOCUS STATES ========== */
+
+:focus-visible {
+  outline: 2px solid hsl(var(--electric-cyan));
+  outline-offset: 2px;
+}
+
+/* ========== REDUCED MOTION ========== */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
-  to {
-    transform: rotate(360deg);
+}
+
+/* ========== MOBILE OPTIMIZATIONS ========== */
+
+@media (max-width: 768px) {
+  button:hover, [role="button"]:hover {
+    transform: scale(1.02);
   }
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+  .card:hover, [class*="card"]:hover, .bg-card:hover {
+    transform: translateY(-3px) scale(1.01);
   }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
 }

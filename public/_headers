@@ -1,0 +1,16 @@
+/*
+  Cache-Control: max-age=3600, must-revalidate
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+
+/assets/*
+  Cache-Control: max-age=31536000, immutable
+
+/*.js
+  Cache-Control: max-age=3600, must-revalidate
+
+/*.css
+  Cache-Control: max-age=3600, must-revalidate
+
+/index.html
+  Cache-Control: max-age=0, no-cache, no-store, must-revalidate
