@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import sgcLogo from "@/assets/sgc-logo.png";
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -38,7 +37,7 @@ const Header = () => {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
-            <img src={sgcLogo} alt="SGC TECH AI Logo" className="h-10 w-10 transition-transform group-hover:scale-110" />
+            <img src="/images/hero/sgc-tech-ai-logo.png" alt="SGC TECH AI Logo" className="h-10 w-10 transition-transform group-hover:scale-110" />
             <span className="font-display font-bold text-xl text-gradient whitespace-nowrap">SGC TECH AI</span>
           </Link>
 

@@ -1,39 +1,37 @@
-import { Building2, Hotel, Construction, Home, Factory, ShoppingBag } from "lucide-react";
-
 const Industries = () => {
   const industries = [
     {
-      icon: Building2,
+      iconPath: "/icons/20-support-24-7.webp",
       name: "Healthcare",
       description: "Patient management, compliance automation, intelligent scheduling",
       metrics: "40hrs saved/month",
     },
     {
-      icon: Hotel,
+      iconPath: "/icons/15-partnership-handshake.webp",
       name: "Hospitality",
       description: "Guest experience automation, revenue optimization, operations intelligence",
       metrics: "25% revenue increase",
     },
     {
-      icon: Construction,
+      iconPath: "/icons/09-automation-gears.webp",
       name: "Construction",
       description: "Project tracking, resource optimization, safety compliance automation",
       metrics: "60% faster delivery",
     },
     {
-      icon: Home,
+      iconPath: "/icons/12-growth-chart.webp",
       name: "Real Estate",
       description: "Lead management, transaction automation, market intelligence",
       metrics: "180% ROI in 90 days",
     },
     {
-      icon: Factory,
+      iconPath: "/icons/09-automation-gears.webp",
       name: "Manufacturing",
       description: "Supply chain intelligence, quality control automation, predictive maintenance",
       metrics: "90% error reduction",
     },
     {
-      icon: ShoppingBag,
+      iconPath: "/icons/08-data-analytics.webp",
       name: "Retail",
       description: "Inventory optimization, customer intelligence, omnichannel automation",
       metrics: "35% margin improvement",
@@ -60,7 +58,6 @@ const Industries = () => {
         {/* Industry Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {industries.map((industry, index) => {
-            const Icon = industry.icon;
             return (
               <div
                 key={industry.name}
@@ -68,8 +65,8 @@ const Industries = () => {
                 style={{ animationDelay: `${index * 0.05}s` }}
               >
                 <div className="flex items-start justify-between mb-6">
-                  <div className="w-14 h-14 rounded-sm bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
-                    <Icon size={28} className="text-accent" />
+                  <div className="w-14 h-14 rounded-sm bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors p-2">
+                    <img src={industry.iconPath} alt={industry.name} className="w-full h-full object-contain filter brightness-0 invert" />
                   </div>
                   <span className="text-xs font-mono text-success bg-success/10 px-3 py-1 rounded-full">
                     {industry.metrics}

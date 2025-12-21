@@ -1,10 +1,9 @@
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
-import sgcFavicon from "./assets/sgc-logo.png";
 
 const ensureFavicon = () => {
-	const href = new URL(sgcFavicon, import.meta.url).toString();
+	const href = "/favicon.svg";
 	const existing = document.querySelector<HTMLLinkElement>("link[rel~='icon']");
 
 	if (existing) {

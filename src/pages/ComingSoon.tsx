@@ -1,11 +1,5 @@
 import { useEffect, useState, useRef } from "react";
 import { cn } from "@/lib/utils";
-import logoVideo from "@/assets/sgc-logo-video.mp4";
-import video2 from "@/assets/sgc-video-2.mp4";
-import video3 from "@/assets/sgc-video-3.mp4";
-import scholarixLogo from "@/assets/scholarix-logo.png";
-import voiceoverAudio from "@/assets/ElevenLabs_2025-11-22T00_54_16_Liam_pre_sp100_s50_sb75_v3 (1).mp3";
-import backgroundMusic from "@/assets/Inspire Cinematic Trailer.mp3";
 
 const ComingSoon = () => {
   const [videoLoaded, setVideoLoaded] = useState(false);
@@ -18,7 +12,7 @@ const ComingSoon = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
   
-  const videos = [logoVideo, video2, video3];
+  const videos = ["/videos/logo-intro-2025.mp4", "/videos/logo-reveal-final.mp4", "/videos/logo-reveal-v2.mp4"];
   const videoRef = useRef<HTMLVideoElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
   const bgMusicRef = useRef<HTMLAudioElement>(null);
@@ -210,7 +204,7 @@ const ComingSoon = () => {
           playsInline
           style={{ display: 'none' }}
         >
-          <source src={voiceoverAudio} type="audio/mpeg" />
+          <source src="/audio/1-c6d18217.mp3" type="audio/mpeg" />
           Your browser does not support the audio element.
         </audio>
         
@@ -222,7 +216,7 @@ const ComingSoon = () => {
           playsInline
           style={{ display: 'none' }}
         >
-          <source src={backgroundMusic} type="audio/mpeg" />
+          <source src="/audio/logo-reveal-music.mp3" type="audio/mpeg" />
           Your browser does not support the audio element.
         </audio>
         
@@ -298,7 +292,7 @@ const ComingSoon = () => {
             )}
           >
             <img 
-              src={scholarixLogo} 
+              src="/sgc-tech-ai-logo-full-color.png" 
               alt="Scholarix Global Logo" 
               className="h-12 w-12 sm:h-14 sm:w-14 md:h-16 md:w-16 animate-float-subtle drop-shadow-glow" 
             />

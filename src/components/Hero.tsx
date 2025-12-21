@@ -2,8 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Zap, TrendingUp, Shield, Volume2, VolumeX } from "lucide-react";
-import heroBg from "@/assets/hero-bg.jpg";
-import logoVideo from "@/assets/sgc-logo-video.mp4";
 
 const Hero = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -95,7 +93,7 @@ const Hero = () => {
           className="absolute inset-0 w-full h-full object-cover"
           loop
           playsInline
-          poster={heroBg}
+          poster="/images/hero/founder-video-poster.jpg"
           aria-hidden
           controlsList="nodownload"
           style={{ 
@@ -103,14 +101,14 @@ const Hero = () => {
             transition: 'opacity 0.5s ease-in-out'
           }}
         >
-          <source src={logoVideo} type="video/mp4" />
+          <source src="/videos/logo-intro-2025.mp4" type="video/mp4" />
         </video>
         
         {/* Fallback background while video loads */}
         {!videoReady && (
           <div
             className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url(${heroBg})` }}
+            style={{ backgroundImage: `url('/images/hero/founder-video-poster.jpg')` }}
           />
         )}
         
@@ -155,15 +153,15 @@ const Hero = () => {
           {/* Value Props */}
           <div className="flex flex-wrap items-center justify-center gap-6 text-sm md:text-base animate-fade-in stagger-6">
             <div className="flex items-center gap-2 text-foreground-muted">
-              <Zap size={20} className="text-accent" />
+              <img src="/icons/04-lightning-speed.webp" alt="Fast deployment" className="w-5 h-5 filter brightness-0 invert opacity-80" />
               <span>14-Day Deployments</span>
             </div>
             <div className="flex items-center gap-2 text-foreground-muted">
-              <TrendingUp size={20} className="text-success" />
+              <img src="/icons/12-growth-chart.webp" alt="Growth metrics" className="w-5 h-5 filter brightness-0 invert opacity-80" />
               <span>200% Faster Than Industry</span>
             </div>
             <div className="flex items-center gap-2 text-foreground-muted">
-              <Shield size={20} className="text-gold" />
+              <img src="/icons/05-security-shield-left.webp" alt="Guaranteed ROI" className="w-5 h-5 filter brightness-0 invert opacity-80" />
               <span>Guaranteed ROI</span>
             </div>
           </div>
