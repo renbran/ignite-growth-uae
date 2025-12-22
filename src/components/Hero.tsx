@@ -75,15 +75,17 @@ const Hero = () => {
       {showSplash && <AudioSplashScreen onEnter={handleEnterSite} />}
 
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      {/* Pattern Backdrop Layer */}
+      {/* Futuristic Pattern Background */}
       <div className="absolute inset-0 z-0">
         <div 
-          className="absolute inset-0 bg-cover bg-center opacity-25"
+          className="absolute inset-0 bg-cover bg-center"
           style={{ 
             backgroundImage: "url('/images/hero/futuristic-circuit-pattern.png')",
-            filter: 'brightness(0.6) contrast(1.3) saturate(1.2)'
+            filter: 'brightness(0.4) contrast(1.4) saturate(1.1)'
           }}
         />
+        {/* Dark overlay for text contrast */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/60 to-background/80"></div>
       </div>
       
       {/* Background Video Logo - Performance Optimized */}
@@ -110,7 +112,7 @@ const Hero = () => {
             playsInline
             poster="/images/hero/sgc-tech-ai-logo.png"
           >
-            <source src="https://res.cloudinary.com/dsl5fhclj/video/upload/v1734836754/sgc-hero-intro_vn6i5f.mp4" type="video/mp4" />
+            <source src="/videos/logo-intro-2025.mp4" type="video/mp4" />
           </video>
         </div>
         
