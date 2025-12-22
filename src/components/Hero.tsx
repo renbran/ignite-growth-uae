@@ -11,8 +11,8 @@ const Hero = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isMuted, setIsMuted] = useState(false);
-  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(true);
   const [showSplash, setShowSplash] = useState(true);
   const [audioEnabled, setAudioEnabled] = useState(false);
 
@@ -98,7 +98,7 @@ const Hero = () => {
         <div className="absolute inset-0 flex items-center justify-center hero-video-container">
           <video
             ref={videoRef}
-            className={`w-full h-full object-contain opacity-0 transition-opacity duration-700 ${
+            className={`w-full h-full object-contain transition-opacity duration-700 ${
               isVideoLoaded ? "opacity-70" : "opacity-0"
             }`}
             style={{
@@ -108,11 +108,12 @@ const Hero = () => {
             }}
             autoPlay
             loop
-            muted={false}
+            muted
             playsInline
+            preload="auto"
             poster="/images/hero/sgc-tech-ai-logo.png"
           >
-            <source src="/videos/logo-intro-new.mp4" type="video/mp4" />
+            <source src="/videos/logo-intro-2025.mp4" type="video/mp4" />
           </video>
         </div>
         
