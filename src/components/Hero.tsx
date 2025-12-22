@@ -1,76 +1,20 @@
-import { useEffect, useRef, useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Zap, TrendingUp, Shield, Volume2, VolumeX } from "lucide-react";
+import { ArrowRight, Volume2, VolumeX } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import AudioSplashScreen from "./AudioSplashScreen";
+import PremiumIcon from "./PremiumIcon";
+import { SECTION_ICON_MAP } from "@/lib/iconMapping";
 
 const Hero = () => {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [isMuted, setIsMuted] = useState(false);
-  const [videoReady, setVideoReady] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    // Set video attributes
-    video.muted = false;
-    video.volume = 0.7;
-    video.preload = "metadata";
-
-    // Handle when metadata is loaded
-    const handleLoadedMetadata = () => {
-      setVideoReady(true);
-      // Attempt to play
-      const playPromise = video.play();
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => {
-            setIsPlaying(true);
-          })
-          .catch((err) => {
-            console.warn("Autoplay was blocked:", err);
-            // Set muted and try again
-            video.muted = true;
-            video.play().catch((e) => console.warn("Play failed:", e));
-          });
-      }
-    };
-
-    // Handle when video can play through
-    const handleCanPlayThrough = () => {
-      setVideoReady(true);
-      setIsPlaying(true);
-    };
-
-    // Handle play/pause state
-    const handlePlay = () => setIsPlaying(true);
-    const handlePause = () => setIsPlaying(false);
-
-    video.addEventListener("loadedmetadata", handleLoadedMetadata);
-    video.addEventListener("canplaythrough", handleCanPlayThrough);
-    video.addEventListener("play", handlePlay);
-    video.addEventListener("pause", handlePause);
-
-    // Try to load video
-    video.load();
-
-    return () => {
-      video.removeEventListener("loadedmetadata", handleLoadedMetadata);
-      video.removeEventListener("canplaythrough", handleCanPlayThrough);
-      video.removeEventListener("play", handlePlay);
-      video.removeEventListener("pause", handlePause);
-    };
-  }, []);
-
-  const toggleMute = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !videoRef.current.muted;
-      setIsMuted(!videoRef.current.muted);
-    }
-  };
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isMuted, setIsMuted] = useState(false);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const [showSplash, setShowSplash] = useState(true);
+  const [audioEnabled, setAudioEnabled] = useState(false);
 
   // Handle navigation to section (works cross-page)
   const handleSectionNavigation = (sectionId: string) => {
@@ -84,52 +28,112 @@ const Hero = () => {
     }
   };
 
+  // Handle splash screen entry - enables audio
+  const handleEnterSite = () => {
+    setShowSplash(false);
+    setAudioEnabled(true);
+  };
+
+  // Handle video autoplay with audio after user interaction
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !audioEnabled) return;
+
+    const handleLoadedData = () => {
+      setIsVideoLoaded(true);
+      video.muted = false; // Enable audio after user interaction
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch((err) => {
+          console.warn("Autoplay error:", err);
+        });
+      }
+    };
+
+    if (video.readyState >= 2) {
+      handleLoadedData();
+    } else {
+      video.addEventListener("loadeddata", handleLoadedData);
+    }
+
+    return () => {
+      video.removeEventListener("loadeddata", handleLoadedData);
+    };
+  }, [audioEnabled]);
+
+  const toggleMute = () => {
+    if (videoRef.current) {
+      const newMutedState = !videoRef.current.muted;
+      videoRef.current.muted = newMutedState;
+      setIsMuted(newMutedState);
+    }
+  };
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      {/* Background Video with Overlay */}
+    <>
+      {/* Audio Splash Screen */}
+      {showSplash && <AudioSplashScreen onEnter={handleEnterSite} />}
+
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+      {/* Pattern Backdrop Layer */}
       <div className="absolute inset-0 z-0">
-        <video
-          ref={videoRef}
-          className="absolute inset-0 w-full h-full object-cover"
-          loop
-          playsInline
-          poster="/images/hero/founder-video-poster.jpg"
-          aria-hidden
-          controlsList="nodownload"
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-25"
           style={{ 
-            opacity: videoReady ? 1 : 0,
-            transition: 'opacity 0.5s ease-in-out'
+            backgroundImage: "url('/images/hero/futuristic-circuit-pattern.png')",
+            filter: 'brightness(0.6) contrast(1.3) saturate(1.2)'
           }}
-        >
-          <source src="/videos/logo-intro-2025.mp4" type="video/mp4" />
-        </video>
+        />
+      </div>
+      
+      {/* Background Video Logo - Performance Optimized */}
+      <div className="absolute inset-0 z-0">
+        {/* Optimized glow backdrop */}
+        <div className="absolute inset-0 flex items-center justify-center will-change-transform">
+          <div className="w-full h-full bg-gradient-radial from-accent/15 via-primary/8 to-transparent opacity-60"></div>
+        </div>
         
-        {/* Fallback background while video loads */}
-        {!videoReady && (
-          <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url('/images/hero/founder-video-poster.jpg')` }}
-          />
-        )}
+        <div className="absolute inset-0 flex items-center justify-center hero-video-container">
+          <video
+            ref={videoRef}
+            className={`w-full h-full object-contain opacity-0 transition-opacity duration-700 ${
+              isVideoLoaded ? "opacity-70" : "opacity-0"
+            }`}
+            style={{
+              filter: 'drop-shadow(0 0 60px rgba(0, 255, 255, 0.5)) contrast(1.15) brightness(1.1)',
+              willChange: 'opacity',
+              transform: 'translateZ(0)',
+            }}
+            autoPlay
+            loop
+            muted={false}
+            playsInline
+            poster="/images/hero/sgc-tech-ai-logo.png"
+          >
+            <source src="https://res.cloudinary.com/dsl5fhclj/video/upload/v1734836754/sgc-hero-intro_vn6i5f.mp4" type="video/mp4" />
+          </video>
+        </div>
         
-        <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/80 to-background"></div>
-        
-        {/* Mute/Unmute Button */}
-        <button
-          onClick={toggleMute}
-          className="absolute top-6 right-6 z-20 p-3 glass rounded-full hover-lift interactive-button group"
-          aria-label={isMuted ? "Unmute video" : "Mute video"}
-        >
-          {isMuted ? (
-            <VolumeX className="w-5 h-5 text-foreground-muted group-hover:text-accent transition-colors" />
-          ) : (
-            <Volume2 className="w-5 h-5 text-accent group-hover:text-accent-secondary transition-colors" />
-          )}
-        </button>
+        {/* Lighter Gradient Overlay for Text Readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-background/65 to-background"></div>
       </div>
 
-      {/* Animated Grid Pattern Overlay */}
-      <div className="absolute inset-0 grid-pattern opacity-20 z-0"></div>
+      {/* Animated Grid Pattern Overlay - Reduced Opacity */}
+      <div className="absolute inset-0 grid-pattern opacity-10 z-0"></div>
+
+      {/* Mute/Unmute Button - Fixed Position */}
+      <button
+        onClick={toggleMute}
+        className="fixed top-24 right-4 z-50 p-3 bg-background/80 backdrop-blur-sm rounded-full hover:bg-background transition-transform duration-200 border border-border/50 hover:border-accent/50 group hover:scale-105"
+        aria-label={isMuted ? "Unmute background video" : "Mute background video"}
+        title={isMuted ? "Unmute background video" : "Mute background video"}
+      >
+        {isMuted ? (
+          <VolumeX className="w-5 h-5 text-foreground-muted group-hover:text-accent transition-colors" />
+        ) : (
+          <Volume2 className="w-5 h-5 text-accent group-hover:text-accent-secondary transition-colors" />
+        )}
+      </button>
 
       {/* Content */}
       <div className="container relative z-10 px-4 sm:px-6 lg:px-8 py-20">
@@ -150,19 +154,31 @@ const Hero = () => {
             </p>
           </div>
 
-          {/* Value Props */}
+          {/* Value Props with Premium Icons */}
           <div className="flex flex-wrap items-center justify-center gap-6 text-sm md:text-base animate-fade-in stagger-6">
-            <div className="flex items-center gap-2 text-foreground-muted">
-              <img src="/icons/04-lightning-speed.webp" alt="Fast deployment" className="w-5 h-5 filter brightness-0 invert opacity-80" />
-              <span>14-Day Deployments</span>
+            <div className="flex items-center gap-3 text-foreground-muted hover:text-foreground transition-colors group">
+              <PremiumIcon 
+                src={SECTION_ICON_MAP.hero.speedBadge.url}
+                alt={SECTION_ICON_MAP.hero.speedBadge.alt}
+                size="sm"
+              />
+              <span className="group-hover:text-gradient transition-all">14-Day Deployments</span>
             </div>
-            <div className="flex items-center gap-2 text-foreground-muted">
-              <img src="/icons/12-growth-chart.webp" alt="Growth metrics" className="w-5 h-5 filter brightness-0 invert opacity-80" />
-              <span>200% Faster Than Industry</span>
+            <div className="flex items-center gap-3 text-foreground-muted hover:text-foreground transition-colors group">
+              <PremiumIcon 
+                src={SECTION_ICON_MAP.hero.growthBadge.url}
+                alt={SECTION_ICON_MAP.hero.growthBadge.alt}
+                size="sm"
+              />
+              <span className="group-hover:text-gradient transition-all">200% Faster Than Industry</span>
             </div>
-            <div className="flex items-center gap-2 text-foreground-muted">
-              <img src="/icons/05-security-shield-left.webp" alt="Guaranteed ROI" className="w-5 h-5 filter brightness-0 invert opacity-80" />
-              <span>Guaranteed ROI</span>
+            <div className="flex items-center gap-3 text-foreground-muted hover:text-foreground transition-colors group">
+              <PremiumIcon 
+                src={SECTION_ICON_MAP.hero.roiBadge.url}
+                alt={SECTION_ICON_MAP.hero.roiBadge.alt}
+                size="sm"
+              />
+              <span className="group-hover:text-gradient transition-all">Guaranteed ROI</span>
             </div>
           </div>
 
@@ -203,6 +219,7 @@ const Hero = () => {
       {/* Bottom Fade */}
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent z-0"></div>
     </section>
+    </>
   );
 };
 

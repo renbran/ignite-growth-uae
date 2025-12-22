@@ -1,46 +1,45 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import PremiumIcon from "./PremiumIcon";
+import { SECTION_ICON_MAP } from "@/lib/iconMapping";
 
 const ValueProposition = () => {
   const values = [
     {
-      iconPath: "/icons/24-visibility-scope.webp",
       title: "Navigate",
       description: "Strategic roadmaps built on deep industry expertise and AI-powered market intelligence.",
-      color: "text-primary",
+      icon: SECTION_ICON_MAP.valueProposition.navigate,
     },
     {
-      iconPath: "/icons/21-ai-brain.webp",
       title: "Innovate",
       description: "AI-native solutions engineered for production from day one. No prototypes. Real infrastructure.",
-      color: "text-accent",
+      icon: SECTION_ICON_MAP.valueProposition.innovate,
     },
     {
-      iconPath: "/icons/10-rocket-launch.webp",
       title: "Transform",
       description: "14-day deployments that deliver measurable ROI in first 30 days. Guaranteed results.",
-      color: "text-success",
+      icon: SECTION_ICON_MAP.valueProposition.transform,
     },
   ];
 
   const guarantees = [
     {
-      iconPath: "/icons/04-lightning-speed.webp",
       title: "14 Days to Production",
       stat: "200% Faster",
       description: "Industry standard: 6-12 months. SGC TECH AI: 14 days.",
+      icon: SECTION_ICON_MAP.valueProposition.speed,
     },
     {
-      iconPath: "/icons/17-financial-roi.webp",
       title: "Guaranteed ROI",
       stat: "150-200%",
       description: "40-80 hours saved monthly. 90%+ error reduction.",
+      icon: SECTION_ICON_MAP.valueProposition.roi,
     },
     {
-      iconPath: "/icons/06-security-shield-right.webp",
       title: "Zero Risk",
       stat: "10x Results",
       description: "If we don't deliver, you don't pay. Simple.",
+      icon: SECTION_ICON_MAP.valueProposition.guarantee,
     },
   ];
 
@@ -73,9 +72,12 @@ const ValueProposition = () => {
                 className="group bg-card p-8 rounded-sm border border-border hover:border-accent transition-all duration-300 hover-lift animate-fade-in"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div className={`w-14 h-14 rounded-sm ${value.color} bg-muted flex items-center justify-center mb-6 group-hover:scale-110 transition-transform p-2`}>
-                  <img src={value.iconPath} alt={value.title} className="w-full h-full object-contain filter brightness-0 invert" />
-                </div>
+                <PremiumIcon 
+                  src={value.icon.url}
+                  alt={value.icon.alt}
+                  size="lg"
+                  wrapperClassName="mb-6"
+                />
                 <h3 className="font-display font-bold text-2xl mb-4 text-foreground">
                   {value.title}
                 </h3>
@@ -90,7 +92,7 @@ const ValueProposition = () => {
         {/* Guarantees */}
         <div className="max-w-5xl mx-auto">
           <h3 className="font-display font-bold text-3xl md:text-4xl text-center mb-12 text-foreground">
-            Our <span className="text-gold">Guarantees</span>
+            Our <span className="text-gradient">Guarantees</span>
           </h3>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -101,9 +103,12 @@ const ValueProposition = () => {
                   className="bg-gradient-to-br from-card to-muted p-8 rounded-sm border border-border text-center hover-lift animate-fade-in"
                   style={{ animationDelay: `${index * 0.1 + 0.3}s` }}
                 >
-                  <div className="w-16 h-16 mx-auto rounded-full bg-accent/20 flex items-center justify-center mb-6 p-3">
-                    <img src={guarantee.iconPath} alt={guarantee.title} className="w-full h-full object-contain filter brightness-0 invert" />
-                  </div>
+                  <PremiumIcon 
+                    src={guarantee.icon.url}
+                    alt={guarantee.icon.alt}
+                    size="xl"
+                    wrapperClassName="mx-auto mb-6"
+                  />
                   <h4 className="font-display font-bold text-xl mb-2 text-foreground">
                     {guarantee.title}
                   </h4>

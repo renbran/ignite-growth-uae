@@ -1,40 +1,43 @@
+import PremiumIcon from "./PremiumIcon";
+import { SECTION_ICON_MAP } from "@/lib/iconMapping";
+
 const Industries = () => {
   const industries = [
     {
-      iconPath: "/icons/20-support-24-7.webp",
       name: "Healthcare",
       description: "Patient management, compliance automation, intelligent scheduling",
       metrics: "40hrs saved/month",
+      icon: SECTION_ICON_MAP.industries.healthcare,
     },
     {
-      iconPath: "/icons/15-partnership-handshake.webp",
       name: "Hospitality",
       description: "Guest experience automation, revenue optimization, operations intelligence",
       metrics: "25% revenue increase",
+      icon: SECTION_ICON_MAP.industries.hospitality,
     },
     {
-      iconPath: "/icons/09-automation-gears.webp",
       name: "Construction",
       description: "Project tracking, resource optimization, safety compliance automation",
       metrics: "60% faster delivery",
+      icon: SECTION_ICON_MAP.industries.construction,
     },
     {
-      iconPath: "/icons/12-growth-chart.webp",
       name: "Real Estate",
       description: "Lead management, transaction automation, market intelligence",
       metrics: "180% ROI in 90 days",
+      icon: SECTION_ICON_MAP.industries.realEstate,
     },
     {
-      iconPath: "/icons/09-automation-gears.webp",
       name: "Manufacturing",
       description: "Supply chain intelligence, quality control automation, predictive maintenance",
       metrics: "90% error reduction",
+      icon: SECTION_ICON_MAP.industries.manufacturing,
     },
     {
-      iconPath: "/icons/08-data-analytics.webp",
       name: "Retail",
       description: "Inventory optimization, customer intelligence, omnichannel automation",
       metrics: "35% margin improvement",
+      icon: SECTION_ICON_MAP.industries.retail,
     },
   ];
 
@@ -65,9 +68,11 @@ const Industries = () => {
                 style={{ animationDelay: `${index * 0.05}s` }}
               >
                 <div className="flex items-start justify-between mb-6">
-                  <div className="w-14 h-14 rounded-sm bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors p-2">
-                    <img src={industry.iconPath} alt={industry.name} className="w-full h-full object-contain filter brightness-0 invert" />
-                  </div>
+                  <PremiumIcon 
+                    src={industry.icon.url}
+                    alt={industry.icon.alt}
+                    size="lg"
+                  />
                   <span className="text-xs font-mono text-success bg-success/10 px-3 py-1 rounded-full">
                     {industry.metrics}
                   </span>

@@ -3,15 +3,26 @@ import Footer from "@/components/Footer";
 import BackgroundAnimation from "@/components/BackgroundAnimation";
 import BackgroundPatterns from "@/components/BackgroundPatterns";
 import { Button } from "@/components/ui/button";
-import { Building2, Home, ShoppingCart, Factory, Briefcase, Package, TrendingUp, Users, Quote, CheckCircle, ArrowRight, Award } from "lucide-react";
+import { Building2, TrendingUp, Users, Quote, CheckCircle, ArrowRight, Award } from "lucide-react";
 import { Link } from "react-router-dom";
 import { GoldGradientDef } from "@/components/GoldIcon";
+import PremiumIcon from "@/components/PremiumIcon";
+import { SECTION_ICON_MAP } from "@/lib/iconMapping";
+
+const industryIconMap: Record<string, { url: string; alt: string }> = {
+  "Real Estate Development": SECTION_ICON_MAP.industries.realEstate,
+  "Property Management": SECTION_ICON_MAP.industries.healthcare,
+  "Trading & Distribution": SECTION_ICON_MAP.industries.retail,
+  "Manufacturing & Assembly": SECTION_ICON_MAP.industries.manufacturing,
+  "Retail & E-Commerce": SECTION_ICON_MAP.industries.retail,
+  "Professional Services": SECTION_ICON_MAP.industries.hospitality,
+};
 
 const industries = [
   {
     title: "Real Estate Development",
     description: "End-to-end solutions for property developers, from land acquisition and project costing to unit sales, handover management, and post-sale customer service portals.",
-    icon: Home,
+    icon: industryIconMap["Real Estate Development"],
     stats: "45% faster deal closures",
     features: ["Project cost tracking & budget variance", "Unit inventory & availability management", "Sales commission automation", "Snagging & handover workflows", "Customer portal for owners"],
     clients: ["Samana Developers", "GJ Real Estate", "Urban Properties"],
@@ -19,7 +30,7 @@ const industries = [
   {
     title: "Property Management",
     description: "Streamline facility operations, tenant lifecycle management, and financial reporting for residential communities, commercial buildings, and mixed-use developments.",
-    icon: Building2,
+    icon: industryIconMap["Property Management"],
     stats: "60% reduction in admin time",
     features: ["Tenant onboarding & lease management", "Maintenance request tracking", "Automated rent invoicing & reminders", "Vendor management & procurement", "Owner statement generation"],
     clients: ["Dubai Holding", "AHS Properties"],
@@ -27,7 +38,7 @@ const industries = [
   {
     title: "Trading & Distribution",
     description: "Unified commerce platform connecting suppliers, warehouses, and customers with real-time inventory visibility, multi-location stock transfers, and landed cost tracking.",
-    icon: Package,
+    icon: industryIconMap["Trading & Distribution"],
     stats: "35% inventory optimization",
     features: ["Multi-warehouse management", "Purchase & sales order automation", "Lot/serial number tracking", "Landed cost calculation", "Supplier performance analytics"],
     clients: ["Fresh Market UAE", "Emirates Trading Co."],
@@ -35,7 +46,7 @@ const industries = [
   {
     title: "Manufacturing & Assembly",
     description: "Production planning, shop floor control, and quality management systems designed for discrete and process manufacturing in free zones and mainland facilities.",
-    icon: Factory,
+    icon: industryIconMap["Manufacturing & Assembly"],
     stats: "28% production efficiency gain",
     features: ["Bill of materials management", "Work order scheduling", "Quality inspection checkpoints", "Machine maintenance tracking", "Production cost analysis"],
     clients: ["Al Habtoor Engineering", "Gulf Industrial Supplies"],
@@ -43,7 +54,7 @@ const industries = [
   {
     title: "Retail & E-Commerce",
     description: "Omnichannel retail management unifying physical stores, online marketplaces, and direct-to-consumer channels with centralized inventory and customer data.",
-    icon: ShoppingCart,
+    icon: industryIconMap["Retail & E-Commerce"],
     stats: "52% better inventory accuracy",
     features: ["Multi-channel order management", "POS system integration", "Customer loyalty & rewards", "Marketplace connectors (Noon, Amazon)", "Returns & exchange processing"],
     clients: ["Osus Retail Group"],
@@ -51,7 +62,7 @@ const industries = [
   {
     title: "Professional Services",
     description: "Project-based billing, resource utilization tracking, and client delivery management for consulting firms, agencies, and technical service providers.",
-    icon: Briefcase,
+    icon: industryIconMap["Professional Services"],
     stats: "34% improved utilization",
     features: ["Project profitability tracking", "Timesheet & expense management", "Resource capacity planning", "Milestone-based invoicing", "Client collaboration portals"],
     clients: ["LMD Consulting", "AX Capital Advisory"],
@@ -172,9 +183,12 @@ const Industries = () => {
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <div className="flex items-start justify-between mb-lg">
-                  <div className="w-14 h-14 rounded-lg bg-primary/20 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
-                    <industry.icon className="w-7 h-7 text-primary group-hover:text-accent transition-colors" />
-                  </div>
+                  <PremiumIcon 
+                    src={industry.icon.url}
+                    alt={industry.title}
+                    size="lg"
+                    wrapperClassName="w-14 h-14 rounded-lg bg-primary/20 flex items-center justify-center group-hover:bg-accent/20 transition-colors"
+                  />
                   <div className="px-3 py-1 rounded-full bg-success/20 text-success text-xs font-semibold">
                     {industry.stats}
                   </div>

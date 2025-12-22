@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import ValueProposition from "@/components/ValueProposition";
 import Industries from "@/components/Industries";
+import PremiumServices from "@/components/PremiumServices";
 import ROICalculator from "@/components/ROICalculator";
 import ContactForm from "@/components/ContactForm";
 import Footer from "@/components/Footer";
@@ -36,6 +37,17 @@ const Index = () => {
             className="left-0 z-0"
           />
           <ValueProposition />
+        </div>
+        
+        {/* Premium Services pattern */}
+        <div className="relative">
+          <BackgroundPatterns 
+            pattern="circuit" 
+            opacity={0.1} 
+            position="center"
+            className="left-0 z-0"
+          />
+          <PremiumServices />
         </div>
         
         {/* Industries pattern */}
