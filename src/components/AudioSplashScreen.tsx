@@ -26,7 +26,7 @@ const AudioSplashScreen = ({ onEnter }: AudioSplashScreenProps) => {
         <div 
           className="absolute inset-0 bg-cover bg-center"
           style={{ 
-            backgroundImage: "url('/images/hero/futuristic-circuit-pattern.png')",
+            backgroundImage: "url('/images/hero/ultra-hexagon-circuit.png')",
             filter: 'brightness(0.4) contrast(1.4) saturate(1.1)'
           }}
         />
