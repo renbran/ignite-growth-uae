@@ -191,7 +191,7 @@ const Hero = () => {
             <Button
               variant="hero"
               size="xl"
-              className="group interactive-button"
+              className="group interactive-button bg-[hsl(var(--electric-cyan))] text-[hsl(var(--deep-navy))] shadow-glow hover:brightness-110 hover:shadow-glow rounded-sm"
               onClick={() => handleSectionNavigation("contact")}
             >
               Book Free Consultation
