@@ -74,7 +74,7 @@ const Hero = () => {
       {/* Audio Splash Screen */}
       {showSplash && <AudioSplashScreen onEnter={handleEnterSite} />}
 
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-[var(--header-offset)]">
       {/* Futuristic Pattern Background */}
       <div className="absolute inset-0 z-0">
         <div 
@@ -127,7 +127,8 @@ const Hero = () => {
       {/* Mute/Unmute Button - Fixed Position */}
       <button
         onClick={toggleMute}
-        className="fixed top-24 right-4 z-50 p-3 bg-background/80 backdrop-blur-sm rounded-full hover:bg-background transition-transform duration-200 border border-border/50 hover:border-accent/50 group hover:scale-105"
+        className="fixed right-4 z-50 p-3 bg-background/80 backdrop-blur-sm rounded-full hover:bg-background transition-transform duration-200 border border-border/50 hover:border-accent/50 group hover:scale-105"
+        style={{ top: `calc(var(--header-offset) + 1rem)` }}
         aria-label={isMuted ? "Unmute background video" : "Mute background video"}
         title={isMuted ? "Unmute background video" : "Mute background video"}
       >

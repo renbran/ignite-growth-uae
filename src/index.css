@@ -117,6 +117,9 @@ defined here. Components use semantic tokens.
     --z-modal: 1300;
     --z-popover: 1400;
     --z-tooltip: 1500;
+
+    /* Header offset used to pad top content under fixed header */
+    --header-offset: 5rem;
   }
   
   /* Dark mode already default, but keeping structure for extensibility */
@@ -588,4 +591,18 @@ defined here. Components use semantic tokens.
   @keyframes spin {
     to { transform: rotate(360deg); }
   }
+}
+
+/* Responsive header offset scaling */
+@media (min-width: 640px) { /* sm */
+  :root { --header-offset: 6rem; }
+}
+@media (min-width: 768px) { /* md */
+  :root { --header-offset: 8rem; }
+}
+@media (min-width: 1024px) { /* lg */
+  :root { --header-offset: 10rem; }
+}
+@media (min-width: 1280px) { /* xl */
+  :root { --header-offset: 12rem; }
 }

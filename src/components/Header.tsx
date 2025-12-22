@@ -33,8 +33,8 @@ const Header = () => {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border/50 shadow-lg">
-      <nav className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+      <nav className="container mx-auto px-4 sm:px-6 lg:px-8 py-[var(--header-offset)]">
+        <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
             <img src="/images/hero/sgc-tech-ai-logo.png" alt="SGC TECH AI Logo" className="h-10 w-10 transition-transform group-hover:scale-110" />
