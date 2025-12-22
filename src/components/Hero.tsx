@@ -112,7 +112,7 @@ const Hero = () => {
             playsInline
             poster="/images/hero/sgc-tech-ai-logo.png"
           >
-            <source src="/videos/logo-intro-2025.mp4" type="video/mp4" />
+            <source src="/videos/logo-intro-new.mp4" type="video/mp4" />
           </video>
         </div>
         
