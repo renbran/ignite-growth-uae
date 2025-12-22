@@ -17,12 +17,25 @@ const AudioSplashScreen = ({ onEnter }: AudioSplashScreenProps) => {
 
   return (
     <div
-      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-gradient-to-br from-background via-background-secondary to-background transition-opacity duration-800 ${
+      className={`fixed inset-0 z-[9999] flex items-center justify-center transition-opacity duration-800 ${
         isExiting ? "opacity-0 pointer-events-none" : "opacity-100"
       }`}
     >
+      {/* Futuristic Circuit Pattern Backdrop */}
+      <div className="absolute inset-0">
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ 
+            backgroundImage: "url('/images/hero/futuristic-circuit-pattern.png')",
+            filter: 'brightness(0.4) contrast(1.4) saturate(1.1)'
+          }}
+        />
+        {/* Dark overlay for text contrast */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/70 to-background/90"></div>
+      </div>
+      
       {/* Animated Background Grid */}
-      <div className="absolute inset-0 grid-pattern opacity-20"></div>
+      <div className="absolute inset-0 grid-pattern opacity-10"></div>
       
       {/* Glow Effect */}
       <div className="absolute inset-0 flex items-center justify-center">
