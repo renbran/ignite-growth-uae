@@ -13,13 +13,13 @@ export interface IconConfig {
 export const PREMIUM_ICONS: Record<string, IconConfig> = {
   // AI & Intelligence
   aiNeuralNetwork: {
-    url: "https://i.postimg.cc/brFhFG7W/01-ai-neural-network.png",
+    url: "/icons/industry/01-ai-neural-network.png",
     name: "AI Neural Network",
     bestFor: ["ai-features", "machine-learning", "intelligent-systems"],
     alt: "AI Neural Network - Advanced Intelligence"
   },
   aiBrain: {
-    url: "https://i.postimg.cc/dQWw0Xhf/21-ai-brain.png",
+    url: "/icons/industry/21-ai-brain.png",
     name: "AI Brain",
     bestFor: ["innovation", "ai-solutions", "smart-features"],
     alt: "AI Brain - Intelligent Solutions"
@@ -27,13 +27,13 @@ export const PREMIUM_ICONS: Record<string, IconConfig> = {
   
   // Cloud & Infrastructure
   cloudIntegration: {
-    url: "https://i.postimg.cc/Fs7mkZSZ/02-cloud-integration.png",
+    url: "/icons/industry/02-cloud-integration.png",
     name: "Cloud Integration",
     bestFor: ["cloud-services", "integration", "connectivity"],
     alt: "Cloud Integration - Seamless Connectivity"
   },
   cloudStorage: {
-    url: "https://i.postimg.cc/j2kbkwVY/03-cloud-storage.png",
+    url: "/icons/industry/03-cloud-storage.png",
     name: "Cloud Storage",
     bestFor: ["data-storage", "cloud-infrastructure", "scalability"],
     alt: "Cloud Storage - Scalable Infrastructure"
@@ -41,13 +41,13 @@ export const PREMIUM_ICONS: Record<string, IconConfig> = {
   
   // Performance & Speed
   lightningSpeed: {
-    url: "https://i.postimg.cc/jdLKnXfc/04-lightning-speed.png",
+    url: "/icons/industry/04-lightning-speed.png",
     name: "Lightning Speed",
     bestFor: ["performance", "fast-deployment", "speed"],
     alt: "Lightning Speed - Rapid Deployment"
   },
   rocketLaunch: {
-    url: "https://i.postimg.cc/Ssr8JS4p/10-rocket-launch.png",
+    url: "/icons/industry/10-rocket-launch.png",
     name: "Rocket Launch",
     bestFor: ["transformation", "launch", "growth"],
     alt: "Rocket Launch - Rapid Growth"
@@ -55,19 +55,19 @@ export const PREMIUM_ICONS: Record<string, IconConfig> = {
   
   // Security
   securityShieldLeft: {
-    url: "https://i.postimg.cc/vTSsSgRy/05-security-shield-left.png",
+    url: "/icons/industry/05-security-shield.png",
     name: "Security Shield",
     bestFor: ["security", "protection", "compliance"],
     alt: "Security Shield - Enterprise Protection"
   },
   securityShieldRight: {
-    url: "https://i.postimg.cc/C56g6Byg/06-security-shield-right.png",
+    url: "/icons/industry/05-security-shield.png",
     name: "Security Shield Right",
     bestFor: ["data-security", "privacy", "safety"],
     alt: "Security Shield - Data Protection"
   },
   dataSecurity: {
-    url: "https://i.postimg.cc/h4CcGwXs/18-data-security.png",
+    url: "/icons/industry/18-data-security.png",
     name: "Data Security",
     bestFor: ["data-protection", "encryption", "secure-systems"],
     alt: "Data Security - Protected Systems"
@@ -75,19 +75,19 @@ export const PREMIUM_ICONS: Record<string, IconConfig> = {
   
   // Global & Network
   globalTransform: {
-    url: "https://i.postimg.cc/5ykVkYcM/07-global-transform.png",
+    url: "/icons/industry/07-global-transform.png",
     name: "Global Transform",
     bestFor: ["global-reach", "transformation", "worldwide"],
     alt: "Global Transform - Worldwide Solutions"
   },
   globalNetwork: {
-    url: "https://i.postimg.cc/bY6pvMZB/19-global-network.png",
+    url: "/icons/industry/19-global-network.png",
     name: "Global Network",
     bestFor: ["connectivity", "network", "global-presence"],
     alt: "Global Network - Connected Enterprise"
   },
   innovationNetwork: {
-    url: "https://i.postimg.cc/m2tR1w9p/22-innovation-network.png",
+    url: "/icons/industry/22-innovation-network.png",
     name: "Innovation Network",
     bestFor: ["innovation", "networking", "collaboration"],
     alt: "Innovation Network - Collaborative Innovation"
@@ -95,13 +95,13 @@ export const PREMIUM_ICONS: Record<string, IconConfig> = {
   
   // Analytics & Data
   dataAnalytics: {
-    url: "https://i.postimg.cc/9XxCfSDM/08-data-analytics.png",
+    url: "/icons/industry/08-data-analytics.png",
     name: "Data Analytics",
     bestFor: ["analytics", "insights", "data-driven"],
     alt: "Data Analytics - Actionable Insights"
   },
   growthChart: {
-    url: "https://i.postimg.cc/zDd8fMyT/12-growth-chart.png",
+    url: "/icons/industry/12-growth-chart.png",
     name: "Growth Chart",
     bestFor: ["growth", "metrics", "performance"],
     alt: "Growth Chart - Measurable Results"
@@ -109,19 +109,19 @@ export const PREMIUM_ICONS: Record<string, IconConfig> = {
   
   // Automation & Efficiency
   automationGears: {
-    url: "https://i.postimg.cc/v8Pbmj4g/09-automation-gears.png",
+    url: "/icons/industry/09-automation-gears.png",
     name: "Automation Gears",
     bestFor: ["automation", "efficiency", "processes"],
     alt: "Automation Gears - Streamlined Operations"
   },
   timeEfficiency: {
-    url: "https://i.postimg.cc/7PBwLc5N/16-time-efficiency.png",
+    url: "/icons/industry/16-time-efficiency.png",
     name: "Time Efficiency",
     bestFor: ["efficiency", "time-saving", "productivity"],
     alt: "Time Efficiency - Optimized Workflow"
   },
   smartSolutions: {
-    url: "https://i.postimg.cc/v8Pbmj4j/23-smart-solutions.png",
+    url: "/icons/industry/23-smart-solutions.png",
     name: "Smart Solutions",
     bestFor: ["intelligent-solutions", "smart-systems", "optimization"],
     alt: "Smart Solutions - Intelligent Optimization"
@@ -129,13 +129,13 @@ export const PREMIUM_ICONS: Record<string, IconConfig> = {
   
   // Achievement & ROI
   achievementTrophy: {
-    url: "https://i.postimg.cc/c1D0Jjv8/11-achievement-trophy.png",
+    url: "/icons/industry/11-achievement-trophy.png",
     name: "Achievement Trophy",
     bestFor: ["success", "achievement", "excellence"],
     alt: "Achievement Trophy - Proven Success"
   },
   financialROI: {
-    url: "https://i.postimg.cc/tT5PYqbJ/17-financial-roi.png",
+    url: "/icons/industry/17-financial-roi.png",
     name: "Financial ROI",
     bestFor: ["roi", "financial", "returns"],
     alt: "Financial ROI - Guaranteed Returns"
@@ -143,19 +143,19 @@ export const PREMIUM_ICONS: Record<string, IconConfig> = {
   
   // Precision & Strategy
   mobileResponsive: {
-    url: "https://i.postimg.cc/kMjq5Z2N/13-mobile-responsive.png",
+    url: "/icons/industry/13-mobile-responsive.png",
     name: "Mobile Responsive",
     bestFor: ["mobile", "responsive", "accessibility"],
     alt: "Mobile Responsive - Accessible Anywhere"
   },
   targetPrecision: {
-    url: "https://i.postimg.cc/HWSdLKr4/14-target-precision.png",
+    url: "/icons/industry/14-target-precision.png",
     name: "Target Precision",
     bestFor: ["precision", "targeting", "accuracy"],
     alt: "Target Precision - Accurate Solutions"
   },
   visibilityScope: {
-    url: "https://i.postimg.cc/vHcMxznN/24-visibility-scope.png",
+    url: "/icons/industry/24-visibility-scope.png",
     name: "Visibility Scope",
     bestFor: ["visibility", "strategy", "navigation"],
     alt: "Visibility Scope - Strategic Vision"
@@ -163,13 +163,13 @@ export const PREMIUM_ICONS: Record<string, IconConfig> = {
   
   // Partnership & Support
   partnershipHandshake: {
-    url: "https://i.postimg.cc/3rLYw6kX/15-partnership-handshake.png",
+    url: "/icons/industry/15-partnership-handshake.png",
     name: "Partnership Handshake",
     bestFor: ["partnership", "collaboration", "trust"],
     alt: "Partnership - Trusted Collaboration"
   },
   support247: {
-    url: "https://i.postimg.cc/jq8tj9D8/20-support-24-7.png",
+    url: "/icons/industry/20-support-24-7.png",
     name: "24/7 Support",
     bestFor: ["support", "customer-service", "availability"],
     alt: "24/7 Support - Always Available"
