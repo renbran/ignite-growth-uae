@@ -120,6 +120,9 @@ defined here. Components use semantic tokens.
 
     /* Header offset used to pad top content under fixed header */
     --header-offset: 5rem;
+
+    /* Nudge for hero background video position under navbar */
+    --hero-video-nudge: 2rem;
   }
   
   /* Dark mode already default, but keeping structure for extensibility */
@@ -339,7 +342,7 @@ defined here. Components use semantic tokens.
   /* Performance-optimized hero video container */
   .hero-video-container {
     will-change: transform;
-    transform: scale(1.5) translateZ(0);
+    transform: translateY(var(--hero-video-nudge)) scale(1.5) translateZ(0);
     backface-visibility: hidden;
     perspective: 1000px;
   }
@@ -598,11 +601,11 @@ defined here. Components use semantic tokens.
   :root { --header-offset: 6rem; }
 }
 @media (min-width: 768px) { /* md */
-  :root { --header-offset: 8rem; }
+  :root { --header-offset: 8rem; --hero-video-nudge: 2.5rem; }
 }
 @media (min-width: 1024px) { /* lg */
-  :root { --header-offset: 10rem; }
+  :root { --header-offset: 10rem; --hero-video-nudge: 3rem; }
 }
 @media (min-width: 1280px) { /* xl */
-  :root { --header-offset: 12rem; }
+  :root { --header-offset: 12rem; --hero-video-nudge: 3.5rem; }
 }
