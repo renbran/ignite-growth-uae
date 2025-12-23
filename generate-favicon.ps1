@@ -25,36 +25,45 @@ catch {
 New-Item -ItemType Directory -Force -Path $faviconDir | Out-Null
 New-Item -ItemType Directory -Force -Path "$publicDir/icons" | Out-Null
 
-Write-Host "Generating favicon sizes..." -ForegroundColor Yellow
+Write-Host "Generating favicon sizes with transparent background..." -ForegroundColor Yellow
 
-# Generate favicon.ico (multi-size)
-magick $sourceIcon -define icon:auto-resize=16,32,48,64 "$publicDir/favicon.ico"
+# Generate favicon.ico (multi-size) with transparency
+magick $sourceIcon -background none -alpha on -define icon:auto-resize=16,32,48,64 "$publicDir/favicon.ico"
 Write-Host "  Created favicon.ico (16x16, 32x32, 48x48, 64x64)" -ForegroundColor Green
 
-# Generate PNG favicons
-magick $sourceIcon -resize 16x16 "$faviconDir/favicon-16x16.png"
+# Generate PNG favicons with transparency
+magick $sourceIcon -background none -alpha on -resize 16x16 "$faviconDir/favicon-16x16.png"
 Write-Host "  Created favicon-16x16.png" -ForegroundColor Green
 
-magick $sourceIcon -resize 32x32 "$faviconDir/favicon-32x32.png"
+magick $sourceIcon -background none -alpha on -resize 32x32 "$faviconDir/favicon-32x32.png"
 Write-Host "  Created favicon-32x32.png" -ForegroundColor Green
 
-# Generate Apple Touch Icon
-magick $sourceIcon -resize 180x180 "$faviconDir/apple-touch-icon.png"
+magick $sourceIcon -background none -alpha on -resize 96x96 "$faviconDir/favicon-96x96.png"
+Write-Host "  Created favicon-96x96.png" -ForegroundColor Green
+
+# Generate Apple Touch Icon with transparency
+magick $sourceIcon -background none -alpha on -resize 180x180 "$faviconDir/apple-touch-icon.png"
 Write-Host "  Created apple-touch-icon.png (180x180)" -ForegroundColor Green
 
-# Generate Android Chrome icons
-magick $sourceIcon -resize 192x192 "$faviconDir/android-chrome-192x192.png"
-Write-Host "  Created android-chrome-192x192.png" -ForegroundColor Green
+# Generate Android Chrome icons with transparency
+magick $sourceIcon -background none -alpha on -resize 192x192 "$faviconDir/web-app-manifest-192x192.png"
+Write-Host "  Created web-app-manifest-192x192.png" -ForegroundColor Green
 
-magick $sourceIcon -resize 512x512 "$faviconDir/android-chrome-512x512.png"
-Write-Host "  Created android-chrome-512x512.png" -ForegroundColor Green
+magick $sourceIcon -background none -alpha on -resize 512x512 "$faviconDir/web-app-manifest-512x512.png"
+Write-Host "  Created web-app-manifest-512x512.png" -ForegroundColor Green
 
-# Copy to public directory
+# Generate SVG favicon (preserves original transparency)
+magick $sourceIcon -background none -alpha on "$faviconDir/favicon.svg"
+Write-Host "  Created favicon.svg" -ForegroundColor Green
+
+# Copy to public directory with transparency preserved
 Copy-Item "$faviconDir/favicon-16x16.png" "$publicDir/" -Force
 Copy-Item "$faviconDir/favicon-32x32.png" "$publicDir/" -Force
+Copy-Item "$faviconDir/favicon-96x96.png" "$publicDir/" -Force
 Copy-Item "$faviconDir/apple-touch-icon.png" "$publicDir/" -Force
-Copy-Item "$faviconDir/android-chrome-192x192.png" "$publicDir/" -Force
-Copy-Item "$faviconDir/android-chrome-512x512.png" "$publicDir/" -Force
+Copy-Item "$faviconDir/web-app-manifest-192x192.png" "$publicDir/" -Force
+Copy-Item "$faviconDir/web-app-manifest-512x512.png" "$publicDir/" -Force
+Copy-Item "$faviconDir/favicon.svg" "$publicDir/" -Force
 
 Write-Host ""
 Write-Host "Favicon Generation Complete!" -ForegroundColor Green

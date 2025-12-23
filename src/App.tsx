@@ -8,6 +8,7 @@ import LoadingScreen from "@/components/LoadingScreen";
 import SmokeAurora from "@/components/SmokeAurora";
 import JotFormChatbot from "@/components/JotFormChatbot";
 import ScrollToTop from "@/components/ScrollToTop";
+import NewsCarousel from "@/components/NewsCarousel";
 import Index from "./pages/Index";
 import Solutions from "./pages/Solutions";
 import Industries from "./pages/Industries";
@@ -31,6 +32,7 @@ const App = () => (
       <JotFormChatbot />
       <BrowserRouter>
         <ScrollToTop />
+        <NewsCarousel />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/solutions" element={<Solutions />} />
