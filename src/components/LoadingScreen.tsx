@@ -4,13 +4,22 @@ const LoadingScreen = () => {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
-    // Hide loading screen after a longer delay to allow video to start loading
-    // This ensures the video has time to begin loading before we show the page
-    const timer = setTimeout(() => {
+    // Check if page is already loaded
+    if (document.readyState === 'complete') {
       setIsVisible(false);
-    }, 3500);
+      return;
+    }
 
-    return () => clearTimeout(timer);
+    // Hide loading screen when page fully loads OR after max 2 seconds
+    const handleLoad = () => setIsVisible(false);
+    const timer = setTimeout(() => setIsVisible(false), 2000);
+
+    window.addEventListener('load', handleLoad);
+
+    return () => {
+      window.removeEventListener('load', handleLoad);
+      clearTimeout(timer);
+    };
   }, []);
 
   if (!isVisible) return null;

@@ -1,0 +1,13 @@
+{
+	"mcpServers": {
+		"frontend-review": {
+			"command": "node",
+			"args": [
+				"d:\\GitHub\\webpages\\ignite-growth-uae\\frontend-review-mcp\\build\\index.js"
+			],
+			"env": {
+				"HYPERBOLIC_API_KEY": "sk_live_I65bmPe35bE20NeRStBVEw34L5HnFreBF7cKcskGu3aOjUBw74yo6Ybd8_PL31xIs"
+			}
+		}
+	}
+}

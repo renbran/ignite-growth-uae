@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { newsItems as configuredNewsItems } from "@/config/newsConfig";
+import {
+  trackCarouselClick,
+  trackCarouselNavigation,
+  trackCarouselClosed,
+} from "@/lib/analytics";
 
 const NewsCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -21,13 +26,17 @@ const NewsCarousel = () => {
   }, [autoplay, isVisible, newsItems.length]);
 
   const handlePrev = () => {
-    setCurrentIndex((prev) => (prev - 1 + newsItems.length) % newsItems.length);
+    const newIndex = (currentIndex - 1 + newsItems.length) % newsItems.length;
+    setCurrentIndex(newIndex);
     setAutoplay(false);
+    trackCarouselNavigation("prev", newIndex);
   };
 
   const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % newsItems.length);
+    const newIndex = (currentIndex + 1) % newsItems.length;
+    setCurrentIndex(newIndex);
     setAutoplay(false);
+    trackCarouselNavigation("next", newIndex);
   };
 
   const currentItem = newsItems[currentIndex];
@@ -65,9 +74,20 @@ const NewsCarousel = () => {
           {/* Content */}
           <div
             className="flex-1 cursor-pointer transition-all duration-300 group"
-            onClick={() => currentItem.link && window.open(currentItem.link)}
+            onClick={() => {
+              trackCarouselClick(currentItem);
+              if (currentItem.link) window.open(currentItem.link);
+            }}
             onMouseEnter={() => setAutoplay(false)}
             onMouseLeave={() => setAutoplay(true)}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                trackCarouselClick(currentItem);
+                if (currentItem.link) window.open(currentItem.link);
+              }
+            }}
           >
             <div className="flex items-center gap-3">
               {/* Category Badge */}
@@ -121,7 +141,10 @@ const NewsCarousel = () => {
 
           {/* Close Button */}
           <button
-            onClick={() => setIsVisible(false)}
+            onClick={() => {
+              trackCarouselClosed();
+              setIsVisible(false);
+            }}
             className="flex-shrink-0 p-2 text-foreground-muted hover:text-foreground transition-colors hover:bg-foreground/10 rounded-lg"
             aria-label="Close news carousel"
           >

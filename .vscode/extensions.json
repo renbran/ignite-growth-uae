@@ -47,7 +47,6 @@
 		"redhat.vscode-commons",
 		"golang.Go",
 		"rust-lang.rust-analyzer",
-		"charliermarsh.ruff",
 		"charliermarsh.Ruff",
 		"bungcip.better-toml",
 		"tamasfe.even-better-toml",
