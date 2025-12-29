@@ -20,11 +20,11 @@ const BookConsultation = () => {
   }, []);
 
   return (
-    <div className="min-h-screen relative">
+    <div className="page-container min-h-screen relative">
       <BackgroundAnimation />
       <Header />
       
-      <main className="pt-24 pb-16">
+      <main className="pt-24 pb-16 relative z-10">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           {/* Page Header */}
           <div className="text-center mb-12 animate-fade-in">

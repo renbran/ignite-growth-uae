@@ -99,12 +99,12 @@ const faqs = [
 
 const Pricing = () => {
   return (
-    <div className="min-h-screen relative">
+    <div className="page-container min-h-screen relative">
       <GoldGradientDef />
       <BackgroundAnimation />
-      <BackgroundPatterns pattern="hexagon" opacity={0.15} position="full" className="left-0 z-0" />
+      <BackgroundPatterns pattern="circuit" opacity={0.1} position="top" className="left-0 z-0" />
       <Header />
-      <main className="pt-32 pb-4xl">
+      <main className="pt-32 pb-4xl relative z-10">
         {/* Hero Section */}
         <section className="container text-center mb-4xl">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold/30 bg-gold/10 text-gold text-sm font-medium mb-lg animate-fade-in">

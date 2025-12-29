@@ -81,18 +81,19 @@ const Hero = () => {
           className="absolute inset-0 bg-cover bg-center"
           style={{ 
             backgroundImage: "url('/images/hero/futuristic-circuit-pattern.png')",
-            filter: 'brightness(0.4) contrast(1.4) saturate(1.1)'
+            filter: 'brightness(0.4) contrast(1.4) saturate(1.1)',
+            animation: 'neuron-pulse 4s ease-in-out infinite'
           }}
         />
-        {/* Dark overlay for text contrast */}
-        <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/60 to-background/80"></div>
+        {/* Dark overlay for text contrast - 60% opacity */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/55 to-background/65"></div>
       </div>
       
       {/* Background Video Logo - Performance Optimized */}
       <div className="absolute inset-0 z-0">
-        {/* Optimized glow backdrop */}
+        {/* Optimized glow backdrop with animated neuron lights */}
         <div className="absolute inset-0 flex items-center justify-center will-change-transform">
-          <div className="w-full h-full bg-gradient-radial from-accent/15 via-primary/8 to-transparent opacity-60"></div>
+          <div className="w-full h-full bg-gradient-radial from-accent/15 via-primary/8 to-transparent opacity-60 neuron-lights"></div>
         </div>
         
         <div className="absolute inset-0 flex items-center justify-center hero-video-container">
@@ -117,8 +118,10 @@ const Hero = () => {
           </video>
         </div>
         
-        {/* Lighter Gradient Overlay for Text Readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-background/65 to-background"></div>
+        {/* Gradient Overlay for Text Readability - Reduced to 60% */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/55 to-background/65 animate-pulse-slow"></div>
+        {/* Additional shadow overlay for enhanced contrast */}
+        <div className="absolute inset-0 shadow-inner" style={{ boxShadow: 'inset 0 0 60px rgba(0, 0, 0, 0.5)' }}></div>
       </div>
 
       {/* Animated Grid Pattern Overlay - Reduced Opacity */}

@@ -814,10 +814,10 @@ const Article = () => {
   const shareText = encodeURIComponent(article.title);
 
   return (
-    <div className="min-h-screen relative">
+    <div className="page-container min-h-screen relative">
       <BackgroundAnimation />
       <Header />
-      <main className="pt-32 pb-4xl">
+      <main className="pt-32 pb-4xl relative z-10">
         <article className="container max-w-4xl">
           {/* Breadcrumb */}
           <div className="mb-xl animate-fade-in">

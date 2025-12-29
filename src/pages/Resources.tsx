@@ -141,12 +141,12 @@ const caseStudyHighlights = [
 
 const Resources = () => {
   return (
-    <div className="min-h-screen relative">
+    <div className="page-container min-h-screen relative">
       <GoldGradientDef />
       <BackgroundAnimation />
-      <BackgroundPatterns pattern="hexagon" opacity={0.12} position="top" className="left-0 z-0" />
+      <BackgroundPatterns pattern="circuit" opacity={0.1} position="top" className="left-0 z-0" />
       <Header />
-      <main className="pt-32 pb-4xl">
+      <main className="pt-32 pb-4xl relative z-10">
         {/* Hero Section */}
         <section className="container text-center mb-4xl">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold/30 bg-gold/10 text-gold text-sm font-medium mb-lg animate-fade-in">
@@ -308,6 +308,42 @@ const Resources = () => {
                 <iframe
                   src="https://fliphtml5.com/sgctech/olzf/"
                   title="Digital Transformation Flipbook"
+                  className="absolute inset-0 h-full w-full rounded-b-2xl border-t border-border"
+                  allowFullScreen
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Second Flipbook Section */}
+        <section className="container mb-4xl">
+          <div className="glass rounded-2xl overflow-hidden shadow-lg">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 p-lg">
+              <div>
+                <p className="text-sm uppercase tracking-wide text-foreground-subtle">Interactive Flipbook</p>
+                <h2 className="text-2xl md:text-3xl font-bold text-foreground">ERP Solutions Guide</h2>
+                <p className="text-foreground-muted text-sm md:text-base max-w-2xl">
+                  Comprehensive guide to ERP solutions, features, and implementation strategies for UAE enterprises.
+                </p>
+              </div>
+              <Button
+                variant="outline"
+                className="interactive-button border-gold/30 hover:bg-gold/10 hover:text-gold"
+                asChild
+              >
+                <a href="https://online.fliphtml5.com/sgctech/obmg/" target="_blank" rel="noopener noreferrer">
+                  Open in New Tab
+                </a>
+              </Button>
+            </div>
+
+            <div className="relative w-full">
+              <div className="relative w-full pb-[62.5%]">{/* 16:10 aspect ratio */}
+                <iframe
+                  src="https://online.fliphtml5.com/sgctech/obmg/"
+                  title="ERP Solutions Guide Flipbook"
                   className="absolute inset-0 h-full w-full rounded-b-2xl border-t border-border"
                   allowFullScreen
                   loading="lazy"
