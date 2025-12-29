@@ -814,7 +814,7 @@ const Article = () => {
   const shareText = encodeURIComponent(article.title);
 
   return (
-    <div className="min-h-screen bg-background relative">
+    <div className="min-h-screen relative">
       <BackgroundAnimation />
       <Header />
       <main className="pt-32 pb-4xl">
