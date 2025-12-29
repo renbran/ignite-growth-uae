@@ -9,67 +9,67 @@ import {
 } from "@/components/ui/carousel";
 import { cn } from "@/lib/utils";
 
-// Standardized feature icons/logos
-const featureLogos = [
+// Standardized partner logos
+const partnerLogos = [
   {
-    src: "https://i.postimg.cc/SxZ6VdsV/01-ai-neural-network.png",
-    alt: "AI & Neural Network",
-    label: "AI Intelligence",
+    src: "https://i.postimg.cc/0ymf5D2W/11-achievement-trophy.png",
+    alt: "Achievement Trophy",
+    label: "Achievement",
   },
   {
-    src: "https://i.postimg.cc/sgnYKmxC/02-cloud-integration.png",
-    alt: "Cloud Integration",
-    label: "Cloud Integration",
+    src: "https://i.postimg.cc/4xt54VNw/AHS.png",
+    alt: "AHS",
+    label: "AHS",
   },
   {
-    src: "https://i.postimg.cc/Vk7q4gv8/03-cloud-storage.png",
-    alt: "Cloud Storage",
-    label: "Cloud Storage",
+    src: "https://i.postimg.cc/8zWHkMPb/AM.png",
+    alt: "AM",
+    label: "AM",
   },
   {
-    src: "https://i.postimg.cc/SxZ6VdRQ/04-lightning-speed.png",
-    alt: "Lightning Speed",
-    label: "Lightning Speed",
+    src: "https://i.postimg.cc/qvnLByM2/Continental-Invesstment-LMD.png",
+    alt: "Continental Investment LMD",
+    label: "Continental Investment",
   },
   {
-    src: "https://i.postimg.cc/y8fmnjxs/05-security-shield-left.png",
-    alt: "Security Left",
-    label: "Enterprise Security",
+    src: "https://i.postimg.cc/W4v7dzdq/Dubai-holdings.png",
+    alt: "Dubai Holdings",
+    label: "Dubai Holdings",
   },
   {
-    src: "https://i.postimg.cc/d0L8fCZq/06-security-shield-right.png",
-    alt: "Security Right",
-    label: "Data Protection",
+    src: "https://i.postimg.cc/d0Y9h3hT/Eiger-Marvel.png",
+    alt: "Eiger Marvel",
+    label: "Eiger Marvel",
   },
   {
-    src: "https://i.postimg.cc/W4hMyZqN/07-global-transform.png",
-    alt: "Global Transformation",
-    label: "Global Transform",
+    src: "https://i.postimg.cc/g0HH8phn/GJ-PROPERTIES.png",
+    alt: "GJ Properties",
+    label: "GJ Properties",
   },
   {
-    src: "https://i.postimg.cc/fbJxPdSy/08-data-analytics.png",
-    alt: "Data Analytics",
-    label: "Advanced Analytics",
+    src: "https://i.postimg.cc/3wFFmhGW/GJ-REAL-ESTATE.png",
+    alt: "GJ Real Estate",
+    label: "GJ Real Estate",
   },
   {
-    src: "https://i.postimg.cc/d0L8fCZD/09-automation-gears.png",
-    alt: "Automation",
-    label: "Smart Automation",
+    src: "https://i.postimg.cc/ZKWHgXGg/image.png",
+    alt: "Brand Icon",
+    label: "Brand Icon",
   },
   {
-    src: "https://i.postimg.cc/mrtQn91c/10-rocket-launch.png",
-    alt: "Rocket Launch",
-    label: "Fast Deployment",
+    src: "https://i.postimg.cc/TPJJgxbm/LMD.png",
+    alt: "LMD",
+    label: "LMD",
   },
   {
-    src: "https://i.postimg.cc/cJrQz3tw/11-achievement-trophy.png",
-    alt: "Achievement",
-    label: "Excellence",
+    src: "https://i.postimg.cc/3wFFmhGZ/OSUS.png",
+    alt: "OSUS",
+    label: "OSUS",
   },
   {
-    src: "https://i.postimg.cc/rpKSH4R1/12-growth-chart.png",
-    alt: "Growth Chart",
-    label: "Scalable Growth",
+    src: "https://i.postimg.cc/xd33MQmR/Urban-properties.png",
+    alt: "Urban Properties",
+    label: "Urban Properties",
   },
 ];
 
@@ -83,9 +83,9 @@ const PartnerCarousel = () => {
       <div className="glass rounded-2xl p-6 md:p-8 shadow-lg">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
           <div>
-            <p className="text-sm uppercase tracking-wide text-foreground-subtle">Capabilities</p>
-            <h3 className="text-2xl font-bold text-foreground">Enterprise-Grade Features</h3>
-            <p className="text-foreground-muted text-sm md:text-base">Comprehensive suite of tools and services for business transformation</p>
+            <p className="text-sm uppercase tracking-wide text-foreground-subtle">Partners</p>
+            <h3 className="text-2xl font-bold text-foreground">Trusted by industry leaders</h3>
+            <p className="text-foreground-muted text-sm md:text-base">A curated set of partner logos displayed in a clean, consistent carousel.</p>
           </div>
           <div className="flex items-center gap-2 text-xs text-foreground-subtle">
             <span className="h-2 w-2 rounded-full bg-accent animate-pulse" />
@@ -99,7 +99,7 @@ const PartnerCarousel = () => {
           className="relative"
         >
           <CarouselContent className="-ml-2 md:-ml-4">
-            {featureLogos.map((feature, idx) => (
+            {partnerLogos.map((feature, idx) => (
               <CarouselItem 
                 key={idx} 
                 className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/6 pl-2 md:pl-4"
