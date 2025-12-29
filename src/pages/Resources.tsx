@@ -281,6 +281,42 @@ const Resources = () => {
           </div>
         </section>
 
+        {/* Flipbook Section */}
+        <section className="container mb-4xl">
+          <div className="glass rounded-2xl overflow-hidden shadow-lg">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 p-lg">
+              <div>
+                <p className="text-sm uppercase tracking-wide text-foreground-subtle">Interactive Flipbook</p>
+                <h2 className="text-2xl md:text-3xl font-bold text-foreground">Digital Transformation Playbook</h2>
+                <p className="text-foreground-muted text-sm md:text-base max-w-2xl">
+                  Explore our interactive flipbook with implementation checklists, best practices, and visual walk-throughs.
+                </p>
+              </div>
+              <Button
+                variant="outline"
+                className="interactive-button border-gold/30 hover:bg-gold/10 hover:text-gold"
+                asChild
+              >
+                <a href="https://fliphtml5.com/sgctech/olzf/" target="_blank" rel="noopener noreferrer">
+                  Open in New Tab
+                </a>
+              </Button>
+            </div>
+
+            <div className="relative w-full">
+              <div className="relative w-full pb-[62.5%]">{/* 16:10 aspect ratio */}
+                <iframe
+                  src="https://fliphtml5.com/sgctech/olzf/"
+                  title="Digital Transformation Flipbook"
+                  className="absolute inset-0 h-full w-full rounded-b-2xl border-t border-border"
+                  allowFullScreen
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Webinars Section */}
         <section className="container mb-4xl">
           <div className="text-center mb-xl">
