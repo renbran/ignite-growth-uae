@@ -3,7 +3,7 @@ import App from "./App.tsx";
 import "./index.css";
 
 const ensureFavicon = () => {
-	const href = "/favicon.svg";
+	const href = "/favicon.ico";
 	const existing = document.querySelector<HTMLLinkElement>("link[rel~='icon']");
 
 	if (existing) {
