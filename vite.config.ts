@@ -19,13 +19,34 @@ export default defineConfig(({ mode }) => ({
     },
   },
   build: {
-    rollupOptions: {
-      output: {
-        // Add timestamp to force cache invalidation
-        entryFileNames: `assets/[name]-[hash]-${Date.now()}.js`,
-        chunkFileNames: `assets/[name]-[hash]-${Date.now()}.js`,
-        assetFileNames: `assets/[name]-[hash]-${Date.now()}[extname]`,
+    // Optimize for slow networks
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        passes: 2,
       },
     },
+    // Increase chunk size warning limit (we're optimizing)
+    chunkSizeWarningLimit: 800,
+    rollupOptions: {
+      output: {
+        // Smart code splitting for better caching
+        entryFileNames: `assets/[name]-[hash].js`,
+        chunkFileNames: `assets/[name]-[hash].js`,
+        assetFileNames: `assets/[name]-[hash][extname]`,
+        // Manual chunks for better control
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+          'vendor-ui': ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu', '@radix-ui/react-popover'],
+          'vendor-query': ['@tanstack/react-query'],
+          'vendor-utils': ['clsx', 'class-variance-authority', 'date-fns'],
+        },
+      },
+    },
+  },
+  // Performance optimizations
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'react-router-dom', '@tanstack/react-query'],
   },
 }));
