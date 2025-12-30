@@ -297,7 +297,11 @@ const Resources = () => {
                 className="interactive-button border-gold/30 hover:bg-gold/10 hover:text-gold"
                 asChild
               >
-                <a href="https://fliphtml5.com/sgctech/olzf/" target="_blank" rel="noopener noreferrer">
+                <a
+                  href="https://www.flipbookpdf.net/web/site/dddebcb14e53978818f0969e676f05219af38423202512.pdf.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   Open in New Tab
                 </a>
               </Button>
@@ -306,7 +310,7 @@ const Resources = () => {
             <div className="relative w-full">
               <div className="relative w-full pb-[62.5%]">{/* 16:10 aspect ratio */}
                 <iframe
-                  src="https://fliphtml5.com/sgctech/olzf/"
+                  src="https://www.flipbookpdf.net/web/site/dddebcb14e53978818f0969e676f05219af38423202512.pdf.html"
                   title="Digital Transformation Flipbook"
                   className="absolute inset-0 h-full w-full rounded-b-2xl border-t border-border"
                   allowFullScreen
@@ -333,7 +337,11 @@ const Resources = () => {
                 className="interactive-button border-gold/30 hover:bg-gold/10 hover:text-gold"
                 asChild
               >
-                <a href="https://online.fliphtml5.com/sgctech/obmg/" target="_blank" rel="noopener noreferrer">
+                <a
+                  href="https://www.flipbookpdf.net/web/site/a4dd13bee94079adaa6e2edb8635231809c131ec202512.pdf.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   Open in New Tab
                 </a>
               </Button>
@@ -342,7 +350,7 @@ const Resources = () => {
             <div className="relative w-full">
               <div className="relative w-full pb-[62.5%]">{/* 16:10 aspect ratio */}
                 <iframe
-                  src="https://online.fliphtml5.com/sgctech/obmg/"
+                  src="https://www.flipbookpdf.net/web/site/a4dd13bee94079adaa6e2edb8635231809c131ec202512.pdf.html"
                   title="ERP Solutions Guide Flipbook"
                   className="absolute inset-0 h-full w-full rounded-b-2xl border-t border-border"
                   allowFullScreen
