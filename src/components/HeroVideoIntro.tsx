@@ -6,15 +6,34 @@ interface HeroVideoIntroProps {
   className?: string;
 }
 
+const INTRO_VIDEO_SOURCES = [
+  "/videos/logo-intro-2025-720p.mp4",
+  "/videos/logo-intro-2025.mp4",
+];
+
 const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isVisible, setIsVisible] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [videoSourceIndex, setVideoSourceIndex] = useState(0);
 
   useEffect(() => {
-    // Video has built-in audio, no separate audio elements needed
-  }, []);
+    // Skip the intro on data-saver or very slow connections
+    const connection = (navigator as unknown as { connection?: { saveData?: boolean; effectiveType?: string } })?.connection;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (prefersReducedMotion) {
+      setIsVisible(false);
+      onComplete();
+      return;
+    }
+
+    if (connection?.saveData || connection?.effectiveType === "slow-2g" || connection?.effectiveType === "2g") {
+      setIsVisible(false);
+      onComplete();
+    }
+  }, [onComplete]);
 
   const handleVideoClick = () => {
     // Start playing the video (audio will sync via onTimeUpdate)
@@ -28,6 +47,11 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
       console.log("📍 User clicked - starting video playback");
       setIsPlaying(true);
       
+      // Set src if not already set
+      if (!video.src) {
+        video.src = INTRO_VIDEO_SOURCES[videoSourceIndex];
+      }
+
       video.play().then(() => {
         console.log("✅ Video started. Duration:", video.duration, "seconds");
         if (window.trackVideoEvent) {
@@ -71,16 +95,32 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
       <div className="absolute inset-0 flex items-center justify-center p-4 sm:p-6 md:p-8 lg:p-10">
         <video
           ref={videoRef}
-          src="/videos/logo-intro-2025.mp4"
           className="w-full max-w-[90vw] sm:max-w-[80vw] md:max-w-[70vw] lg:max-w-[60vw] xl:max-w-[50vw] 2xl:max-w-[800px] h-auto max-h-[70vh] object-contain cursor-pointer"
           playsInline
           preload="auto"
+          poster="/images/hero/sgc-tech-ai-logo.png"
           onClick={handleVideoClick}
           onLoadedMetadata={() => {
             const video = videoRef.current;
             if (video) {
               console.log("✅ Logo video loaded. Duration:", video.duration, "seconds");
             }
+          }}
+          onError={() => {
+            const nextIndex = videoSourceIndex + 1;
+            if (nextIndex < INTRO_VIDEO_SOURCES.length) {
+              setVideoSourceIndex(nextIndex);
+              const video = videoRef.current;
+              if (video) {
+                video.src = INTRO_VIDEO_SOURCES[nextIndex];
+              }
+              setIsPlaying(false);
+              return;
+            }
+
+            setHasError(true);
+            setIsVisible(false);
+            setTimeout(() => onComplete(), 500);
           }}
           onEnded={() => {
             console.log("✅ Video ended");
@@ -93,6 +133,7 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
             }, 1000);
           }}
           aria-label="SGC TECH AI Logo Reveal"
+          src={videoSrc ?? undefined}
         />
 
         {/* Mobile-First Play Overlay */}

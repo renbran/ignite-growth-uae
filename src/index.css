@@ -803,4 +803,44 @@ defined here. Components use semantic tokens.
 }
 @media (min-width: 1280px) { /* xl */
   :root { --header-offset: 12rem; --hero-video-nudge: 7rem; }
+@layer components {
+  .hero-pattern {
+    background-image: url('/images/hero/futuristic-circuit-pattern.png');
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.4) contrast(1.4) saturate(1.1);
+    animation: neuron-pulse 4s ease-in-out infinite;
+  }
+
+  .hero-video-filter {
+    filter: drop-shadow(0 0 60px rgba(0, 255, 255, 0.5)) contrast(1.15) brightness(1.1);
+  }
+
+  .hero-shadow-overlay {
+    box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.5);
+  }
+
+  .hero-mute-offset {
+    top: calc(var(--header-offset) + 1rem);
+  }
+
+  .will-change-opacity {
+    will-change: opacity;
+  }
+
+  .translate-z-0 {
+    transform: translateZ(0);
+  }
+
+  .typewriter-delay-0 {
+    animation-delay: 0s;
+  }
+
+  .typewriter-delay-1-5 {
+    animation-delay: 1.5s;
+  }
+
+  .typewriter-delay-3 {
+    animation-delay: 3s;
+  }
 }

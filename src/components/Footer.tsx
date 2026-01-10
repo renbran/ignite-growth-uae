@@ -1,5 +1,6 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Mail, Phone, MapPin, Linkedin, Twitter, Youtube } from "lucide-react";
+import HeaderCarousel from "@/components/HeaderCarousel";
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -49,8 +50,15 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-background-secondary border-t border-border">
-      <div className="container px-4 sm:px-6 lg:px-8 py-16">
+    <>
+      <div className="fixed bottom-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-t border-border/80 shadow-lg">
+        <div className="container mx-auto px-3 sm:px-6 pb-[env(safe-area-inset-bottom)]">
+          <HeaderCarousel />
+        </div>
+      </div>
+
+      <footer className="bg-background-secondary border-t border-border pb-28">
+        <div className="container px-4 sm:px-6 lg:px-8 pt-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-12 mb-12">
           {/* Brand Column */}
           <div className="lg:col-span-2">
@@ -174,8 +182,9 @@ const Footer = () => {
             </button>
           </div>
         </div>
-      </div>
-    </footer>
+        </div>
+      </footer>
+    </>
   );
 };
 

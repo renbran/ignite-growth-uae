@@ -7,14 +7,21 @@ import AudioSplashScreen from "./AudioSplashScreen";
 import PremiumIcon from "./PremiumIcon";
 import { SECTION_ICON_MAP } from "@/lib/iconMapping";
 
+const HERO_VIDEO_SOURCES = [
+  "/videos/logo-intro-2025-720p.mp4",
+  "/videos/logo-intro-2025.mp4",
+];
+
 const Hero = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isMuted, setIsMuted] = useState(true);
-  const [isVideoLoaded, setIsVideoLoaded] = useState(true);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [showSplash, setShowSplash] = useState(true);
   const [audioEnabled, setAudioEnabled] = useState(false);
+  const [shouldUseVideo, setShouldUseVideo] = useState(true);
+  const [videoSourceIndex, setVideoSourceIndex] = useState(0);
 
   // Handle navigation to section (works cross-page)
   const handleSectionNavigation = (sectionId: string) => {
@@ -34,14 +41,30 @@ const Hero = () => {
     setAudioEnabled(true);
   };
 
-  // Handle video autoplay with audio after user interaction
+  // Skip heavy video on data-saver or very slow connections
+  useEffect(() => {
+    const connection = (navigator as unknown as { connection?: { saveData?: boolean; effectiveType?: string } })?.connection;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (prefersReducedMotion) {
+      setShouldUseVideo(false);
+      return;
+    }
+
+    if (connection && (connection.saveData || connection.effectiveType === "slow-2g" || connection.effectiveType === "2g")) {
+      setShouldUseVideo(false);
+    }
+  }, []);
+
+  // Handle video autoplay immediately - hero video is critical content, no lazy loading
   useEffect(() => {
     const video = videoRef.current;
-    if (!video || !audioEnabled) return;
+    if (!video || !shouldUseVideo) return;
 
     const handleLoadedData = () => {
       setIsVideoLoaded(true);
-      video.muted = false; // Enable audio after user interaction
+      // Play muted video immediately for autoplay compliance
+      video.muted = !audioEnabled;
       const playPromise = video.play();
       if (playPromise !== undefined) {
         playPromise.catch((err) => {
@@ -59,7 +82,7 @@ const Hero = () => {
     return () => {
       video.removeEventListener("loadeddata", handleLoadedData);
     };
-  }, [audioEnabled]);
+  }, [audioEnabled, shouldUseVideo]);
 
   const toggleMute = () => {
     if (videoRef.current) {
@@ -74,17 +97,12 @@ const Hero = () => {
       {/* Audio Splash Screen */}
       {showSplash && <AudioSplashScreen onEnter={handleEnterSite} />}
 
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-[var(--header-offset)]">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-[max(4rem,var(--header-offset))]">
       {/* Futuristic Pattern Background */}
       <div className="absolute inset-0 z-0">
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ 
-            backgroundImage: "url('/images/hero/futuristic-circuit-pattern.png')",
-            filter: 'brightness(0.4) contrast(1.4) saturate(1.1)',
-            animation: 'neuron-pulse 4s ease-in-out infinite'
-          }}
-        />
+        {shouldUseVideo && (
+          <div className="absolute inset-0 hero-pattern" />
+        )}
         {/* Dark overlay for text contrast - 60% opacity */}
         <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/55 to-background/65"></div>
       </div>
@@ -97,31 +115,45 @@ const Hero = () => {
         </div>
         
         <div className="absolute inset-0 flex items-center justify-center hero-video-container">
-          <video
-            ref={videoRef}
-            className={`w-full h-full object-contain transition-opacity duration-700 ${
-              isVideoLoaded ? "opacity-70" : "opacity-0"
-            }`}
-            style={{
-              filter: 'drop-shadow(0 0 60px rgba(0, 255, 255, 0.5)) contrast(1.15) brightness(1.1)',
-              willChange: 'opacity',
-              transform: 'translateZ(0)',
-            }}
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="auto"
-            poster="/images/hero/sgc-tech-ai-logo.png"
-          >newnew
-            <source src="/videos/logo-intro-2025.mp4" type="video/mp4" />
-          </video>
+          {shouldUseVideo ? (
+            <video
+              ref={videoRef}
+              className={`w-full h-full object-contain transition-opacity duration-700 ${
+                isVideoLoaded ? "opacity-70" : "opacity-0"
+              } hero-video-filter will-change-opacity translate-z-0`}
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              crossOrigin="anonymous"
+              poster="/images/hero/sgc-tech-ai-logo.png"
+              onError={() => {
+                const nextIndex = videoSourceIndex + 1;
+                if (nextIndex < HERO_VIDEO_SOURCES.length) {
+                  setVideoSourceIndex(nextIndex);
+                } else {
+                  setShouldUseVideo(false);
+                }
+              }}
+            >
+              <source src={HERO_VIDEO_SOURCES[videoSourceIndex]} type="video/mp4" />
+            </video>
+          ) : (
+            <img
+              src="/images/hero/sgc-tech-ai-logo.png"
+              alt="SGC TECH AI logo"
+              className="w-full h-full object-contain opacity-80 hero-video-filter translate-z-0"
+              loading="eager"
+              decoding="sync"
+            />
+          )}
         </div>
         
         {/* Gradient Overlay for Text Readability - Reduced to 60% */}
         <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/55 to-background/65 animate-pulse-slow"></div>
         {/* Additional shadow overlay for enhanced contrast */}
-        <div className="absolute inset-0 shadow-inner" style={{ boxShadow: 'inset 0 0 60px rgba(0, 0, 0, 0.5)' }}></div>
+        <div className="absolute inset-0 shadow-inner hero-shadow-overlay"></div>
       </div>
 
       {/* Animated Grid Pattern Overlay - Reduced Opacity */}
@@ -130,8 +162,7 @@ const Hero = () => {
       {/* Mute/Unmute Button - Fixed Position */}
       <button
         onClick={toggleMute}
-        className="fixed right-4 z-50 p-3 bg-background/80 backdrop-blur-sm rounded-full hover:bg-background transition-transform duration-200 border border-border/50 hover:border-accent/50 group hover:scale-105"
-        style={{ top: `calc(var(--header-offset) + 1rem)` }}
+        className="fixed right-4 z-50 p-3 bg-background/80 backdrop-blur-sm rounded-full hover:bg-background transition-transform duration-200 border border-border/50 hover:border-accent/50 group hover:scale-105 hero-mute-offset"
         aria-label={isMuted ? "Unmute background video" : "Mute background video"}
         title={isMuted ? "Unmute background video" : "Mute background video"}
       >
@@ -149,14 +180,14 @@ const Hero = () => {
           {/* Main Headline with Typewriter Effect */}
           <div className="space-y-4 animate-fade-in stagger-3">
             <h1 className="font-display font-black text-4xl md:text-6xl lg:text-7xl leading-tight">
-              <span className="typewriter-line text-gradient block" style={{ animationDelay: '0s' }}>
+              <span className="typewriter-line text-gradient block typewriter-delay-0">
                 UAE's Fastest ERP Implementation
               </span>
             </h1>
-            <p className="typewriter-line text-xl md:text-2xl lg:text-3xl text-foreground-muted font-display" style={{ animationDelay: '1.5s' }}>
+            <p className="typewriter-line text-xl md:text-2xl lg:text-3xl text-foreground-muted font-display typewriter-delay-1-5">
               Intelligent Infrastructure Deployed in 14 Days.
             </p>
-            <p className="typewriter-line text-xl md:text-2xl lg:text-3xl font-display" style={{ animationDelay: '3s' }}>
+            <p className="typewriter-line text-xl md:text-2xl lg:text-3xl font-display typewriter-delay-3">
               <span className="text-success font-bold">Guaranteed ROI in 6 Months.</span>
             </p>
           </div>
