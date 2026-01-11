@@ -102,7 +102,7 @@ const HeroContentStage = ({ isActive, className }: HeroContentStageProps) => {
             className="min-w-[250px] border-2 border-[#4fc3f7] text-[#4fc3f7] hover:bg-[rgba(79,195,247,0.1)]"
             asChild
           >
-            <a href="#pricing">View Launch Partner Pricing</a>
+            <a href="/pricing">View Launch Partner Pricing</a>
           </Button>
         </div>
 

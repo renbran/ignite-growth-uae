@@ -333,7 +333,7 @@ const ROICalculator = () => {
             <div className="flex flex-col sm:flex-row items-center gap-sm w-full md:w-auto">
               <Button
                 className="w-full sm:w-auto bg-accent hover:bg-accent/90 text-accent-foreground"
-                onClick={() => (window.location.href = "/pricing#free-trial")}
+                onClick={() => (window.location.href = "/pricing")}
               >
                 Start Free Trial
               </Button>
@@ -616,7 +616,7 @@ const ROICalculator = () => {
                 <Button
                   variant="outline"
                   className="w-full sm:w-auto"
-                  onClick={() => (window.location.href = "/pricing#free-trial")}
+                  onClick={() => (window.location.href = "/pricing")}
                   type="button"
                 >
                   Start Free Trial
