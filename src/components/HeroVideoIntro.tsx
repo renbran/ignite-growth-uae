@@ -17,6 +17,7 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
   const [hasError, setHasError] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [videoSourceIndex, setVideoSourceIndex] = useState(0);
+  const videoSrc = INTRO_VIDEO_SOURCES[videoSourceIndex];
 
   useEffect(() => {
     // Skip the intro on data-saver or very slow connections
@@ -47,11 +48,6 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
       console.log("📍 User clicked - starting video playback");
       setIsPlaying(true);
       
-      // Set src if not already set
-      if (!video.src) {
-        video.src = INTRO_VIDEO_SOURCES[videoSourceIndex];
-      }
-
       video.play().then(() => {
         console.log("✅ Video started. Duration:", video.duration, "seconds");
         if (window.trackVideoEvent) {
@@ -97,7 +93,9 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
           ref={videoRef}
           className="w-full max-w-[90vw] sm:max-w-[80vw] md:max-w-[70vw] lg:max-w-[60vw] xl:max-w-[50vw] 2xl:max-w-[800px] h-auto max-h-[70vh] object-contain cursor-pointer"
           playsInline
+          muted
           preload="auto"
+          controls={false}
           poster="/images/hero/sgc-tech-ai-logo.png"
           onClick={handleVideoClick}
           onLoadedMetadata={() => {
@@ -133,7 +131,7 @@ const HeroVideoIntro = ({ onComplete, className }: HeroVideoIntroProps) => {
             }, 1000);
           }}
           aria-label="SGC TECH AI Logo Reveal"
-          src={videoSrc ?? undefined}
+          src={videoSrc}
         />
 
         {/* Mobile-First Play Overlay */}

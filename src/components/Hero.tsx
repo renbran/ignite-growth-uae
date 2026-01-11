@@ -126,6 +126,7 @@ const Hero = () => {
               muted
               playsInline
               preload="auto"
+              controls={false}
               crossOrigin="anonymous"
               poster="/images/hero/sgc-tech-ai-logo.png"
               onError={() => {

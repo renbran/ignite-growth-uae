@@ -577,3 +577,19 @@ Before committing code, verify:
 
 **Last Updated**: November 2025  
 **Maintainer**: GitHub Copilot for SGC TECH AI / Ignite Growth UAE
+
+---
+
+## MCP Integration
+- **Overview:** The workspace includes a VS Code MCP configuration to surface local tools in agent mode.
+- **Config:** See [../.vscode/mcp.json](../.vscode/mcp.json) for server entries.
+- **Servers:**
+  - Filesystem: `@modelcontextprotocol/server-filesystem` scoped to this repo (src, public, root)
+  - Memory: `@modelcontextprotocol/server-memory` for quick scratch/context
+  - GitHub: `@modelcontextprotocol/server-github` (requires `GITHUB_TOKEN` in environment)
+- **Docs:**
+  - TypeScript SDK: https://github.com/modelcontextprotocol/typescript-sdk
+  - Python SDK: https://github.com/modelcontextprotocol/python-sdk
+  - Getting Started: https://modelcontextprotocol.io/docs/getting-started/intro
+  - Build Server: https://modelcontextprotocol.io/docs/develop/build-server
+- **VS Code usage:** In Copilot Chat agent mode, tools from configured MCP servers appear automatically. Ensure your environment variables (e.g., `GITHUB_TOKEN`) are set before connecting.

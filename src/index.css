@@ -803,6 +803,8 @@ defined here. Components use semantic tokens.
 }
 @media (min-width: 1280px) { /* xl */
   :root { --header-offset: 12rem; --hero-video-nudge: 7rem; }
+}
+
 @layer components {
   .hero-pattern {
     background-image: url('/images/hero/futuristic-circuit-pattern.png');
