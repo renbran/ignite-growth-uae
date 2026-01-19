@@ -1,0 +1,264 @@
+{
+  "name": "Enhanced_Webhook_Mail_OdooTrial",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "b3a132d7-ae3d-4a4f-8e9a-e17d8122c11a",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "717d7c0f-21a5-40f6-be8b-473b0a7bb4ed",
+      "name": "Webhook",
+      "webhookId": "b3a132d7-ae3d-4a4f-8e9a-e17d8122c11a"
+    },
+    {
+      "parameters": {
+        "fromEmail": "noreply@scholarixglobal.com",
+        "toEmail": "=renbranmadelo@gmail.com,{{ $json.email }}",
+        "subject": "🎉 Your Odoo Free Trial Request - SGC TECH AI",
+        "html": "=<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: 'Arial', sans-serif; line-height: 1.6; color: #333; }\n    .container { max-width: 600px; margin: 0 auto; padding: 20px; }\n    .header { background: linear-gradient(135deg, #1E3A8A 0%, #10B981 100%); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }\n    .content { background: #f8f9fa; padding: 30px; border-radius: 0 0 10px 10px; }\n    .info-box { background: white; padding: 20px; margin: 20px 0; border-left: 4px solid #10B981; border-radius: 5px; }\n    .info-row { padding: 10px 0; border-bottom: 1px solid #e0e0e0; }\n    .info-row:last-child { border-bottom: none; }\n    .label { font-weight: bold; color: #1E3A8A; display: inline-block; width: 150px; }\n    .footer { text-align: center; padding: 20px; color: #666; font-size: 12px; }\n    .cta-button { display: inline-block; background: #10B981; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; margin: 20px 0; }\n  </style>\n</head>\n<body>\n  <div class=\"container\">\n    <div class=\"header\">\n      <h1>🚀 Welcome to SGC TECH AI</h1>\n      <p>Your Odoo Free Trial Request Received</p>\n    </div>\n    <div class=\"content\">\n      <h2>Hi {{ $json.name }},</h2>\n      <p>Thank you for requesting a free trial of our Managed Odoo Platform! We're excited to help transform your business with AI-native technology.</p>\n      \n      <div class=\"info-box\">\n        <h3 style=\"color: #1E3A8A; margin-top: 0;\">📋 Your Trial Details</h3>\n        <div class=\"info-row\">\n          <span class=\"label\">Name:</span>\n          <span>{{ $json.name }}</span>\n        </div>\n        <div class=\"info-row\">\n          <span class=\"label\">Company:</span>\n          <span>{{ $json.company }}</span>\n        </div>\n        <div class=\"info-row\">\n          <span class=\"label\">Email:</span>\n          <span>{{ $json.email }}</span>\n        </div>\n        <div class=\"info-row\">\n          <span class=\"label\">Phone:</span>\n          <span>{{ $json.phone }}</span>\n        </div>\n        <div class=\"info-row\">\n          <span class=\"label\">Server Location:</span>\n          <span>{{ $json.server_location }}</span>\n        </div>\n        <div class=\"info-row\">\n          <span class=\"label\">Request Time:</span>\n          <span>{{ $json.timestamp }}</span>\n        </div>\n      </div>\n\n      <div class=\"info-box\" style=\"border-left-color: #F59E0B;\">\n        <h3 style=\"color: #F59E0B; margin-top: 0;\">⏱️ What Happens Next?</h3>\n        <ol style=\"padding-left: 20px;\">\n          <li><strong>Within 2 Hours:</strong> Our team will provision your Odoo instance on {{ $json.server_location }} server</li>\n          <li><strong>Within 24 Hours:</strong> You'll receive login credentials and setup instructions</li>\n          <li><strong>4 Weeks Free:</strong> Full access to enterprise-grade Odoo ERP with AI automation</li>\n          <li><strong>Ongoing Support:</strong> Our experts will guide you through setup and optimization</li>\n        </ol>\n      </div>\n\n      <div style=\"text-align: center;\">\n        <a href=\"https://scholarixglobal.com/odoo-trial\" class=\"cta-button\" style=\"color: white;\">📚 View Getting Started Guide</a>\n      </div>\n\n      <div class=\"info-box\" style=\"border-left-color: #1E3A8A; background: #E0F2FE;\">\n        <h3 style=\"color: #1E3A8A; margin-top: 0;\">✨ Your Trial Includes:</h3>\n        <ul style=\"padding-left: 20px;\">\n          <li>✅ Enterprise-grade Odoo ERP platform</li>\n          <li>✅ AI automation tools and workflows</li>\n          <li>✅ Dedicated server resources</li>\n          <li>✅ Technical support and onboarding</li>\n          <li>✅ No credit card required</li>\n          <li>✅ No obligation to continue</li>\n        </ul>\n      </div>\n\n      <p style=\"margin-top: 30px;\"><strong>Questions?</strong> Reply to this email or call us at <a href=\"tel:+971509675518\">+971 50 967 5518</a></p>\n    </div>\n    <div class=\"footer\">\n      <p><strong>SGC TECH AI</strong> - A division of Scholarix Global Consultants<br>\n      Dubai, United Arab Emirates<br>\n      <a href=\"mailto:info@sgctech.ai\">info@sgctech.ai</a> | <a href=\"https://scholarixglobal.com\">scholarixglobal.com</a></p>\n      <p style=\"color: #999; font-size: 11px; margin-top: 20px;\">© 2026 SGC TECH AI. All rights reserved.<br>\nThis is an automated confirmation email. Please do not reply directly to this message.</p>\n    </div>\n  </div>\n</body>\n</html>",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        300,
+        0
+      ],
+      "id": "b3b6761b-290c-45f3-aa22-2c5fbabdc989",
+      "name": "Send Confirmation Email",
+      "webhookId": "9f424d32-644f-40d0-ae7a-6a8c6984556f",
+      "credentials": {
+        "smtp": {
+          "id": "LdfsBWBCZSSn1HzM",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "value": "jGIyU8yWRc3YUuCF",
+          "mode": "list",
+          "cachedResultName": "Requests",
+          "cachedResultUrl": "/projects/IlJeMhbkf3tgVJKB/datatables/jGIyU8yWRc3YUuCF"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $('Webhook').item.json.name }}",
+            "Email": "={{ $('Webhook').item.json.email }}",
+            "Mobile": "={{ $('Webhook').item.json.phone }}",
+            "Company": "={{ $('Webhook').item.json.company }}",
+            "ServerLocation": "={{ $('Webhook').item.json.server_location }}",
+            "Timestamp": "={{ $('Webhook').item.json.timestamp }}",
+            "Source": "={{ $('Webhook').item.json.headers.host || 'Website Form' }}",
+            "Status": "Pending Setup"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Mobile",
+              "displayName": "Mobile",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Company",
+              "displayName": "Company",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "ServerLocation",
+              "displayName": "Server Location",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Timestamp",
+              "displayName": "Timestamp",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Source",
+              "displayName": "Source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {
+          "optimizeBulk": false
+        }
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        600,
+        0
+      ],
+      "id": "3f24007b-42fa-45cd-a437-b6ddc72486d3",
+      "name": "Insert to Database",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"success\": true, \"message\": \"Trial request received successfully\", \"email_sent\": true, \"request_id\": $('Webhook').item.json.timestamp } }}"
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        900,
+        0
+      ],
+      "id": "response-node-id",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "fromEmail": "noreply@scholarixglobal.com",
+        "toEmail": "renbranmadelo@gmail.com",
+        "subject": "=🔔 New Odoo Trial Request - {{ $('Webhook').item.json.company }}",
+        "html": "=<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }\n    .container { max-width: 600px; margin: 0 auto; padding: 20px; background: #f5f5f5; }\n    .header { background: #1E3A8A; color: white; padding: 20px; text-align: center; }\n    .content { background: white; padding: 20px; }\n    .info-row { padding: 8px; border-bottom: 1px solid #eee; }\n    .label { font-weight: bold; color: #1E3A8A; width: 150px; display: inline-block; }\n    .priority { background: #10B981; color: white; padding: 5px 15px; border-radius: 20px; display: inline-block; }\n  </style>\n</head>\n<body>\n  <div class=\"container\">\n    <div class=\"header\">\n      <h2>🎯 New Odoo Free Trial Request</h2>\n      <p style=\"margin: 5px 0;\"><span class=\"priority\">ACTION REQUIRED</span></p>\n    </div>\n    <div class=\"content\">\n      <h3>Contact Information</h3>\n      <div class=\"info-row\"><span class=\"label\">Name:</span> {{ $('Webhook').item.json.name }}</div>\n      <div class=\"info-row\"><span class=\"label\">Company:</span> {{ $('Webhook').item.json.company }}</div>\n      <div class=\"info-row\"><span class=\"label\">Email:</span> <a href=\"mailto:{{ $('Webhook').item.json.email }}\">{{ $('Webhook').item.json.email }}</a></div>\n      <div class=\"info-row\"><span class=\"label\">Phone:</span> <a href=\"tel:{{ $('Webhook').item.json.phone }}\">{{ $('Webhook').item.json.phone }}</a></div>\n      <div class=\"info-row\"><span class=\"label\">Server Location:</span> {{ $('Webhook').item.json.server_location }}</div>\n      <div class=\"info-row\"><span class=\"label\">Requested:</span> {{ $('Webhook').item.json.timestamp }}</div>\n      \n      <h3 style=\"margin-top: 30px; color: #F59E0B;\">⚡ Next Steps:</h3>\n      <ol>\n        <li>Provision Odoo instance on {{ $('Webhook').item.json.server_location }} server</li>\n        <li>Set up user credentials and access</li>\n        <li>Send login details within 24 hours</li>\n        <li>Schedule onboarding call if needed</li>\n      </ol>\n      \n      <p style=\"margin-top: 30px; padding: 15px; background: #E0F2FE; border-left: 4px solid #1E3A8A;\">\n        <strong>⏰ SLA:</strong> Respond within 2 hours, provision within 24 hours\n      </p>\n    </div>\n  </div>\n</body>\n</html>",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        300,
+        200
+      ],
+      "id": "admin-notification-id",
+      "name": "Send Admin Notification",
+      "webhookId": "admin-webhook-id",
+      "credentials": {
+        "smtp": {
+          "id": "LdfsBWBCZSSn1HzM",
+          "name": "SMTP account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Send Confirmation Email",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send Admin Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Confirmation Email": {
+      "main": [
+        [
+          {
+            "node": "Insert to Database",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert to Database": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "enhanced-version-2026",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "92d21a714d5c215083acc81cbbaf10718f44bafa07d980e3e276368baed14a3c"
+  },
+  "id": "EnhancedOdooTrialWorkflow",
+  "tags": [
+    "production",
+    "odoo-trial",
+    "automated"
+  ]
+}

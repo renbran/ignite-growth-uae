@@ -19,6 +19,8 @@ const About = lazy(() => import("./pages/About"));
 const Resources = lazy(() => import("./pages/Resources"));
 const BookConsultation = lazy(() => import("./pages/BookConsultation"));
 const Article = lazy(() => import("./pages/Article"));
+const Privacy = lazy(() => import("./pages/Privacy"));
+const Terms = lazy(() => import("./pages/Terms"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 // Loading fallback component for lazy routes
@@ -68,6 +70,8 @@ const App = () => (
             <Route path="/resources" element={<Resources />} />
             <Route path="/book-consultation" element={<BookConsultation />} />
             <Route path="/article/:slug" element={<Article />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

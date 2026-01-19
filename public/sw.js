@@ -47,14 +47,32 @@ const CACHE_STRATEGIES = {
   // Stale while revalidate (best for performance)
   staleWhileRevalidate: async (request) => {
     const cached = await caches.match(request);
-    const fetchPromise = fetch(request).then((response) => {
-      if (response.ok) {
-        const cache = caches.open(CACHE_NAME);
-        cache.then((c) => c.put(request, response.clone()));
-      }
-      return response;
-    });
+    const fetchPromise = fetch(request)
+      .then(async (response) => {
+        // If the response is invalid, just return it (or cached fallback handled below)
+        const isCacheable = response && (response.ok || response.type === 'opaque');
+        if (!isCacheable) {
+          return response;
+        }
 
+        // Clone immediately before any async work to avoid "body used" errors
+        const responseClone = response.clone();
+        try {
+          const cache = await caches.open(CACHE_NAME);
+          await cache.put(request, responseClone);
+        } catch (err) {
+          // Don't crash the SW if caching fails; log and continue
+          console.warn('SW cache put failed:', err);
+        }
+        return response;
+      })
+      .catch((err) => {
+        // If network fetch fails, fall back to cache when possible
+        console.warn('SW fetch failed in staleWhileRevalidate:', err);
+        return cached || new Response('Offline - Resource not available', { status: 503 });
+      });
+
+    // Return cached response immediately if available, while refreshing in background
     return cached || fetchPromise;
   },
 };

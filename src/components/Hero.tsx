@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Volume2, VolumeX } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
-import AudioSplashScreen from "./AudioSplashScreen";
 import PremiumIcon from "./PremiumIcon";
 import { SECTION_ICON_MAP } from "@/lib/iconMapping";
 
@@ -18,8 +17,6 @@ const Hero = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isMuted, setIsMuted] = useState(true);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
-  const [showSplash, setShowSplash] = useState(true);
-  const [audioEnabled, setAudioEnabled] = useState(false);
   const [shouldUseVideo, setShouldUseVideo] = useState(true);
   const [videoSourceIndex, setVideoSourceIndex] = useState(0);
 
@@ -33,12 +30,6 @@ const Hero = () => {
     } else {
       navigate(`/#${sectionId}`);
     }
-  };
-
-  // Handle splash screen entry - enables audio
-  const handleEnterSite = () => {
-    setShowSplash(false);
-    setAudioEnabled(true);
   };
 
   // Skip heavy video on data-saver or very slow connections
@@ -63,8 +54,8 @@ const Hero = () => {
 
     const handleLoadedData = () => {
       setIsVideoLoaded(true);
-      // Play muted video immediately for autoplay compliance
-      video.muted = !audioEnabled;
+      // Play video immediately with autoplay
+      video.muted = isMuted;
       const playPromise = video.play();
       if (playPromise !== undefined) {
         playPromise.catch((err) => {
@@ -82,7 +73,7 @@ const Hero = () => {
     return () => {
       video.removeEventListener("loadeddata", handleLoadedData);
     };
-  }, [audioEnabled, shouldUseVideo]);
+  }, [isMuted, shouldUseVideo]);
 
   const toggleMute = () => {
     if (videoRef.current) {
@@ -93,11 +84,7 @@ const Hero = () => {
   };
 
   return (
-    <>
-      {/* Audio Splash Screen */}
-      {showSplash && <AudioSplashScreen onEnter={handleEnterSite} />}
-
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-[max(4rem,var(--header-offset))]">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-[max(4rem,var(--header-offset))]">
       {/* Futuristic Pattern Background */}
       <div className="absolute inset-0 z-0">
         {shouldUseVideo && (
@@ -258,7 +245,6 @@ const Hero = () => {
       {/* Bottom Fade */}
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent z-0"></div>
     </section>
-    </>
   );
 };
 

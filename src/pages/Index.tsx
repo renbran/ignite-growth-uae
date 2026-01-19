@@ -4,6 +4,7 @@ import ValueProposition from "@/components/ValueProposition";
 import Industries from "@/components/Industries";
 import PremiumServices from "@/components/PremiumServices";
 import ROICalculator from "@/components/ROICalculator";
+import OdooFreeTrial from "@/components/OdooFreeTrial";
 import ContactForm from "@/components/ContactForm";
 import Footer from "@/components/Footer";
 import BackgroundAnimation from "@/components/BackgroundAnimation";
@@ -70,6 +71,17 @@ const Index = () => {
             className="left-0 z-0"
           />
           <ROICalculator />
+        </div>
+        
+        {/* Odoo Free Trial pattern */}
+        <div className="relative">
+          <BackgroundPatterns 
+            pattern="hexagon" 
+            opacity={0.12} 
+            position="center"
+            className="left-0 z-0"
+          />
+          <OdooFreeTrial />
         </div>
         
         {/* Contact Form pattern */}
