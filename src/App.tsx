@@ -3,18 +3,15 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Analytics } from "@vercel/analytics/react";
-import { useEffect, lazy, Suspense } from "react";
-import posthog from "posthog-js";
+import { Suspense, lazy } from "react";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import LoadingScreen from "@/components/LoadingScreen";
 import SmokeAurora from "@/components/SmokeAurora";
 import JotFormChatbot from "@/components/JotFormChatbot";
 import ScrollToTop from "@/components/ScrollToTop";
-import NewsCarousel from "@/components/NewsCarousel";
 import Index from "./pages/Index";
 
-// Lazy load non-critical routes for better performance
+// Lazy load heavy pages to improve initial load time
 const Solutions = lazy(() => import("./pages/Solutions"));
 const Industries = lazy(() => import("./pages/Industries"));
 const Pricing = lazy(() => import("./pages/Pricing"));
@@ -22,24 +19,37 @@ const About = lazy(() => import("./pages/About"));
 const Resources = lazy(() => import("./pages/Resources"));
 const BookConsultation = lazy(() => import("./pages/BookConsultation"));
 const Article = lazy(() => import("./pages/Article"));
+const Privacy = lazy(() => import("./pages/Privacy"));
+const Terms = lazy(() => import("./pages/Terms"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
-const queryClient = new QueryClient();
+// Loading fallback component for lazy routes
+const PageLoader = () => (
+  <div className="min-h-screen flex items-center justify-center bg-background">
+    <div className="text-center">
+      <div className="inline-flex items-center gap-2 mb-4">
+        <div className="w-2 h-2 bg-accent rounded-full animate-pulse"></div>
+        <div className="w-2 h-2 bg-accent rounded-full animate-pulse" style={{ animationDelay: "0.2s" }}></div>
+        <div className="w-2 h-2 bg-accent rounded-full animate-pulse" style={{ animationDelay: "0.4s" }}></div>
+      </div>
+      <p className="text-foreground-muted">Loading page...</p>
+    </div>
+  </div>
+);
 
-const App = () => {
-  // Initialize PostHog
-  useEffect(() => {
-    if (import.meta.env.VITE_POSTHOG_KEY) {
-      posthog.init(import.meta.env.VITE_POSTHOG_KEY, {
-        api_host: import.meta.env.VITE_POSTHOG_HOST || "https://app.posthog.com",
-        loaded: (posthog) => {
-          if (import.meta.env.DEV) posthog.debug();
-        },
-      });
-    }
-  }, []);
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      // Optimize query caching for slow networks
+      staleTime: 5 * 60 * 1000, // 5 minutes
+      gcTime: 10 * 60 * 1000, // 10 minutes
+      retry: 2,
+      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+    },
+  },
+});
 
-  return (
+const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
@@ -50,8 +60,7 @@ const App = () => {
       <JotFormChatbot />
       <BrowserRouter>
         <ScrollToTop />
-        <NewsCarousel />
-        <Suspense fallback={<LoadingScreen />}>
+        <Suspense fallback={<PageLoader />}>
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/solutions" element={<Solutions />} />
@@ -61,15 +70,15 @@ const App = () => {
             <Route path="/resources" element={<Resources />} />
             <Route path="/book-consultation" element={<BookConsultation />} />
             <Route path="/article/:slug" element={<Article />} />
-            {/* Catch-all 404 route - must be last */}
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
       </BrowserRouter>
-      <Analytics />
     </TooltipProvider>
   </QueryClientProvider>
-  );
-};
+);
 
 export default App;

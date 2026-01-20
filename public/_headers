@@ -2,15 +2,59 @@
   Cache-Control: max-age=3600, must-revalidate
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
+  X-XSS-Protection: 1; mode=block
+  Referrer-Policy: strict-origin-when-cross-origin
 
+# Optimized for slow networks - aggressive caching
 /assets/*
   Cache-Control: max-age=31536000, immutable
+  CDN-Cache-Control: max-age=31536000
 
+# JavaScript bundles with versioning
 /*.js
-  Cache-Control: max-age=3600, must-revalidate
+  Cache-Control: max-age=31536000, immutable
+  CDN-Cache-Control: max-age=31536000
 
+# CSS with versioning
 /*.css
-  Cache-Control: max-age=3600, must-revalidate
+  Cache-Control: max-age=31536000, immutable
+  CDN-Cache-Control: max-age=31536000
 
+# HTML - always revalidate for fresh content
 /index.html
   Cache-Control: max-age=0, no-cache, no-store, must-revalidate
+  CDN-Cache-Control: max-age=3600
+
+# Images - moderate caching
+/images/*
+  Cache-Control: public, max-age=604800, s-maxage=604800
+  CDN-Cache-Control: max-age=604800
+
+# Fonts - long-term caching
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+  CDN-Cache-Control: max-age=31536000
+
+# Videos - moderate caching with revalidation
+/videos/*
+  Cache-Control: public, max-age=604800, s-maxage=604800
+  CDN-Cache-Control: max-age=604800
+
+# API calls - no caching
+/api/*
+  Cache-Control: public, max-age=0, must-revalidate
+  CDN-Cache-Control: max-age=0
+
+# Service worker - always fresh
+/sw.js
+  Cache-Control: max-age=0, no-cache, no-store, must-revalidate
+  CDN-Cache-Control: max-age=0
+
+# Manifest and metadata - moderate caching
+/manifest.json
+  Cache-Control: public, max-age=86400
+  CDN-Cache-Control: max-age=86400
+
+# Enable gzip compression and brotli
+/*
+  Content-Encoding: gzip

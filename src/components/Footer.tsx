@@ -1,5 +1,7 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Mail, Phone, MapPin, Linkedin, Twitter, Youtube } from "lucide-react";
+import HeaderCarousel from "@/components/HeaderCarousel";
+import VideoLogo from "@/components/VideoLogo";
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -49,13 +51,20 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-background-secondary border-t border-border">
-      <div className="container px-4 sm:px-6 lg:px-8 py-16">
+    <>
+      <div className="fixed bottom-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-t border-border/80 shadow-lg">
+        <div className="container mx-auto px-3 sm:px-6 pb-[env(safe-area-inset-bottom)]">
+          <HeaderCarousel />
+        </div>
+      </div>
+
+      <footer className="bg-background-secondary border-t border-border pb-28">
+        <div className="container px-4 sm:px-6 lg:px-8 pt-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-12 mb-12">
           {/* Brand Column */}
           <div className="lg:col-span-2">
             <Link to="/" className="flex items-center gap-3 mb-6 group">
-              <img src="/sgc-tech-ai-logo-full-color.png" alt="Scholarix Global Logo" className="h-12 w-12 transition-transform group-hover:scale-110" />
+              <VideoLogo className="w-12 h-12" />
               <div className="flex flex-col">
                 <span className="font-display font-bold text-2xl text-gradient leading-none">SGC TECH AI</span>
                 <span className="text-xs text-foreground-subtle font-body">by Scholarix Global</span>
@@ -159,23 +168,18 @@ const Footer = () => {
           </div>
           
           <div className="flex items-center gap-4 text-sm">
-            <button
-              onClick={() => handleSectionNavigation("/", "contact")}
-              className="text-foreground-muted hover:text-accent transition-colors"
-            >
+            <Link to="/privacy" className="text-foreground-muted hover:text-accent transition-colors">
               Privacy Policy
-            </button>
+            </Link>
             <span className="text-border">|</span>
-            <button
-              onClick={() => handleSectionNavigation("/", "contact")}
-              className="text-foreground-muted hover:text-accent transition-colors"
-            >
+            <Link to="/terms" className="text-foreground-muted hover:text-accent transition-colors">
               Terms of Service
-            </button>
+            </Link>
           </div>
         </div>
-      </div>
-    </footer>
+        </div>
+      </footer>
+    </>
   );
 };
 

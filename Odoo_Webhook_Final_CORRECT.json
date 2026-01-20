@@ -1,0 +1,112 @@
+{
+  "name": "Odoo_Free_Trial_Webhook_FINAL",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "b3a132d7-ae3d-4a4f-8e9a-e17d8122c11a",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [0, 0],
+      "id": "webhook-node",
+      "name": "Webhook",
+      "webhookId": "b3a132d7-ae3d-4a4f-8e9a-e17d8122c11a"
+    },
+    {
+      "parameters": {
+        "fromEmail": "noreply@scholarixglobal.com",
+        "toEmail": "=renbranmadelo@gmail.com,{{ $json.email }}",
+        "subject": "🎉 Your Odoo Free Trial Request Received - SGC TECH AI",
+        "html": "=<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Welcome to SGC TECH AI - Your Free Trial Awaits</title>\n</head>\n<body style=\"margin: 0; padding: 0; font-family: 'Inter', 'Roboto', Arial, sans-serif; background-color: #f4f4f4;\">\n    <table role=\"presentation\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" style=\"background-color: #f4f4f4;\">\n        <tr>\n            <td align=\"center\" style=\"padding: 20px 0;\">\n                <table role=\"presentation\" width=\"600\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" style=\"background-color: #ffffff; max-width: 600px;\">\n                    \n                    <!-- Header -->\n                    <tr>\n                        <td style=\"background: linear-gradient(135deg, #0c1e34 0%, #1e3a8a 100%); padding: 40px 30px; text-align: center;\">\n                            <h1 style=\"margin: 0 0 10px 0; font-size: 32px; font-weight: 700; color: #ffffff; letter-spacing: 2px;\">SGC TECH AI</h1>\n                            <p style=\"margin: 0; color: #00FFF0; font-size: 16px; font-weight: 600; letter-spacing: 1px;\">Intelligent Infrastructure. Instant Impact.</p>\n                        </td>\n                    </tr>\n\n                    <!-- Main Content -->\n                    <tr>\n                        <td style=\"padding: 40px 30px;\">\n                            \n                            <!-- Greeting -->\n                            <h2 style=\"margin: 0 0 20px 0; font-size: 24px; font-weight: 600; color: #0c1e34;\">Welcome, {{ $json.name }}! 🎉</h2>\n                            \n                            <!-- Body Text -->\n                            <p style=\"margin: 0 0 20px 0; font-size: 16px; line-height: 1.6; color: #333333;\">\n                                Thank you for choosing <strong>SGC TECH AI</strong> for your enterprise AI transformation journey. We're excited to show you how intelligent infrastructure can deliver instant impact to your business.\n                            </p>\n\n                            <p style=\"margin: 0 0 20px 0; font-size: 16px; line-height: 1.6; color: #333333;\">\n                                Your <span style=\"color: #1e3a8a; font-weight: 600;\">free trial account</span> is now active and ready to use! We've noted your preference for the <strong>{{ $json.server_location }}</strong> server location and will have everything ready within 24 hours.\n                            </p>\n\n                            <!-- Request Details -->\n                            <table role=\"presentation\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" style=\"margin: 30px 0;\">\n                                <tr>\n                                    <td style=\"background-color: #f8f9fa; border-left: 4px solid #00FFF0; padding: 20px; border-radius: 4px;\">\n                                        <h3 style=\"margin: 0 0 15px 0; font-size: 18px; font-weight: 700; color: #0c1e34;\">📋 Your Request Details</h3>\n                                        \n                                        <p style=\"margin: 10px 0; font-size: 15px; color: #333333;\">\n                                            <span style=\"font-weight: 600; color: #1e3a8a; display: inline-block; width: 120px;\">Name:</span>\n                                            <span>{{ $json.name }}</span>\n                                        </p>\n                                        \n                                        <p style=\"margin: 10px 0; font-size: 15px; color: #333333;\">\n                                            <span style=\"font-weight: 600; color: #1e3a8a; display: inline-block; width: 120px;\">Company:</span>\n                                            <span>{{ $json.company }}</span>\n                                        </p>\n                                        \n                                        <p style=\"margin: 10px 0; font-size: 15px; color: #333333;\">\n                                            <span style=\"font-weight: 600; color: #1e3a8a; display: inline-block; width: 120px;\">Email:</span>\n                                            <span>{{ $json.email }}</span>\n                                        </p>\n                                        \n                                        <p style=\"margin: 10px 0; font-size: 15px; color: #333333;\">\n                                            <span style=\"font-weight: 600; color: #1e3a8a; display: inline-block; width: 120px;\">Phone:</span>\n                                            <span>{{ $json.phone }}</span>\n                                        </p>\n                                        \n                                        <p style=\"margin: 10px 0; font-size: 15px; color: #333333;\">\n                                            <span style=\"font-weight: 600; color: #1e3a8a; display: inline-block; width: 120px;\">Server Location:</span>\n                                            <span>{{ $json.server_location }}</span>\n                                        </p>\n                                    </td>\n                                </tr>\n                            </table>\n\n                            <!-- Next Steps -->\n                            <table role=\"presentation\" width=\"100%\" cellspacing=\"0\" cellpadding=\"0\" border=\"0\" style=\"margin: 25px 0;\">\n                                <tr>\n                                    <td style=\"background-color: #f0f8ff; padding: 25px; border-radius: 6px;\">\n                                        <h3 style=\"margin: 0 0 15px 0; font-size: 18px; font-weight: 700; color: #0c1e34;\">⏱️ What Happens Next:</h3>\n                                        \n                                        <p style=\"margin: 12px 0; padding-left: 25px; font-size: 15px; line-height: 1.5; color: #333333;\">\n                                            ✅ <strong>Within 2 Hours:</strong> Our team will provision your Odoo instance\n                                        </p>\n                                        \n                                        <p style=\"margin: 12px 0; padding-left: 25px; font-size: 15px; line-height: 1.5; color: #333333;\">\n                                            ✅ <strong>Within 24 Hours:</strong> You'll receive login credentials\n                                        </p>\n                                        \n                                        <p style=\"margin: 12px 0; padding-left: 25px; font-size: 15px; line-height: 1.5; color: #333333;\">\n                                            ✅ <strong>4 Weeks Free:</strong> Full access to enterprise-grade Odoo ERP\n                                        </p>\n                                        \n                                        <p style=\"margin: 12px 0; padding-left: 25px; font-size: 15px; line-height: 1.5; color: #333333;\">\n                                            ✅ <strong>Ongoing Support:</strong> Our experts guide you through setup\n                                        </p>\n                                    </td>\n                                </tr>\n                            </table>\n\n                            <!-- Support Text -->\n                            <p style=\"margin: 25px 0 20px 0; font-size: 16px; line-height: 1.6; color: #333333;\">\n                                Need help getting started? Our engineering team is standing by to assist you. Simply reply to this email or call us at <strong>+971 56 390 5772</strong>.\n                            </p>\n\n                            <!-- Signature -->\n                            <p style=\"margin: 25px 0 0 0; font-size: 15px; line-height: 1.6; color: #333333;\">\n                                Best regards,<br>\n                                <strong style=\"color: #0c1e34;\">The SGC TECH AI Team</strong><br>\n                                <span style=\"font-style: italic; color: #1e3a8a;\">Building the Future, One Enterprise at a Time</span>\n                            </p>\n\n                        </td>\n                    </tr>\n\n                    <!-- Footer -->\n                    <tr>\n                        <td style=\"background-color: #0c1e34; color: #ffffff; padding: 30px; text-align: center;\">\n                            <p style=\"margin: 0 0 15px 0; font-size: 14px;\">\n                                <strong>SGC TECH AI</strong> - A Scholarix Global Consultants Brand\n                            </p>\n                            \n                            <p style=\"margin: 10px 0; font-size: 14px;\">\n                                <a href=\"https://www.sgctech.ai\" style=\"color: #00FFF0; text-decoration: none;\">www.sgctech.ai</a> | \n                                <a href=\"mailto:hello@sgctech.ai\" style=\"color: #00FFF0; text-decoration: none;\">hello@sgctech.ai</a>\n                            </p>\n                            \n                            <p style=\"margin: 20px 0 0 0; font-size: 12px; color: #b0b0b0;\">\n                                © 2026 SGC TECH AI. All rights reserved.\n                            </p>\n                        </td>\n                    </tr>\n\n                </table>\n            </td>\n        </tr>\n    </table>\n</body>\n</html>"
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [250, 0],
+      "id": "email-confirm",
+      "name": "Send Confirmation Email",
+      "credentials": {
+        "smtp": {
+          "id": "LdfsBWBCZSSn1HzM",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "dataTableId": {
+          "value": "jGIyU8yWRc3YUuCF",
+          "mode": "list",
+          "cachedResultName": "Requests"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $json.name }}",
+            "Email": "={{ $json.email }}",
+            "Mobile": "={{ $json.phone }}",
+            "company_name": "={{ $json.company }}",
+            "user_name": "={{ $json.name }}"
+          }
+        }
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [500, 0],
+      "id": "insert-table",
+      "name": "Insert to Database"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { \"success\": true, \"message\": \"Trial request received and stored successfully\", \"email\": $json.email, \"timestamp\": $json.timestamp } }}"
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [750, 0],
+      "id": "response-node",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Send Confirmation Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Confirmation Email": {
+      "main": [
+        [
+          {
+            "node": "Insert to Database",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert to Database": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

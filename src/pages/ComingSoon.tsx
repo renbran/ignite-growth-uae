@@ -174,7 +174,7 @@ const ComingSoon = () => {
   };
 
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-carbon-black">
+    <div className="page-container relative min-h-screen w-full overflow-hidden bg-carbon-black">
       {/* Video Background - KEPT CLEAN AND UNOBSTRUCTED */}
       <div className="absolute inset-0 z-0">
         <video
