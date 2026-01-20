@@ -147,7 +147,7 @@ const Hero = () => {
           <div className="space-y-4 animate-fade-in stagger-3">
             <h1 className="font-display font-black text-4xl md:text-6xl lg:text-7xl leading-tight">
               <span className="typewriter-line text-gradient block" style={{ animationDelay: '0s' }}>
-                UAE FASTEST ERP Implementation
+                UAE's Fastest ERP Implementation
               </span>
             </h1>
             <p className="typewriter-line text-xl md:text-2xl lg:text-3xl text-foreground-muted font-display" style={{ animationDelay: '1.5s' }}>
