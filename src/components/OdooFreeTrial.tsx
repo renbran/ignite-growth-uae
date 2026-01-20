@@ -248,11 +248,11 @@ const OdooFreeTrial = () => {
                       <SelectValue placeholder="Select your region" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="gb-uk-manchester">🇬🇧 UK, Manchester</SelectItem>
-                      <SelectItem value="us-boston">🇺🇸 US, Boston</SelectItem>
-                      <SelectItem value="in-mumbai">🇮🇳 IN, Mumbai</SelectItem>
-                      <SelectItem value="br-sao-paulo">🇧🇷 BR, São Paulo</SelectItem>
-                      <SelectItem value="nl-meppel">🇳🇱 NL, Meppel</SelectItem>
+                      <SelectItem value="manchester">🇬🇧 UK, Manchester</SelectItem>
+                      <SelectItem value="boston">🇺🇸 US, Boston</SelectItem>
+                      <SelectItem value="mumbai">🇮🇳 IN, Mumbai</SelectItem>
+                      <SelectItem value="saopaulo">🇧🇷 BR, São Paulo</SelectItem>
+                      <SelectItem value="meppel">🇳🇱 NL, Meppel</SelectItem>
                     </SelectContent>
                   </Select>
                   {errors.serverLocation && (
