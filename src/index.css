@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .animation-delay-200 {
+    animation-delay: 0.2s;
+  }
+
+  .animation-delay-400 {
+    animation-delay: 0.4s;
+  }
+}
+
 /* 
 ==============================================
 SGC TECH AI / SCHOLARIX GLOBAL DESIGN SYSTEM
@@ -213,6 +223,13 @@ defined here. Components use semantic tokens.
     background-size: 50px 50px;
     background-position: center center;
   }
+
+  .cal-inline-container {
+    width: 100%;
+    min-width: 320px;
+    height: 700px;
+    overflow: auto;
+  }
   
   /* Gradient Text */
   .text-gradient {
@@ -237,8 +254,8 @@ defined here. Components use semantic tokens.
   /* Glass Morphism */
   .glass {
     background: hsl(var(--background-glass));
-    backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
     border: 1px solid hsl(var(--border));
   }
   
@@ -496,8 +513,8 @@ defined here. Components use semantic tokens.
       hsl(45 100% 60%) 75%,
       hsl(50 100% 75%) 100%
     );
-    background-clip: text;
     -webkit-background-clip: text;
+    background-clip: text;
     filter: drop-shadow(0 2px 4px hsl(45 100% 40% / 0.4)) drop-shadow(0 0 8px hsl(45 100% 50% / 0.3));
   }
 
@@ -542,6 +559,7 @@ defined here. Components use semantic tokens.
     border: 1.5px solid;
     border-image: linear-gradient(135deg, hsl(45 100% 60%), hsl(38 100% 45%)) 1;
     border-radius: 0.5rem;
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     box-shadow: 
       0 0 30px hsl(45 100% 50% / 0.25),

@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import LoadingScreen from "@/components/LoadingScreen";
@@ -21,6 +21,7 @@ const BookConsultation = lazy(() => import("./pages/BookConsultation"));
 const Article = lazy(() => import("./pages/Article"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Terms = lazy(() => import("./pages/Terms"));
+const FreeTrial = lazy(() => import("./pages/FreeTrial"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 // Loading fallback component for lazy routes
@@ -29,8 +30,8 @@ const PageLoader = () => (
     <div className="text-center">
       <div className="inline-flex items-center gap-2 mb-4">
         <div className="w-2 h-2 bg-accent rounded-full animate-pulse"></div>
-        <div className="w-2 h-2 bg-accent rounded-full animate-pulse" style={{ animationDelay: "0.2s" }}></div>
-        <div className="w-2 h-2 bg-accent rounded-full animate-pulse" style={{ animationDelay: "0.4s" }}></div>
+        <div className="w-2 h-2 bg-accent rounded-full animate-pulse animation-delay-200"></div>
+        <div className="w-2 h-2 bg-accent rounded-full animate-pulse animation-delay-400"></div>
       </div>
       <p className="text-foreground-muted">Loading page...</p>
     </div>
@@ -49,33 +50,45 @@ const queryClient = new QueryClient({
   },
 });
 
+const AppShell = () => {
+  const location = useLocation();
+  const isFreeTrialPage = location.pathname === "/free-trial";
+
+  return (
+    <>
+      {!isFreeTrialPage && <SmokeAurora />}
+      <LoadingScreen />
+      <WhatsAppButton />
+      <JotFormChatbot />
+      <ScrollToTop />
+      <Suspense fallback={<PageLoader />}>
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/solutions" element={<Solutions />} />
+          <Route path="/industries" element={<Industries />} />
+          <Route path="/pricing" element={<Pricing />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/resources" element={<Resources />} />
+          <Route path="/book-consultation" element={<BookConsultation />} />
+          <Route path="/free-trial" element={<FreeTrial />} />
+          <Route path="/article/:slug" element={<Article />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
+          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
+    </>
+  );
+};
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <SmokeAurora />
-      <LoadingScreen />
-      <WhatsAppButton />
-      <JotFormChatbot />
       <BrowserRouter>
-        <ScrollToTop />
-        <Suspense fallback={<PageLoader />}>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/solutions" element={<Solutions />} />
-            <Route path="/industries" element={<Industries />} />
-            <Route path="/pricing" element={<Pricing />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/resources" element={<Resources />} />
-            <Route path="/book-consultation" element={<BookConsultation />} />
-            <Route path="/article/:slug" element={<Article />} />
-            <Route path="/privacy" element={<Privacy />} />
-            <Route path="/terms" element={<Terms />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Suspense>
+        <AppShell />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

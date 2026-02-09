@@ -437,7 +437,10 @@ const ROICalculator = () => {
                         value={watchedEmployeeCount}
                         onValueChange={(value) => setValue("employeeCount", value, { shouldValidate: true })}
                       >
-                        <SelectTrigger className={errors.employeeCount ? "border-destructive" : ""}>
+                        <SelectTrigger
+                          id="employeeCount"
+                          className={errors.employeeCount ? "border-destructive" : ""}
+                        >
                           <SelectValue placeholder="Select employee count" />
                         </SelectTrigger>
                         <SelectContent>
@@ -459,7 +462,7 @@ const ROICalculator = () => {
                         value={watchedIndustry}
                         onValueChange={(value) => setValue("industry", value, { shouldValidate: true })}
                       >
-                        <SelectTrigger className={errors.industry ? "border-destructive" : ""}>
+                        <SelectTrigger id="industry" className={errors.industry ? "border-destructive" : ""}>
                           <SelectValue placeholder="Select your industry" />
                         </SelectTrigger>
                         <SelectContent>
@@ -485,7 +488,10 @@ const ROICalculator = () => {
                         value={watchedRevenue}
                         onValueChange={(value) => setValue("monthlyRevenue", value, { shouldValidate: true })}
                       >
-                        <SelectTrigger className={errors.monthlyRevenue ? "border-destructive" : ""}>
+                        <SelectTrigger
+                          id="monthlyRevenue"
+                          className={errors.monthlyRevenue ? "border-destructive" : ""}
+                        >
                           <SelectValue placeholder="Select revenue range" />
                         </SelectTrigger>
                         <SelectContent>

@@ -21,6 +21,16 @@ if (import.meta.env.VITE_SENTRY_DSN) {
   });
 }
 
+// Handle SPA redirects from 404.html (/?/path format)
+if (window.location.search.startsWith("?/")) {
+	const redirectQuery = window.location.search.slice(2);
+	const [rawPath, ...rawQuery] = redirectQuery.split("&");
+	const decodedPath = rawPath.replace(/~and~/g, "&");
+	const decodedQuery = rawQuery.length ? `?${rawQuery.join("&")}`.replace(/~and~/g, "&") : "";
+	const newUrl = `/${decodedPath}${decodedQuery}${window.location.hash}`;
+	window.history.replaceState(null, "", newUrl);
+}
+
 const ensureFavicon = () => {
 	const href = "/favicon.ico";
 	const existing = document.querySelector<HTMLLinkElement>("link[rel~='icon']");

@@ -5,14 +5,32 @@ import BackgroundAnimation from "@/components/BackgroundAnimation";
 
 const BookConsultation = () => {
   useEffect(() => {
-    // Load Calendly widget script
+    // Load Cal.com embed script
     const script = document.createElement("script");
-    script.src = "https://assets.calendly.com/assets/external/widget.js";
+    script.src = "https://app.cal.com/embed/embed.js";
     script.async = true;
+
+    const initializeCal = () => {
+      const Cal = (window as typeof window & { Cal?: any }).Cal;
+      if (!Cal) return;
+
+      Cal("init", "15min", { origin: "https://app.cal.com" });
+      Cal.ns["15min"]("inline", {
+        elementOrSelector: "#my-cal-inline-15min",
+        config: { layout: "month_view", useSlotsViewOnSmallScreen: "true" },
+        calLink: "sgctechai/15min",
+      });
+      Cal.ns["15min"]("ui", {
+        cssVarsPerTheme: { light: { "cal-brand": "#0b46e5" } },
+        hideEventTypeDetails: false,
+        layout: "month_view",
+      });
+    };
+
+    script.onload = initializeCal;
     document.body.appendChild(script);
 
     return () => {
-      // Cleanup script on unmount
       if (document.body.contains(script)) {
         document.body.removeChild(script);
       }
@@ -36,13 +54,9 @@ const BookConsultation = () => {
             </p>
           </div>
 
-          {/* Calendly Inline Widget */}
+          {/* Cal.com Inline Widget */}
           <div className="max-w-5xl mx-auto animate-fade-in">
-            <div 
-              className="calendly-inline-widget" 
-              data-url="https://calendly.com/scholarixglobal-q7ct/book-a-free-consultation?background_color=072846&text_color=f9f9f9&primary_color=10d5bf" 
-              style={{ minWidth: "320px", height: "700px" }}
-            ></div>
+            <div id="my-cal-inline-15min" className="cal-inline-container"></div>
           </div>
 
           {/* Trust Indicators */}

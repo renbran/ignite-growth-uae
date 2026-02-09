@@ -1,7 +1,1 @@
-# Cloudflare Pages Redirects Configuration
-# Redirect to custom domain if accessing via pages.dev
-https://ignite-growth-uae.pages.dev/* https://sgctech.ai/:splat 301!
-https://*.ignite-growth-uae.pages.dev/* https://sgctech.ai/:splat 301!
-
-# SPA fallback - redirect all routes to index.html for client-side routing
 /* /index.html 200

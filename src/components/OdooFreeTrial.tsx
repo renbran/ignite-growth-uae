@@ -34,7 +34,12 @@ const odooTrialSchema = z.object({
 
 type OdooTrialFormData = z.infer<typeof odooTrialSchema>;
 
-const OdooFreeTrial = () => {
+interface OdooFreeTrialProps {
+  compact?: boolean;
+  showIntro?: boolean;
+}
+
+const OdooFreeTrial = ({ compact = false, showIntro = true }: OdooFreeTrialProps) => {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [serverLocation, setServerLocation] = useState("");
 
@@ -60,17 +65,18 @@ const OdooFreeTrial = () => {
       const payload = {
         name: data.fullName,
         email: data.workEmail,
-        phone: data.phone,
+        Phone: data.phone,
         company: data.company,
-        server_location: data.serverLocation || serverLocation, // Fallback to state if needed
-        send_confirmation: true,
+        location: data.serverLocation || serverLocation,
+        URL: "https://004-004-728739eb-7417-41aa-8db6-12f981816288.odoo4projects.com",
+        "send confirmation": true,
         timestamp: new Date().toISOString(),
       };
 
       console.log("Sending payload to Odoo webhook:", payload);
       console.log("Payload stringified:", JSON.stringify(payload, null, 2));
 
-      const response = await fetch("https://002-001-5dd6e535-4d1c-46bc-9bd9-42ad4bc5f082.odoo4projects.com/webhook/47129739-e60b-4944-b6c2-d3fd5ce0991b", {
+      const response = await fetch("https://004-001-3a1dcc2f-4543-46aa-bdf2-c00c52b7f62c.odoo4projects.com/webhook/b3a132d7-ae3d-4a4f-8e9a-e17d8122c11a", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -110,14 +116,16 @@ const OdooFreeTrial = () => {
   };
 
   return (
-    <section id="free-trial" className="py-4xl relative">
-      <div className="container max-w-4xl px-4">
-        <div className="text-center mb-3xl">
-          <h2 className="text-gradient mb-lg">Try Odoo Free for 4 Weeks</h2>
-          <p className="text-foreground-muted text-lg">
-            Experience enterprise-grade Odoo ERP with AI automation. No credit card required.
-          </p>
-        </div>
+    <section id="free-trial" className={compact ? "relative" : "py-4xl relative"}>
+      <div className={compact ? "w-full" : "container max-w-4xl px-4"}>
+        {showIntro && (
+          <div className="text-center mb-3xl">
+            <h2 className="text-gradient mb-lg">Try Odoo Free for 4 Weeks</h2>
+            <p className="text-foreground-muted text-lg">
+              Experience enterprise-grade Odoo ERP with AI automation. No credit card required.
+            </p>
+          </div>
+        )}
 
         <div className="glass rounded-xl p-2xl max-w-2xl mx-auto">
           {status === "success" ? (
@@ -147,12 +155,14 @@ const OdooFreeTrial = () => {
             </div>
           ) : (
             <>
-              <div className="mb-2xl text-center">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/30 mb-lg">
-                  <span className="text-accent font-semibold text-sm">Managed ODOO Platform</span>
+              {showIntro && (
+                <div className="mb-2xl text-center">
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/30 mb-lg">
+                    <span className="text-accent font-semibold text-sm">Managed ODOO Platform</span>
+                  </div>
+                  <h3 className="text-2xl font-bold text-foreground mb-sm">4 Weeks Free • No Credit Card</h3>
                 </div>
-                <h3 className="text-2xl font-bold text-foreground mb-sm">4 Weeks Free • No Credit Card</h3>
-              </div>
+              )}
 
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-lg">
                 {/* Honeypot for spam protection */}
@@ -170,6 +180,7 @@ const OdooFreeTrial = () => {
                   <Input
                     id="fullName"
                     placeholder="John Smith"
+                    autoFocus
                     {...register("fullName")}
                     className={errors.fullName ? "border-destructive" : ""}
                     aria-describedby={errors.fullName ? "fullName-error" : undefined}
