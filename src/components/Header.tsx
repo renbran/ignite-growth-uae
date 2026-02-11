@@ -38,7 +38,11 @@ const Header = () => {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
-            <img src="/images/hero/sgc-tech-ai-logo.png" alt="SGC TECH AI Logo" className="h-10 w-10 transition-transform group-hover:scale-110" />
+            <img
+              src="https://res.cloudinary.com/dsl5fhclj/image/upload/v1769923568/tl6tnnqrgsssuhn5fqjw.png"
+              alt="SGC TECH AI Logo"
+              className="h-10 w-10 transition-transform group-hover:scale-110"
+            />
             <span className="font-display font-bold text-xl text-gradient whitespace-nowrap">SGC TECH AI</span>
           </Link>
 

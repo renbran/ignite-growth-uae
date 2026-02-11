@@ -7,6 +7,7 @@ import PremiumIcon from "./PremiumIcon";
 import { SECTION_ICON_MAP } from "@/lib/iconMapping";
 
 const HERO_VIDEO_SOURCES = [
+  "https://res.cloudinary.com/dsl5fhclj/video/upload/v1767242877/liflh3sqdrut6xnrvtni.mp4",
   "/videos/logo-intro-2025-720p.mp4",
   "/videos/logo-intro-2025.mp4",
 ];
@@ -105,7 +106,7 @@ const Hero = () => {
           {shouldUseVideo ? (
             <video
               ref={videoRef}
-              className={`w-full h-full object-contain transition-opacity duration-700 ${
+              className={`w-full h-full object-cover transition-opacity duration-700 ${
                 isVideoLoaded ? "opacity-70" : "opacity-0"
               } hero-video-filter will-change-opacity translate-z-0`}
               autoPlay
@@ -131,7 +132,7 @@ const Hero = () => {
             <img
               src="/images/hero/sgc-tech-ai-logo.png"
               alt="SGC TECH AI logo"
-              className="w-full h-full object-contain opacity-80 hero-video-filter translate-z-0"
+              className="w-full h-full object-cover opacity-80 hero-video-filter translate-z-0"
               loading="eager"
               decoding="sync"
             />
