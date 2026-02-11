@@ -7,7 +7,7 @@ import PremiumIcon from "./PremiumIcon";
 import { SECTION_ICON_MAP } from "@/lib/iconMapping";
 
 const HERO_VIDEO_SOURCES = [
-  "https://res.cloudinary.com/dsl5fhclj/video/upload/v1767242877/liflh3sqdrut6xnrvtni.mp4",
+  "https://res.cloudinary.com/dsl5fhclj/video/upload/v1770804359/oxvqc6clpwm9htdwm2n8.mp4",
   "/videos/logo-intro-2025-720p.mp4",
   "/videos/logo-intro-2025.mp4",
 ];
