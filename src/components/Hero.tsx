@@ -169,7 +169,7 @@ const Hero = () => {
           {/* Main Headline with Typewriter Effect */}
           <div className="space-y-4 animate-fade-in stagger-3">
             <h1 className="font-display font-black text-4xl md:text-6xl lg:text-7xl leading-tight">
-              <span className="typewriter-line text-gradient block typewriter-delay-0">
+              <span className="typewriter-line text-gradient-logo block typewriter-delay-0">
                 UAE's Fastest ERP Implementation
               </span>
             </h1>

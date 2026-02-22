@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { subscribeToMoosendList, trackMoosendSignup } from "@/lib/moosend";
 import { toast } from "sonner";
 
 const contactSchema = z.object({
@@ -91,6 +92,13 @@ const ContactForm = () => {
       const result = await response.json();
 
       if (result.success) {
+        try {
+          await subscribeToMoosendList({ email: data.email });
+          trackMoosendSignup(data.email);
+        } catch (error) {
+          console.warn("Moosend subscribe failed:", error);
+        }
+
         setStatus("success");
         toast.success("Message sent! We'll get back to you within 24 hours.");
         

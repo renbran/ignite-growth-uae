@@ -1,0 +1,29 @@
+{
+  "routes": [
+    {
+      "routePath": "/api/webhook-transformer",
+      "mountPath": "/api",
+      "method": "",
+      "module": [
+        "api/webhook-transformer.ts:onRequest"
+      ]
+    },
+    {
+      "routePath": "/webhook-transformer",
+      "mountPath": "/",
+      "method": "",
+      "module": [
+        "webhook-transformer.ts:onRequest"
+      ]
+    },
+    {
+      "routePath": "/",
+      "mountPath": "/",
+      "method": "",
+      "middleware": [
+        "_middleware.ts:onRequest"
+      ]
+    }
+  ],
+  "baseURL": "/"
+}

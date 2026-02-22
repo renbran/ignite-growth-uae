@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { subscribeToMoosendList, trackMoosendSignup } from "@/lib/moosend";
 import { toast } from "sonner";
 
 const odooTrialSchema = z.object({
@@ -96,6 +97,13 @@ const OdooFreeTrial = ({ compact = false, showIntro = true }: OdooFreeTrialProps
       }
 
       if (response.ok) {
+        try {
+          await subscribeToMoosendList({ email: data.workEmail });
+          trackMoosendSignup(data.workEmail);
+        } catch (error) {
+          console.warn("Moosend subscribe failed:", error);
+        }
+
         setStatus("success");
         toast.success("Trial request received! Check your email for confirmation.");
         
