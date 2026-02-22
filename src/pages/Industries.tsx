@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BackgroundAnimation from "@/components/BackgroundAnimation";
@@ -134,6 +135,21 @@ const clientLogos = [
 const Industries = () => {
   return (
     <div className="page-container min-h-screen relative">
+      <SEO
+        title="Real Estate ERP Software — Property Management & Development"
+        description="Industry-specific Odoo ERP for real estate development, property management, trading, and manufacturing in the UAE and GCC. Pre-built workflows for faster deployment."
+        keywords="real estate ERP software, property management ERP, Odoo real estate UAE, ERP for property developers, Odoo implementation real estate"
+        canonical="https://sgctech.ai/industries"
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "Service",
+          name: "Real Estate ERP Solutions",
+          provider: { "@type": "Organization", name: "SGC TECH AI" },
+          serviceType: "Real Estate ERP Implementation",
+          areaServed: { "@type": "GeoRegion", name: "United Arab Emirates" },
+          description: "Industry-specific Odoo ERP for real estate development, property management, and trading companies in the UAE and GCC.",
+        }}
+      />
       <GoldGradientDef />
       <BackgroundAnimation />
       <BackgroundPatterns pattern="circuit" opacity={0.1} position="top" className="left-0 z-0" />

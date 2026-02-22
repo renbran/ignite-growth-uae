@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BackgroundAnimation from "@/components/BackgroundAnimation";
@@ -80,6 +81,30 @@ const solutions = [
 const Solutions = () => {
   return (
     <div className="page-container min-h-screen relative">
+      <SEO
+        title="Odoo ERP Solutions — AI Implementation in 14 Days"
+        description="Enterprise-grade Odoo ERP solutions deployed in 14 days using AI automation. Cloud infrastructure, intelligent automation, and compliance modules for UAE and GCC businesses."
+        keywords="Odoo ERP implementation UAE, AI ERP solutions, enterprise ERP 14 days, cloud ERP Dubai, Odoo implementation partner"
+        canonical="https://sgctech.ai/solutions"
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "Service",
+          name: "AI-Powered Odoo ERP Implementation",
+          provider: { "@type": "Organization", name: "SGC TECH AI" },
+          serviceType: "ERP Implementation",
+          areaServed: { "@type": "GeoRegion", name: "United Arab Emirates" },
+          description: "Deploy Odoo ERP in 14 days with AI automation for real estate and enterprise businesses in the UAE and GCC.",
+          offers: {
+            "@type": "Offer",
+            priceCurrency: "AED",
+            price: "15187",
+            priceSpecification: {
+              "@type": "UnitPriceSpecification",
+              referenceQuantity: { "@type": "QuantitativeValue", value: "1", unitCode: "ANN" },
+            },
+          },
+        }}
+      />
       <GoldGradientDef />
       <BackgroundAnimation />
       <BackgroundPatterns pattern="circuit" opacity={0.1} position="top" className="left-0 z-0" />

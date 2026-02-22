@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import OdooFreeTrial from "@/components/OdooFreeTrial";
@@ -33,6 +34,12 @@ const highlights = [
 const FreeTrial = () => {
   return (
     <div className="page-container min-h-screen relative bg-background text-foreground">
+      <SEO
+        title="Start Free Odoo Trial — 4-Week Managed Odoo Environment"
+        description="Start your 4-week free Odoo ERP trial with no credit card required. Get a managed Odoo environment live in 24 hours with guided onboarding from SGC TECH AI experts."
+        keywords="free Odoo trial, try Odoo ERP free, Odoo free trial UAE, plug and play Odoo apps trial, Odoo 4-week trial"
+        canonical="https://sgctech.ai/free-trial"
+      />
       <BackgroundAnimation />
       <BackgroundPatterns
         pattern="hexagon"

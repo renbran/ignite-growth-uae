@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BackgroundAnimation from "@/components/BackgroundAnimation";
@@ -7,6 +8,11 @@ import { GoldGradientDef } from "@/components/GoldIcon";
 const Privacy = () => {
   return (
     <div className="page-container min-h-screen relative">
+      <SEO
+        title="Privacy Policy"
+        description="SGC TECH AI privacy policy. How we collect, use, and protect your personal data in compliance with UAE data protection regulations and GDPR."
+        canonical="https://sgctech.ai/privacy"
+      />
       <GoldGradientDef />
       <BackgroundAnimation />
       <BackgroundPatterns pattern="grid" opacity={0.08} position="top" className="left-0 z-0" />

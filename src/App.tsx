@@ -9,7 +9,7 @@ import LoadingScreen from "@/components/LoadingScreen";
 import SmokeAurora from "@/components/SmokeAurora";
 import JotFormChatbot from "@/components/JotFormChatbot";
 import ScrollToTop from "@/components/ScrollToTop";
-import Index from "./pages/Index";
+const Index = lazy(() => import("./pages/Index"));
 
 // Lazy load heavy pages to improve initial load time
 const Solutions = lazy(() => import("./pages/Solutions"));

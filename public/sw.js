@@ -121,6 +121,18 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
+
+  // Skip video/audio files — too large for Cache Storage
+  // Browser handles video range-requests natively without SW interference
+  if (
+    request.destination === 'video' ||
+    request.destination === 'audio' ||
+    url.pathname.startsWith('/videos/') ||
+    url.pathname.startsWith('/audio/') ||
+    /.(mp4|webm|mov|mp3|wav|ogg)$/.test(url.pathname)
+  ) {
+    return;
+  }
   // Strategy routing
   if (request.destination === 'document') {
     // HTML pages - network first

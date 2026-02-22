@@ -55,6 +55,13 @@
   Cache-Control: public, max-age=86400
   CDN-Cache-Control: max-age=86400
 
-# Enable gzip compression and brotli
-/*
-  Content-Encoding: gzip
+# SEO files - daily refresh
+/sitemap.xml
+  Cache-Control: public, max-age=86400
+  CDN-Cache-Control: max-age=86400
+
+/robots.txt
+  Cache-Control: public, max-age=86400
+  CDN-Cache-Control: max-age=86400
+
+# Cloudflare handles gzip/brotli compression automatically

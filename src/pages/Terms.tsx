@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BackgroundAnimation from "@/components/BackgroundAnimation";
@@ -7,6 +8,11 @@ import { GoldGradientDef } from "@/components/GoldIcon";
 const Terms = () => {
   return (
     <div className="page-container min-h-screen relative">
+      <SEO
+        title="Terms of Service"
+        description="SGC TECH AI terms of service and end-user license agreement. Understand the terms governing use of our Odoo ERP implementation and managed services."
+        canonical="https://sgctech.ai/terms"
+      />
       <GoldGradientDef />
       <BackgroundAnimation />
       <BackgroundPatterns pattern="circuit" opacity={0.08} position="top" className="left-0 z-0" />

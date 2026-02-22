@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BackgroundAnimation from "@/components/BackgroundAnimation";
@@ -63,6 +64,12 @@ const team = [
 const About = () => {
   return (
     <div className="page-container min-h-screen relative">
+      <SEO
+        title="About SGC TECH AI — Odoo Implementation Partner UAE"
+        description="SGC TECH AI (Scholarix Global Consultants) is a certified Odoo implementation partner in Dubai, UAE. 500+ clients served, 14-day average deployment, 98% satisfaction rate."
+        keywords="Odoo implementation partner UAE, SGC Tech AI, Scholarix Global Consultants, certified Odoo partner Dubai, Odoo ERP consultant UAE"
+        canonical="https://sgctech.ai/about"
+      />
       <GoldGradientDef />
       <BackgroundAnimation />
       <BackgroundPatterns pattern="circuit" opacity={0.1} position="top" className="left-0 z-0" />

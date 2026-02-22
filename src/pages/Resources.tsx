@@ -1,9 +1,10 @@
+import SEO from "@/components/SEO";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BackgroundAnimation from "@/components/BackgroundAnimation";
 import BackgroundPatterns from "@/components/BackgroundPatterns";
 import { Button } from "@/components/ui/button";
-import { BookOpen, FileText, Video, Download, Calendar, ArrowRight, Clock, Tag, Users, BarChart3, Shield, Zap } from "lucide-react";
+import { BookOpen, FileText, Video, Download, Calendar, ArrowRight, Clock, Tag, Users, BarChart3, Shield, Zap, CheckCircle2, ExternalLink, Layers } from "lucide-react";
 import { Link } from "react-router-dom";
 import { GoldGradientDef } from "@/components/GoldIcon";
 
@@ -16,6 +17,7 @@ const blogPosts = [
     date: "Dec 15, 2024",
     author: "Mohammed Al Rashid",
     slug: "ai-automation-data-entry-reduction",
+    image: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&q=80",
   },
   {
     title: "The Complete Guide to VAT Phase 2 Compliance in Saudi Arabia",
@@ -25,6 +27,7 @@ const blogPosts = [
     date: "Dec 10, 2024",
     author: "Fatima Hassan",
     slug: "vat-phase-2-compliance-guide",
+    image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&q=80",
   },
   {
     title: "Why Traditional ERP Implementations Fail: Lessons from 50+ Projects",
@@ -34,6 +37,7 @@ const blogPosts = [
     date: "Dec 5, 2024",
     author: "Raj Patel",
     slug: "erp-implementation-failures",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
   },
   {
     title: "Real Estate CRM Integration: Connecting Yardi, PropertyFinder, and Bayut",
@@ -43,6 +47,7 @@ const blogPosts = [
     date: "Nov 28, 2024",
     author: "Sarah Thompson",
     slug: "real-estate-crm-integration",
+    image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80",
   },
   {
     title: "Measuring Digital Transformation ROI: Beyond the Spreadsheet",
@@ -52,6 +57,7 @@ const blogPosts = [
     date: "Nov 20, 2024",
     author: "Ahmed Al Mansoori",
     slug: "measuring-digital-transformation-roi",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
   },
   {
     title: "From Legacy Systems to Cloud: A Manufacturing Company's 18-Month Journey",
@@ -61,8 +67,21 @@ const blogPosts = [
     date: "Nov 12, 2024",
     author: "Chen Wei",
     slug: "legacy-to-cloud-manufacturing",
+    image: "https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?w=800&q=80",
   },
 ];
+
+const categoryColors: Record<string, string> = {
+  "AI & Automation": "bg-blue-500/20 text-blue-300 border-blue-500/30",
+  "Compliance": "bg-amber-500/20 text-amber-300 border-amber-500/30",
+  "Implementation": "bg-purple-500/20 text-purple-300 border-purple-500/30",
+  "Integration": "bg-emerald-500/20 text-emerald-300 border-emerald-500/30",
+  "Strategy": "bg-rose-500/20 text-rose-300 border-rose-500/30",
+  "Case Study": "bg-cyan-500/20 text-cyan-300 border-cyan-500/30",
+};
+
+const getAvatarUrl = (name: string) =>
+  `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=0D1B2A&color=C9A84C&size=64&bold=true&font-size=0.4`;
 
 const resources = [
   {
@@ -140,13 +159,22 @@ const caseStudyHighlights = [
 ];
 
 const Resources = () => {
+  const [featured, ...rest] = blogPosts;
+
   return (
     <div className="page-container min-h-screen relative">
+      <SEO
+        title="ERP & AI Resources — Guides for Real Estate Businesses"
+        description="Expert guides on Odoo ERP implementation, AI automation, VAT compliance, and digital transformation for UAE and GCC real estate and enterprise businesses."
+        keywords="ERP implementation guides, Odoo resources UAE, AI automation UAE, ZATCA compliance guide, digital transformation blog, Odoo ERP blog"
+        canonical="https://sgctech.ai/resources"
+      />
       <GoldGradientDef />
       <BackgroundAnimation />
       <BackgroundPatterns pattern="circuit" opacity={0.1} position="top" className="left-0 z-0" />
       <Header />
       <main className="pt-32 pb-4xl relative z-10">
+
         {/* Hero Section */}
         <section className="container text-center mb-4xl">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-gold/30 bg-gold/10 text-gold text-sm font-medium mb-lg animate-fade-in">
@@ -157,7 +185,7 @@ const Resources = () => {
             Expert Insights & Practical Tools
           </h1>
           <p className="text-xl text-foreground-muted max-w-2xl mx-auto animate-fade-in stagger-2">
-            Industry research, implementation guides, and proven frameworks from 
+            Industry research, implementation guides, and proven frameworks from
             100+ successful digital transformation projects across the GCC region.
           </p>
         </section>
@@ -189,46 +217,108 @@ const Resources = () => {
               <h2 className="text-2xl md:text-3xl font-bold text-foreground">Latest Insights</h2>
               <p className="text-foreground-muted mt-sm">Research, analysis, and best practices from our team</p>
             </div>
-            <Button variant="ghost" size="sm" className="text-gold interactive-button hidden md:flex">
-              View All Articles <ArrowRight className="w-4 h-4 ml-1" />
-            </Button>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-xl">
-            {blogPosts.map((post, index) => (
-              <Link
-                to={`/article/${post.slug}`}
-                key={post.title}
-                className="glass rounded-xl p-xl interactive-card cursor-pointer animate-fade-in group block"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
+
+          {/* Featured Article */}
+          <Link
+            to={`/article/${featured.slug}`}
+            className="group block glass rounded-2xl overflow-hidden interactive-card mb-xl animate-fade-in"
+          >
+            <div className="flex flex-col lg:flex-row">
+              <div className="lg:w-1/2 h-56 lg:h-auto overflow-hidden">
+                <img
+                  src={featured.image}
+                  alt={featured.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                />
+              </div>
+              <div className="lg:w-1/2 p-xl lg:p-3xl flex flex-col justify-center">
                 <div className="flex items-center gap-md mb-md flex-wrap">
-                  <span className="px-3 py-1 rounded-full bg-gold/20 text-gold text-xs font-semibold">
-                    {post.category}
+                  <span className={`px-3 py-1 rounded-full border text-xs font-semibold ${categoryColors[featured.category] ?? "bg-gold/20 text-gold border-gold/30"}`}>
+                    {featured.category}
                   </span>
                   <span className="flex items-center gap-1 text-xs text-foreground-subtle">
                     <Clock className="w-3 h-3" style={{ stroke: "url(#gold-gradient)" }} />
-                    {post.readTime}
+                    {featured.readTime}
                   </span>
+                  <span className="px-2 py-0.5 rounded bg-gold/20 text-gold text-xs font-bold">Featured</span>
                 </div>
-                <h3 className="text-lg font-bold text-foreground mb-sm group-hover:text-gold transition-colors line-clamp-2">
-                  {post.title}
+                <h3 className="text-xl md:text-2xl font-bold text-foreground mb-md group-hover:text-gold transition-colors leading-snug">
+                  {featured.title}
                 </h3>
-                <p className="text-foreground-muted text-sm mb-md line-clamp-3">{post.excerpt}</p>
+                <p className="text-foreground-muted text-sm md:text-base mb-lg line-clamp-3">{featured.excerpt}</p>
                 <div className="flex items-center justify-between pt-md border-t border-border/50">
-                  <div className="text-xs text-foreground-subtle">
-                    <span className="font-medium text-foreground-muted">{post.author}</span>
-                    <span className="mx-2">•</span>
-                    {post.date}
+                  <div className="flex items-center gap-sm">
+                    <img
+                      src={getAvatarUrl(featured.author)}
+                      alt={featured.author}
+                      className="w-8 h-8 rounded-full"
+                    />
+                    <div>
+                      <p className="text-sm font-medium text-foreground-muted">{featured.author}</p>
+                      <p className="text-xs text-foreground-subtle">{featured.date}</p>
+                    </div>
                   </div>
-                  <ArrowRight className="w-4 h-4 text-gold opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <div className="flex items-center gap-1 text-gold text-sm font-medium group-hover:gap-2 transition-all">
+                    Read article <ArrowRight className="w-4 h-4" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Link>
+
+          {/* Rest of articles grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-xl">
+            {rest.map((post, index) => (
+              <Link
+                to={`/article/${post.slug}`}
+                key={post.slug}
+                className="glass rounded-xl overflow-hidden interactive-card cursor-pointer animate-fade-in group flex flex-col"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                {/* Card Image */}
+                <div className="h-48 overflow-hidden">
+                  <img
+                    src={post.image}
+                    alt={post.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                </div>
+
+                {/* Card Body */}
+                <div className="p-xl flex flex-col flex-1">
+                  <div className="flex items-center gap-md mb-md flex-wrap">
+                    <span className={`px-3 py-1 rounded-full border text-xs font-semibold ${categoryColors[post.category] ?? "bg-gold/20 text-gold border-gold/30"}`}>
+                      {post.category}
+                    </span>
+                    <span className="flex items-center gap-1 text-xs text-foreground-subtle">
+                      <Clock className="w-3 h-3" style={{ stroke: "url(#gold-gradient)" }} />
+                      {post.readTime}
+                    </span>
+                  </div>
+                  <h3 className="text-base font-bold text-foreground mb-sm group-hover:text-gold transition-colors line-clamp-2 leading-snug">
+                    {post.title}
+                  </h3>
+                  <p className="text-foreground-muted text-sm mb-md line-clamp-2 flex-1">{post.excerpt}</p>
+                  <div className="flex items-center justify-between pt-md border-t border-border/50 mt-auto">
+                    <div className="flex items-center gap-sm">
+                      <img
+                        src={getAvatarUrl(post.author)}
+                        alt={post.author}
+                        className="w-7 h-7 rounded-full"
+                      />
+                      <div>
+                        <p className="text-xs font-medium text-foreground-muted">{post.author}</p>
+                        <p className="text-xs text-foreground-subtle">{post.date}</p>
+                      </div>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-gold opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </div>
                 </div>
               </Link>
             ))}
-          </div>
-          <div className="mt-xl text-center md:hidden">
-            <Button variant="outline" className="interactive-button">
-              View All Articles <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
           </div>
         </section>
 
@@ -247,9 +337,9 @@ const Resources = () => {
               >
                 <div className="flex items-start gap-lg">
                   <div className="w-12 h-12 rounded-lg icon-gold-bg icon-gold-glow flex items-center justify-center flex-shrink-0">
-                    <resource.icon 
-                      className="w-6 h-6" 
-                      style={{ stroke: "url(#gold-gradient)", filter: "drop-shadow(0 0 4px rgba(255, 215, 0, 0.5))" }} 
+                    <resource.icon
+                      className="w-6 h-6"
+                      style={{ stroke: "url(#gold-gradient)", filter: "drop-shadow(0 0 4px rgba(255, 215, 0, 0.5))" }}
                     />
                   </div>
                   <div className="flex-1">
@@ -263,10 +353,10 @@ const Resources = () => {
                       {resource.title}
                     </h4>
                     <p className="text-sm text-foreground-muted mb-md">{resource.description}</p>
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      className="w-full interactive-button border-gold/30 hover:bg-gold/10 hover:text-gold" 
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="w-full interactive-button border-gold/30 hover:bg-gold/10 hover:text-gold"
                       asChild
                     >
                       <a href={resource.downloadUrl} target="_blank" rel="noopener noreferrer">
@@ -281,83 +371,113 @@ const Resources = () => {
           </div>
         </section>
 
-        {/* Flipbook Section */}
+        {/* Document Showcase — replaces slow third-party flipbook iframes */}
         <section className="container mb-4xl">
-          <div className="glass rounded-2xl overflow-hidden shadow-lg">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 p-lg">
-              <div>
-                <p className="text-sm uppercase tracking-wide text-foreground-subtle">Interactive Flipbook</p>
-                <h2 className="text-2xl md:text-3xl font-bold text-foreground">Digital Transformation Playbook</h2>
-                <p className="text-foreground-muted text-sm md:text-base max-w-2xl">
-                  Explore our interactive flipbook with implementation checklists, best practices, and visual walk-throughs.
-                </p>
-              </div>
-              <Button
-                variant="outline"
-                className="interactive-button border-gold/30 hover:bg-gold/10 hover:text-gold"
-                asChild
-              >
-                <a
-                  href="https://www.flipbookpdf.net/web/site/dddebcb14e53978818f0969e676f05219af38423202512.pdf.html"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Open in New Tab
-                </a>
-              </Button>
-            </div>
-
-            <div className="relative w-full">
-              <div className="relative w-full pb-[62.5%]">{/* 16:10 aspect ratio */}
-                <iframe
-                  src="https://www.flipbookpdf.net/web/site/dddebcb14e53978818f0969e676f05219af38423202512.pdf.html"
-                  title="Digital Transformation Flipbook"
-                  className="absolute inset-0 h-full w-full rounded-b-2xl border-t border-border"
-                  allowFullScreen
-                  loading="lazy"
-                />
-              </div>
-            </div>
+          <div className="text-center mb-xl animate-fade-in">
+            <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-md">Guides & Playbooks</h2>
+            <p className="text-foreground-muted">Expert resources you can read online or download free</p>
           </div>
-        </section>
 
-        {/* Second Flipbook Section */}
-        <section className="container mb-4xl">
-          <div className="glass rounded-2xl overflow-hidden shadow-lg">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 p-lg">
-              <div>
-                <p className="text-sm uppercase tracking-wide text-foreground-subtle">Interactive Flipbook</p>
-                <h2 className="text-2xl md:text-3xl font-bold text-foreground">ERP Solutions Guide</h2>
-                <p className="text-foreground-muted text-sm md:text-base max-w-2xl">
-                  Comprehensive guide to ERP solutions, features, and implementation strategies for UAE enterprises.
+          <div className="grid md:grid-cols-2 gap-xl">
+            {/* Card 1 — Digital Transformation Playbook */}
+            <a
+              href="https://www.flipbookpdf.net/web/site/dddebcb14e53978818f0969e676f05219af38423202512.pdf.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group glass rounded-2xl overflow-hidden interactive-card animate-fade-in flex flex-col"
+            >
+              {/* Visual cover */}
+              <div className="relative h-52 flex items-center justify-center overflow-hidden"
+                style={{ background: "linear-gradient(135deg, #0D1B2A 0%, #112244 50%, #0D1B2A 100%)" }}>
+                {/* Subtle grid */}
+                <div className="absolute inset-0 opacity-[0.06]"
+                  style={{ backgroundImage: "linear-gradient(#C9A84C 1px,transparent 1px),linear-gradient(90deg,#C9A84C 1px,transparent 1px)", backgroundSize: "40px 40px" }} />
+                {/* 3-D book */}
+                <div className="relative" style={{ transform: "perspective(600px) rotateY(-10deg)" }}>
+                  <div className="w-36 h-48 rounded-r-lg shadow-2xl flex flex-col items-center justify-center p-4 border-r border-t border-b border-white/10"
+                    style={{ background: "linear-gradient(160deg, #1a3355 0%, #0D1B2A 100%)", borderLeft: "4px solid #C9A84C" }}>
+                    <BookOpen className="w-10 h-10 text-gold mb-3 group-hover:scale-110 transition-transform duration-300" />
+                    <p className="text-gold font-bold text-center text-[11px] leading-tight tracking-wide uppercase">Digital Transformation Playbook</p>
+                    <p className="text-foreground-subtle text-[9px] mt-2 tracking-widest">SGC TECH AI</p>
+                  </div>
+                  {/* Page depth layers */}
+                  <div className="absolute -right-1 top-1 bottom-1 w-2 rounded-r bg-gradient-to-r from-white/5 to-transparent" />
+                </div>
+                {/* Free badge */}
+                <span className="absolute top-4 right-4 bg-gold text-[#0D1B2A] text-[10px] font-black px-3 py-1 rounded-full tracking-wider">FREE</span>
+              </div>
+
+              {/* Content */}
+              <div className="p-xl flex flex-col flex-1">
+                <span className="text-[10px] uppercase tracking-widest text-gold/70 mb-2 font-semibold">Interactive Guide · 42 pages</span>
+                <h3 className="text-lg font-bold text-foreground mb-3 group-hover:text-gold transition-colors">
+                  Digital Transformation Playbook
+                </h3>
+                <p className="text-sm text-foreground-muted mb-5 flex-1">
+                  Implementation checklists, best practices, and visual walk-throughs for UAE enterprise ERP adoption.
                 </p>
+                <ul className="space-y-2 mb-6">
+                  {["14-day implementation timeline", "Module selection framework", "ROI calculation worksheet", "Change management checklist"].map((t) => (
+                    <li key={t} className="flex items-center gap-2 text-xs text-foreground-muted">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-gold shrink-0" />{t}
+                    </li>
+                  ))}
+                </ul>
+                <div className="flex items-center gap-2 bg-gold/10 border border-gold/30 rounded-xl px-4 py-3 text-gold font-semibold text-sm group-hover:bg-gold/20 transition-colors">
+                  <BookOpen className="w-4 h-4" />
+                  Read Online
+                  <ExternalLink className="w-3.5 h-3.5 ml-auto opacity-60" />
+                </div>
               </div>
-              <Button
-                variant="outline"
-                className="interactive-button border-gold/30 hover:bg-gold/10 hover:text-gold"
-                asChild
-              >
-                <a
-                  href="https://www.flipbookpdf.net/web/site/a4dd13bee94079adaa6e2edb8635231809c131ec202512.pdf.html"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Open in New Tab
-                </a>
-              </Button>
-            </div>
+            </a>
 
-            <div className="relative w-full">
-              <div className="relative w-full pb-[62.5%]">{/* 16:10 aspect ratio */}
-                <iframe
-                  src="https://www.flipbookpdf.net/web/site/a4dd13bee94079adaa6e2edb8635231809c131ec202512.pdf.html"
-                  title="ERP Solutions Guide Flipbook"
-                  className="absolute inset-0 h-full w-full rounded-b-2xl border-t border-border"
-                  allowFullScreen
-                  loading="lazy"
-                />
+            {/* Card 2 — ERP Solutions Guide */}
+            <a
+              href="https://www.flipbookpdf.net/web/site/a4dd13bee94079adaa6e2edb8635231809c131ec202512.pdf.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group glass rounded-2xl overflow-hidden interactive-card animate-fade-in flex flex-col"
+            >
+              {/* Visual cover */}
+              <div className="relative h-52 flex items-center justify-center overflow-hidden"
+                style={{ background: "linear-gradient(135deg, #0D1B2A 0%, #1a2a1a 50%, #0D1B2A 100%)" }}>
+                <div className="absolute inset-0 opacity-[0.06]"
+                  style={{ backgroundImage: "linear-gradient(#C9A84C 1px,transparent 1px),linear-gradient(90deg,#C9A84C 1px,transparent 1px)", backgroundSize: "40px 40px" }} />
+                <div className="relative" style={{ transform: "perspective(600px) rotateY(-10deg)" }}>
+                  <div className="w-36 h-48 rounded-r-lg shadow-2xl flex flex-col items-center justify-center p-4 border-r border-t border-b border-white/10"
+                    style={{ background: "linear-gradient(160deg, #1a2f1a 0%, #0D1B2A 100%)", borderLeft: "4px solid #C9A84C" }}>
+                    <Layers className="w-10 h-10 text-gold mb-3 group-hover:scale-110 transition-transform duration-300" />
+                    <p className="text-gold font-bold text-center text-[11px] leading-tight tracking-wide uppercase">ERP Solutions Guide</p>
+                    <p className="text-foreground-subtle text-[9px] mt-2 tracking-widest">SGC TECH AI</p>
+                  </div>
+                  <div className="absolute -right-1 top-1 bottom-1 w-2 rounded-r bg-gradient-to-r from-white/5 to-transparent" />
+                </div>
+                <span className="absolute top-4 right-4 bg-gold text-[#0D1B2A] text-[10px] font-black px-3 py-1 rounded-full tracking-wider">FREE</span>
               </div>
-            </div>
+
+              {/* Content */}
+              <div className="p-xl flex flex-col flex-1">
+                <span className="text-[10px] uppercase tracking-widest text-gold/70 mb-2 font-semibold">Comprehensive Guide · 58 pages</span>
+                <h3 className="text-lg font-bold text-foreground mb-3 group-hover:text-gold transition-colors">
+                  ERP Solutions Guide
+                </h3>
+                <p className="text-sm text-foreground-muted mb-5 flex-1">
+                  Comprehensive breakdown of ERP modules, features, and implementation strategies for UAE enterprises.
+                </p>
+                <ul className="space-y-2 mb-6">
+                  {["Odoo module comparison matrix", "Industry-specific configurations", "Integration architecture guide", "Vendor evaluation scorecard"].map((t) => (
+                    <li key={t} className="flex items-center gap-2 text-xs text-foreground-muted">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-gold shrink-0" />{t}
+                    </li>
+                  ))}
+                </ul>
+                <div className="flex items-center gap-2 bg-gold/10 border border-gold/30 rounded-xl px-4 py-3 text-gold font-semibold text-sm group-hover:bg-gold/20 transition-colors">
+                  <BookOpen className="w-4 h-4" />
+                  Read Online
+                  <ExternalLink className="w-3.5 h-3.5 ml-auto opacity-60" />
+                </div>
+              </div>
+            </a>
           </div>
         </section>
 
@@ -380,9 +500,7 @@ const Resources = () => {
                   </div>
                   <div>
                     <h4 className="font-bold text-foreground mb-xs">{webinar.title}</h4>
-                    <p className="text-sm text-foreground-muted mb-xs">
-                      {webinar.speaker}
-                    </p>
+                    <p className="text-sm text-foreground-muted mb-xs">{webinar.speaker}</p>
                     <div className="flex items-center gap-md text-xs text-foreground-subtle">
                       <span>{webinar.date} • {webinar.time}</span>
                       <span className="flex items-center gap-1">
@@ -392,15 +510,13 @@ const Resources = () => {
                     </div>
                   </div>
                 </div>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
+                <Button
+                  variant="outline"
+                  size="sm"
                   className="interactive-button flex-shrink-0 border-gold/30 hover:bg-gold/10 hover:text-gold"
                   asChild
                 >
-                  <Link to="/book-consultation">
-                    Register Free
-                  </Link>
+                  <Link to="/book-consultation">Register Free</Link>
                 </Button>
               </div>
             ))}
@@ -415,7 +531,7 @@ const Resources = () => {
               Need Industry-Specific Research?
             </h2>
             <p className="text-lg text-foreground-muted max-w-xl mx-auto mb-xl">
-              Our consultants can prepare custom market analysis, competitive benchmarks, 
+              Our consultants can prepare custom market analysis, competitive benchmarks,
               and implementation roadmaps tailored to your business requirements.
             </p>
             <div className="flex flex-col sm:flex-row gap-md justify-center">
@@ -428,6 +544,7 @@ const Resources = () => {
             </div>
           </div>
         </section>
+
       </main>
       <Footer />
     </div>

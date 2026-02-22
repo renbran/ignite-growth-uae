@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(npm run build:*)",
+      "Bash(NODE_OPTIONS=\"--max-old-space-size=4096\" npm run build:*)",
+      "Bash(npx --node-options=\"--max-old-space-size=4096\" vite build:*)",
+      "Bash(export NODE_OPTIONS=\"--max-old-space-size=4096\")",
+      "Bash(npx tsc:*)",
+      "Bash(python3:*)",
+      "Bash(npm run deploy:cf:*)",
+      "mcp__MCP_DOCKER__fetch",
+      "mcp__MCP_DOCKER__browser_navigate",
+      "Bash(for f in Solutions.tsx Industries.tsx Pricing.tsx About.tsx Resources.tsx BookConsultation.tsx FreeTrial.tsx Privacy.tsx Terms.tsx Article.tsx)",
+      "Bash(do sed -i 's|https://sgtech\\\\.ai|https://sgctech.ai|g' \"$f\")",
+      "Bash(echo:*)",
+      "Bash(done)",
+      "Bash(wrangler pages deploy:*)",
+      "Bash(wrangler pages project:*)",
+      "Bash(wrangler pages deployment list:*)",
+      "Bash(wrangler whoami:*)",
+      "Bash(python -m json.tool:*)",
+      "Bash(du -sh:*)",
+      "Bash(node:*)",
+      "Bash(/tmp/sw_patch.ps1:*)",
+      "Bash(powershell -File:*)",
+      "Bash(xxd:*)",
+      "Bash(ls:*)"
+    ]
+  }
+}

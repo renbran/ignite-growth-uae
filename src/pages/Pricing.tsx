@@ -1,3 +1,4 @@
+import SEO from "@/components/SEO";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BackgroundAnimation from "@/components/BackgroundAnimation";
@@ -100,6 +101,24 @@ const faqs = [
 const Pricing = () => {
   return (
     <div className="page-container min-h-screen relative">
+      <SEO
+        title="Odoo ERP Pricing — Transparent Plans with 14-Day Guarantee"
+        description="Transparent Odoo ERP pricing for UAE businesses. Bronze, Silver, and Gold plans. 14-day money-back guarantee. Includes AI-powered implementation, training, and support."
+        keywords="Odoo ERP pricing UAE, ERP implementation cost, Odoo implementation pricing, real estate ERP cost, Odoo plans UAE"
+        canonical="https://sgctech.ai/pricing"
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "Product",
+          name: "Odoo ERP Implementation — SGC TECH AI",
+          brand: { "@type": "Brand", name: "SGC TECH AI" },
+          description: "AI-powered Odoo ERP implementation for real estate and enterprise businesses. 14-day money-back guarantee.",
+          offers: [
+            { "@type": "Offer", name: "Bronze — Starter", priceCurrency: "AED", price: "15187", priceValidUntil: "2026-12-31", availability: "https://schema.org/InStock" },
+            { "@type": "Offer", name: "Silver — Professional", priceCurrency: "AED", price: "29347", priceValidUntil: "2026-12-31", availability: "https://schema.org/InStock" },
+            { "@type": "Offer", name: "Gold — Enterprise", priceCurrency: "AED", price: "49347", priceValidUntil: "2026-12-31", availability: "https://schema.org/InStock" },
+          ],
+        }}
+      />
       <GoldGradientDef />
       <BackgroundAnimation />
       <BackgroundPatterns pattern="circuit" opacity={0.1} position="top" className="left-0 z-0" />

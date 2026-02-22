@@ -1,23 +1,26 @@
 import { createRoot } from "react-dom/client";
-import * as Sentry from "@sentry/react";
+import { HelmetProvider } from "react-helmet-async";
 import App from "./App.tsx";
 import "./index.css";
 
-// Initialize Sentry for error tracking and performance monitoring
+// Initialize Sentry dynamically — keeps it out of the main bundle entirely
+// Only loads the ~200KB SDK when VITE_SENTRY_DSN is configured
 if (import.meta.env.VITE_SENTRY_DSN) {
-  Sentry.init({
-    dsn: import.meta.env.VITE_SENTRY_DSN,
-    integrations: [
-      Sentry.browserTracingIntegration(),
-      Sentry.replayIntegration({
-        maskAllText: false,
-        blockAllMedia: false,
-      }),
-    ],
-    tracesSampleRate: 1.0, // 100% in dev, reduce to 0.1 in production
-    replaysSessionSampleRate: 0.1, // 10% of sessions
-    replaysOnErrorSampleRate: 1.0, // 100% when errors occur
-    environment: import.meta.env.MODE,
+  import("@sentry/react").then((Sentry) => {
+    Sentry.init({
+      dsn: import.meta.env.VITE_SENTRY_DSN,
+      integrations: [
+        Sentry.browserTracingIntegration(),
+        Sentry.replayIntegration({
+          maskAllText: false,
+          blockAllMedia: false,
+        }),
+      ],
+      tracesSampleRate: 0.1,
+      replaysSessionSampleRate: 0.1,
+      replaysOnErrorSampleRate: 1.0,
+      environment: import.meta.env.MODE,
+    });
   });
 }
 
@@ -70,4 +73,8 @@ const registerServiceWorker = () => {
 ensureFavicon();
 registerServiceWorker();
 
-createRoot(document.getElementById("root")!).render(<App />);
+createRoot(document.getElementById("root")!).render(
+  <HelmetProvider>
+    <App />
+  </HelmetProvider>
+);

@@ -1,63 +1,100 @@
 import { useEffect, useState } from "react";
 
 const LoadingScreen = () => {
-  const [isVisible, setIsVisible] = useState(true);
+  const [phase, setPhase] = useState<"show" | "fade" | "gone">("show");
 
   useEffect(() => {
-    // Check if page is already loaded
-    if (document.readyState === 'complete') {
-      setIsVisible(false);
+    const dismiss = () => {
+      setPhase("fade");
+      setTimeout(() => setPhase("gone"), 400);
+    };
+
+    // Dismiss when page is fully loaded, or after 700ms max
+    if (document.readyState === "complete") {
+      dismiss();
       return;
     }
 
-    // Hide loading screen when page fully loads OR after max 2 seconds
-    const handleLoad = () => setIsVisible(false);
-    const timer = setTimeout(() => setIsVisible(false), 2000);
-
-    window.addEventListener('load', handleLoad);
+    const onLoad = () => dismiss();
+    const timer = setTimeout(dismiss, 700);
+    window.addEventListener("load", onLoad, { once: true });
 
     return () => {
-      window.removeEventListener('load', handleLoad);
+      window.removeEventListener("load", onLoad);
       clearTimeout(timer);
     };
   }, []);
 
-  if (!isVisible) return null;
+  if (phase === "gone") return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 opacity-100 transition-opacity duration-500 pointer-events-none loading-screen">
-      {/* Logo container with animated glow and rotation */}
-      <div className="relative w-32 h-32 flex items-center justify-center">
-        {/* Outer glow rings */}
-        <div className="absolute inset-0 rounded-full border-2 border-cyan-400/30 animate-pulse" />
-        <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-cyan-400 border-r-blue-400 animate-spin opacity-60" />
-        <div className="absolute inset-0 rounded-full border border-transparent border-b-emerald-400 border-l-purple-400 animate-spin-reverse opacity-40" />
+    <>
+      <style>{`
+        @keyframes sgc-shimmer {
+          0%   { background-position: -200% center; }
+          100% { background-position:  200% center; }
+        }
+        @keyframes sgc-dot-pulse {
+          0%, 80%, 100% { opacity: 0.2; transform: scale(0.8); }
+          40%            { opacity: 1;   transform: scale(1);   }
+        }
+        .sgc-loader-text {
+          background: linear-gradient(
+            90deg,
+            #C9A84C 0%,
+            #F5E6A3 40%,
+            #C9A84C 55%,
+            #B8942A 100%
+          );
+          background-size: 200% auto;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          animation: sgc-shimmer 1.4s linear infinite;
+        }
+        .sgc-dot { animation: sgc-dot-pulse 1.2s ease-in-out infinite; }
+        .sgc-dot:nth-child(2) { animation-delay: 0.2s; }
+        .sgc-dot:nth-child(3) { animation-delay: 0.4s; }
+      `}</style>
 
-        {/* Logo with rotation */}
-        <div className="relative w-24 h-24 animate-spin-slow">
-          <img
-            src="/sgc-tech-ai-logo-full-color.png"
-            alt="Loading"
-            className="w-full h-full object-contain drop-shadow-lg drop-shadow-cyan-500/50"
-          />
+      <div
+        className="fixed inset-0 z-[9999] flex flex-col items-center justify-center pointer-events-none"
+        style={{
+          backgroundColor: "#0A1628",
+          opacity: phase === "fade" ? 0 : 1,
+          transition: "opacity 0.4s ease-out",
+        }}
+      >
+        {/* Brand name with gold shimmer sweep */}
+        <div className="flex flex-col items-center gap-6 select-none">
+          <span
+            className="sgc-loader-text text-4xl sm:text-5xl font-black tracking-widest"
+            style={{ fontFamily: "Orbitron, sans-serif" }}
+          >
+            SGC TECH AI
+          </span>
+
+          {/* Tagline */}
+          <span
+            className="text-xs tracking-[0.3em] uppercase"
+            style={{ color: "#C9A84C80", fontFamily: "Inter, sans-serif" }}
+          >
+            Machine Speed · Human Expertise
+          </span>
+
+          {/* Three gold pulsing dots */}
+          <div className="flex items-center gap-2 mt-2">
+            {[0, 1, 2].map((i) => (
+              <span
+                key={i}
+                className="sgc-dot block w-2 h-2 rounded-full"
+                style={{ backgroundColor: "#C9A84C" }}
+              />
+            ))}
+          </div>
         </div>
-
-        {/* Center glow effect */}
-        <div className="absolute inset-6 rounded-full bg-gradient-to-r from-cyan-400/20 to-blue-400/20 blur-xl opacity-60 animate-glow-pulse" />
       </div>
-
-      {/* Loading text with animation */}
-      <div className="absolute bottom-20 flex flex-col items-center gap-4">
-        <p className="text-cyan-400 text-lg font-semibold animate-pulse">
-          Loading Experience...
-        </p>
-        <div className="flex gap-2">
-          <span className="w-2 h-2 rounded-full bg-cyan-400 animate-bounce" />
-          <span className="w-2 h-2 rounded-full bg-blue-400 animate-bounce" style={{ animationDelay: "0.1s" }} />
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-bounce" style={{ animationDelay: "0.2s" }} />
-        </div>
-      </div>
-    </div>
+    </>
   );
 };
 
