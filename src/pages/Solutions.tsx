@@ -86,24 +86,44 @@ const Solutions = () => {
         description="Enterprise-grade Odoo ERP solutions deployed in 14 days using AI automation. Cloud infrastructure, intelligent automation, and compliance modules for UAE and GCC businesses."
         keywords="Odoo ERP implementation UAE, AI ERP solutions, enterprise ERP 14 days, cloud ERP Dubai, Odoo implementation partner"
         canonical="https://sgctech.ai/solutions"
-        schema={{
-          "@context": "https://schema.org",
-          "@type": "Service",
-          name: "AI-Powered Odoo ERP Implementation",
-          provider: { "@type": "Organization", name: "SGC TECH AI" },
-          serviceType: "ERP Implementation",
-          areaServed: { "@type": "GeoRegion", name: "United Arab Emirates" },
-          description: "Deploy Odoo ERP in 14 days with AI automation for real estate and enterprise businesses in the UAE and GCC.",
-          offers: {
-            "@type": "Offer",
-            priceCurrency: "AED",
-            price: "15187",
-            priceSpecification: {
-              "@type": "UnitPriceSpecification",
-              referenceQuantity: { "@type": "QuantitativeValue", value: "1", unitCode: "ANN" },
-            },
-          },
-        }}
+            schema={[
+              {
+                "@context": "https://schema.org",
+                "@type": "Service",
+                name: "AI-Powered Odoo ERP Implementation",
+                provider: { "@type": "Organization", name: "SGC TECH AI", url: "https://sgctech.ai", logo: "https://sgctech.ai/sgc-tech-ai-logo-full-color.png" },
+                serviceType: "ERP Implementation",
+                areaServed: { "@type": "GeoRegion", name: "United Arab Emirates" },
+                description: "Deploy Odoo ERP in 14 days with AI automation for real estate and enterprise businesses in the UAE and GCC.",
+                offers: {
+                  "@type": "Offer",
+                  priceCurrency: "AED",
+                  price: "15187",
+                  priceSpecification: {
+                    "@type": "UnitPriceSpecification",
+                    referenceQuantity: { "@type": "QuantitativeValue", value: "1", unitCode: "ANN" },
+                  },
+                },
+              },
+              {
+                "@context": "https://schema.org",
+                "@type": "Service",
+                name: "Cloud Infrastructure",
+                provider: { "@type": "Organization", name: "SGC TECH AI" },
+                serviceType: "Cloud Infrastructure",
+                areaServed: { "@type": "GeoRegion", name: "United Arab Emirates" },
+                description: "Scalable, secure cloud solutions that grow with your business. Zero downtime migrations and 24/7 monitoring.",
+              },
+              {
+                "@context": "https://schema.org",
+                "@type": "Service",
+                name: "24/7 Support & Training",
+                provider: { "@type": "Organization", name: "SGC TECH AI" },
+                serviceType: "Support & Training",
+                areaServed: { "@type": "GeoRegion", name: "United Arab Emirates" },
+                description: "Dedicated support team and comprehensive training programs to ensure your team maximizes system value.",
+              }
+            ]}
       />
       <GoldGradientDef />
       <BackgroundAnimation />

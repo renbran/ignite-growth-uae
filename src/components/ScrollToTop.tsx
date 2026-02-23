@@ -10,19 +10,16 @@ const ScrollToTop = () => {
   const { pathname, hash } = useLocation();
 
   useEffect(() => {
-    // If there's a hash (e.g., #contact), scroll to that element
-    if (hash) {
-      // Small delay to ensure the element is rendered
+    // Only scroll if hash is present and not empty
+    if (hash && hash.length > 1) {
       setTimeout(() => {
         const element = document.querySelector(hash);
         if (element) {
           element.scrollIntoView({ behavior: "smooth", block: "start" });
         }
       }, 100);
-    } else {
-      // No hash - scroll to top with smooth behavior
-      window.scrollTo({ top: 0, behavior: "smooth" });
     }
+    // Otherwise, do nothing (no scroll on page open)
   }, [pathname, hash]);
 
   return null;

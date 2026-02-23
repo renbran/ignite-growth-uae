@@ -1,67 +1,47 @@
 /*
-  Cache-Control: max-age=3600, must-revalidate
-  X-Content-Type-Options: nosniff
-  X-Frame-Options: DENY
-  X-XSS-Protection: 1; mode=block
-  Referrer-Policy: strict-origin-when-cross-origin
+X-Frame-Options: SAMEORIGIN
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin-when-cross-origin
 
-# Optimized for slow networks - aggressive caching
 /assets/*
-  Cache-Control: max-age=31536000, immutable
-  CDN-Cache-Control: max-age=31536000
+Cache-Control: public, max-age=31536000, immutable
 
-# JavaScript bundles with versioning
 /*.js
-  Cache-Control: max-age=31536000, immutable
-  CDN-Cache-Control: max-age=31536000
+Cache-Control: public, max-age=31536000, immutable
 
-# CSS with versioning
 /*.css
-  Cache-Control: max-age=31536000, immutable
-  CDN-Cache-Control: max-age=31536000
+Cache-Control: public, max-age=31536000, immutable
 
-# HTML - always revalidate for fresh content
+/*.woff2
+Cache-Control: public, max-age=31536000, immutable
+
+/*.ttf
+Cache-Control: public, max-age=31536000, immutable
+
+/*.svg
+Cache-Control: public, max-age=31536000, immutable
+
+/*.webp
+Cache-Control: public, max-age=31536000, immutable
+
+/*.avif
+Cache-Control: public, max-age=31536000, immutable
+
 /index.html
-  Cache-Control: max-age=0, no-cache, no-store, must-revalidate
-  CDN-Cache-Control: max-age=3600
+Cache-Control: no-cache
 
-# Images - moderate caching
 /images/*
-  Cache-Control: public, max-age=604800, s-maxage=604800
-  CDN-Cache-Control: max-age=604800
+Cache-Control: public, max-age=604800, s-maxage=604800
 
-# Fonts - long-term caching
 /fonts/*
-  Cache-Control: public, max-age=31536000, immutable
-  CDN-Cache-Control: max-age=31536000
+Cache-Control: public, max-age=31536000, immutable
 
-# Videos - moderate caching with revalidation
 /videos/*
-  Cache-Control: public, max-age=604800, s-maxage=604800
-  CDN-Cache-Control: max-age=604800
+Cache-Control: public, max-age=604800, s-maxage=604800
 
-# API calls - no caching
 /api/*
-  Cache-Control: public, max-age=0, must-revalidate
-  CDN-Cache-Control: max-age=0
+Cache-Control: public, max-age=0, must-revalidate
 
-# Service worker - always fresh
 /sw.js
-  Cache-Control: max-age=0, no-cache, no-store, must-revalidate
-  CDN-Cache-Control: max-age=0
-
-# Manifest and metadata - moderate caching
-/manifest.json
-  Cache-Control: public, max-age=86400
-  CDN-Cache-Control: max-age=86400
-
-# SEO files - daily refresh
-/sitemap.xml
-  Cache-Control: public, max-age=86400
-  CDN-Cache-Control: max-age=86400
-
-/robots.txt
-  Cache-Control: public, max-age=86400
-  CDN-Cache-Control: max-age=86400
-
-# Cloudflare handles gzip/brotli compression automatically
+Cache-Control: max-age=0, no-cache, no-store, must-revalidate

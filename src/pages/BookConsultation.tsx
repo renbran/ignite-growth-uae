@@ -59,55 +59,83 @@ const BookConsultation = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   useEffect(() => {
-    // Remove any existing Cal script to avoid duplicates on re-mount
-    const existing = document.querySelector('script[src="https://app.cal.com/embed/embed.js"]');
-    if (existing) existing.remove();
-    // Also reset Cal namespace if it exists
-    const w = window as typeof window & { Cal?: any };
-    if (w.Cal) {
-      delete w.Cal;
-    }
+    const w = window as any;
 
-    const script = document.createElement("script");
-    script.src = "https://app.cal.com/embed/embed.js";
-    script.async = true;
+    // Clear previous embed content and Cal state
+    const container = document.getElementById("my-cal-inline-15min");
+    if (container) container.innerHTML = "";
+    if (w.Cal) delete w.Cal;
+    const oldScript = document.querySelector('script[src="https://app.cal.com/embed/embed.js"]');
+    if (oldScript) oldScript.remove();
 
-    script.onload = () => {
-      const Cal = (window as typeof window & { Cal?: any }).Cal;
-      if (!Cal) return;
+    // Official Cal.com queue snippet — MUST run synchronously before any Cal() calls.
+    // This sets up window.Cal as a queue function. When Cal("init",...) is called,
+    // the snippet self-loads embed.js and queues the commands; embed.js processes them on load.
+    (function (C: any, A: string, L: string) {
+      const p = (a: any, ar: any) => { a.q.push(ar); };
+      C.Cal = C.Cal || function () {
+        const cal = C.Cal;
+        const ar = arguments;
+        if (!cal.loaded) {
+          cal.ns = {};
+          cal.q = cal.q || [];
+          const s = document.createElement("script");
+          s.async = true;
+          s.src = A;
+          document.head.appendChild(s);
+          cal.loaded = true;
+        }
+        if (ar[0] === L) {
+          const api: any = function () { p(api, arguments); };
+          const namespace = ar[1];
+          api.q = api.q || [];
+          if (typeof namespace === "string") {
+            cal.ns[namespace] = cal.ns[namespace] || api;
+            p(cal.ns[namespace], ar);
+            p(cal, [L, namespace, ar[2]]);
+          } else {
+            p(cal, ar);
+          }
+          return;
+        }
+        p(cal, ar);
+      };
+    })(window, "https://app.cal.com/embed/embed.js", "init");
 
-      Cal("init", "15min", { origin: "https://app.cal.com" });
+    const Cal = w.Cal;
 
-      Cal.ns["15min"]("inline", {
-        elementOrSelector: "#my-cal-inline-15min",
-        config: {
-          layout: "month_view",
-          useSlotsViewOnSmallScreen: "true",
-          theme: "dark",
-        },
-        calLink: "sgctechai/15min",
-      });
+    // These calls are queued immediately and processed once embed.js finishes loading
+    Cal("init", "15min", { origin: "https://app.cal.com" });
 
-      Cal.ns["15min"]("ui", {
-        cssVarsPerTheme: {
-          dark: {
-            "cal-brand": "#C9A84C",
-            "cal-brand-emphasis": "#B8942A",
-            "cal-brand-text": "#0D1B2A",
-          },
-        },
-        hideEventTypeDetails: false,
+    Cal.ns["15min"]("inline", {
+      elementOrSelector: "#my-cal-inline-15min",
+      config: {
         layout: "month_view",
+        useSlotsViewOnSmallScreen: "true",
         theme: "dark",
-      });
-    };
+      },
+      calLink: "sgctechai/15min",
+    });
 
-    document.body.appendChild(script);
+    Cal.ns["15min"]("ui", {
+      cssVarsPerTheme: {
+        dark: {
+          "cal-brand": "#C9A84C",
+          "cal-brand-emphasis": "#B8942A",
+          "cal-brand-text": "#0D1B2A",
+        },
+      },
+      hideEventTypeDetails: false,
+      layout: "month_view",
+      theme: "dark",
+    });
 
     return () => {
-      if (document.body.contains(script)) {
-        document.body.removeChild(script);
-      }
+      const container = document.getElementById("my-cal-inline-15min");
+      if (container) container.innerHTML = "";
+      if (w.Cal) delete w.Cal;
+      const script = document.querySelector('script[src="https://app.cal.com/embed/embed.js"]');
+      if (script) script.remove();
     };
   }, []);
 

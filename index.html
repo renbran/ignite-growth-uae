@@ -24,10 +24,11 @@
     <link rel="preconnect" href="https://app.cal.com">
     <link rel="dns-prefetch" href="//app.cal.com">
 
-    <!-- Google Fonts -->
+    <!-- Google Fonts: Preload for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet" media="all" onload="this.media='all'">
 
     <meta property="og:title" content="AI-Powered Odoo ERP for Real Estate | SGC TECH AI" />
     <meta property="og:description" content="Deploy AI-powered Odoo ERP for real estate in 14 days. Plug-and-play modules for property developers, property managers, and trading companies. 14-day money-back guarantee." />

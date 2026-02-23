@@ -244,6 +244,7 @@ const ROICalculator = () => {
                 max="100"
                 value={employees}
                 onChange={(e) => setEmployees(parseInt(e.target.value))}
+                aria-label="Number of Employees"
                 className="w-full h-2 bg-[rgba(79,195,247,0.2)] rounded-full appearance-none cursor-pointer
                            [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6 
                            [&::-webkit-slider-thumb]:bg-[#4fc3f7] [&::-webkit-slider-thumb]:border-4 [&::-webkit-slider-thumb]:border-[#00FFF0] 
@@ -263,6 +264,7 @@ const ROICalculator = () => {
                 max="100"
                 value={hours}
                 onChange={(e) => setHours(parseInt(e.target.value))}
+                aria-label="Hours on Manual Tasks (per week)"
                 className="w-full h-2 bg-[rgba(79,195,247,0.2)] rounded-full appearance-none cursor-pointer
                            [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6 
                            [&::-webkit-slider-thumb]:bg-[#4fc3f7] [&::-webkit-slider-thumb]:border-4 [&::-webkit-slider-thumb]:border-[#00FFF0] 
@@ -283,6 +285,7 @@ const ROICalculator = () => {
                 step="10"
                 value={rate}
                 onChange={(e) => setRate(parseInt(e.target.value))}
+                aria-label="Average Hourly Rate (AED)"
                 className="w-full h-2 bg-[rgba(79,195,247,0.2)] rounded-full appearance-none cursor-pointer
                            [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6 
                            [&::-webkit-slider-thumb]:bg-[#4fc3f7] [&::-webkit-slider-thumb]:border-4 [&::-webkit-slider-thumb]:border-[#00FFF0] 

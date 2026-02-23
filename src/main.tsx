@@ -34,6 +34,10 @@ if (window.location.search.startsWith("?/")) {
 	window.history.replaceState(null, "", newUrl);
 }
 
+if ('scrollRestoration' in window.history) {
+  window.history.scrollRestoration = 'manual';
+}
+
 const ensureFavicon = () => {
 	const href = "/favicon.ico";
 	const existing = document.querySelector<HTMLLinkElement>("link[rel~='icon']");

@@ -25,7 +25,11 @@
       "Bash(/tmp/sw_patch.ps1:*)",
       "Bash(powershell -File:*)",
       "Bash(xxd:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "mcp__MCP_DOCKER__browser_take_screenshot",
+      "Bash(npx wrangler pages deploy:*)",
+      "mcp__MCP_DOCKER__browser_network_requests",
+      "mcp__MCP_DOCKER__browser_run_code"
     ]
   }
 }

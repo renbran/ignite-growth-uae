@@ -1,16 +1,19 @@
 import SEO from "@/components/SEO";
+import { Suspense, lazy } from "react";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
-import ValueProposition from "@/components/ValueProposition";
-import Industries from "@/components/Industries";
-import PremiumServices from "@/components/PremiumServices";
-import ROICalculator from "@/components/ROICalculator";
-import OdooFreeTrial from "@/components/OdooFreeTrial";
-import ContactForm from "@/components/ContactForm";
-import Footer from "@/components/Footer";
 import BackgroundAnimation from "@/components/BackgroundAnimation";
 import BackgroundPatterns from "@/components/BackgroundPatterns";
-import PartnerCarousel from "@/components/PartnerCarousel";
+
+const PartnerCarousel = lazy(() => import("@/components/PartnerCarousel"));
+const VideoShowcase = lazy(() => import("@/components/VideoShowcase"));
+const ValueProposition = lazy(() => import("@/components/ValueProposition"));
+const PremiumServices = lazy(() => import("@/components/PremiumServices"));
+const Industries = lazy(() => import("@/components/Industries"));
+const ROICalculator = lazy(() => import("@/components/ROICalculator"));
+const OdooFreeTrial = lazy(() => import("@/components/OdooFreeTrial"));
+const ContactForm = lazy(() => import("@/components/ContactForm"));
+const Footer = lazy(() => import("@/components/Footer"));
 
 const Index = () => {
   return (
@@ -73,8 +76,13 @@ const Index = () => {
       <Header />
       <main>
         <Hero />
-        <PartnerCarousel />
-        
+        <Suspense fallback={<div className="min-h-[120px] flex items-center justify-center">Loading partners...</div>}>
+          <PartnerCarousel />
+        </Suspense>
+        <Suspense fallback={<div className="min-h-[200px] flex items-center justify-center">Loading video...</div>}>
+          <VideoShowcase />
+        </Suspense>
+
         {/* Value Proposition pattern */}
         <div className="relative">
           <BackgroundPatterns 
@@ -83,7 +91,9 @@ const Index = () => {
             position="center"
             className="left-0 z-0"
           />
-          <ValueProposition />
+          <Suspense fallback={<div className="min-h-[300px] flex items-center justify-center">Loading value proposition...</div>}>
+            <ValueProposition />
+          </Suspense>
         </div>
         
         {/* Premium Services pattern */}
@@ -94,7 +104,9 @@ const Index = () => {
             position="center"
             className="left-0 z-0"
           />
-          <PremiumServices />
+          <Suspense fallback={<div className="min-h-[300px] flex items-center justify-center">Loading premium services...</div>}>
+            <PremiumServices />
+          </Suspense>
         </div>
         
         {/* Industries pattern */}
@@ -105,7 +117,9 @@ const Index = () => {
             position="bottom"
             className="left-0 z-0"
           />
-          <Industries />
+          <Suspense fallback={<div className="min-h-[300px] flex items-center justify-center">Loading industries...</div>}>
+            <Industries />
+          </Suspense>
         </div>
         
         {/* ROI Calculator pattern */}
@@ -116,7 +130,9 @@ const Index = () => {
             position="center"
             className="left-0 z-0"
           />
-          <ROICalculator />
+          <Suspense fallback={<div className="min-h-[300px] flex items-center justify-center">Loading ROI calculator...</div>}>
+            <ROICalculator />
+          </Suspense>
         </div>
         
         {/* Odoo Free Trial pattern */}
@@ -127,7 +143,9 @@ const Index = () => {
             position="center"
             className="left-0 z-0"
           />
-          <OdooFreeTrial />
+          <Suspense fallback={<div className="min-h-[300px] flex items-center justify-center">Loading free trial...</div>}>
+            <OdooFreeTrial />
+          </Suspense>
         </div>
         
         {/* Contact Form pattern */}
@@ -138,10 +156,14 @@ const Index = () => {
             position="full"
             className="left-0 z-0"
           />
-          <ContactForm />
+          <Suspense fallback={<div className="min-h-[300px] flex items-center justify-center">Loading contact form...</div>}>
+            <ContactForm />
+          </Suspense>
         </div>
       </main>
-      <Footer />
+      <Suspense fallback={null}>
+        <Footer />
+      </Suspense>
     </div>
   );
 };

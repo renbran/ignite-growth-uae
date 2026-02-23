@@ -149,6 +149,8 @@ defined here. Components use semantic tokens.
   
   html {
     @apply scroll-smooth;
+    scroll-behavior: smooth;
+    overscroll-behavior-y: contain;
   }
 
   body {
@@ -162,6 +164,7 @@ defined here. Components use semantic tokens.
     background-color: hsl(var(--background));
     background-blend-mode: multiply;
     position: relative;
+    will-change: scroll-position, transform;
   }
 
   body::before {

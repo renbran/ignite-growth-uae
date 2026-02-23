@@ -1,14 +1,14 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
 const VideoShowcase = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   const handlePlayPause = () => {
     const video = videoRef.current;
     if (!video) return;
-
     if (video.paused) {
       video.play();
       setIsPlaying(true);
@@ -21,6 +21,18 @@ const VideoShowcase = () => {
   const handleVideoClick = () => {
     handlePlayPause();
   };
+
+  useEffect(() => {
+    if (!videoRef.current) return;
+    const observer = new window.IntersectionObserver(([entry]) => {
+      setIsVisible(entry.isIntersecting);
+      if (entry.isIntersecting) {
+        videoRef.current.load();
+      }
+    }, { threshold: 0.1 });
+    observer.observe(videoRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   const handleVideoEnd = () => {
     setIsPlaying(false);
@@ -48,12 +60,15 @@ const VideoShowcase = () => {
                 ref={videoRef}
                 className="absolute inset-0 w-full h-full object-contain bg-black cursor-pointer"
                 playsInline
-                preload="metadata"
+                preload="none"
+                poster="/images/video-showcase-poster.jpg"
+                style={{ opacity: isVisible ? 1 : 0, transition: 'opacity 0.3s' }}
+                controls
+                loading="lazy"
                 onClick={handleVideoClick}
                 onEnded={handleVideoEnd}
                 aria-label="SGC TECH AI Showcase Video"
               >
-                <source src="/videos/showcase-video.mp4" type="video/mp4" />
                 <p className="text-center text-white p-4 text-sm">
                   Your browser does not support the video tag.
                 </p>
