@@ -6,7 +6,8 @@
 import posthog from "posthog-js";
 
 // Track custom events
-export const trackEvent = (eventName: string, properties?: Record<string, unknown>) => {
+type AnalyticsEventProps = Record<string, string | number | boolean | undefined>;
+export const trackEvent = (eventName: string, properties?: AnalyticsEventProps) => {
   if (globalThis.window !== undefined && posthog.__loaded) {
     posthog.capture(eventName, properties);
   }

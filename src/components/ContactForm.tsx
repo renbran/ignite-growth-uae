@@ -23,7 +23,7 @@ const contactSchema = z.object({
   phone: z
     .string()
     .min(8, "Please enter a valid phone number")
-    .regex(/^[\+]?[0-9\s\-]{8,20}$/, "Please enter a valid phone number"),
+    .regex(/^\+?[0-9\s-]{8,20}$/, "Please enter a valid phone number"),
   message: z
     .string()
     .max(1000, "Message must be less than 1000 characters")

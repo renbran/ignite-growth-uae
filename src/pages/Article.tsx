@@ -756,7 +756,7 @@ const escapeHtml = (s: string) =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 const isSeparatorRow = (row: string) =>
-  /^\|[\s|:\-]+\|?\s*$/.test(row.trim());
+  /^\|[\s|:-]+\|?\s*$/.test(row.trim());
 
 const renderContent = (content: string): string => {
   const lines = content.split("\n");

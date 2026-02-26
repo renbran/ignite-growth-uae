@@ -1,3 +1,7 @@
+// Extend window for Cal.com
+interface CalWindow extends Window {
+  Cal?: any;
+}
 import { useEffect, useState } from "react";
 import SEO from "@/components/SEO";
 import Header from "@/components/Header";
@@ -59,7 +63,7 @@ const BookConsultation = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   useEffect(() => {
-    const w = window as any;
+    const w = window as CalWindow;
 
     // Clear previous embed content and Cal state
     const container = document.getElementById("my-cal-inline-15min");

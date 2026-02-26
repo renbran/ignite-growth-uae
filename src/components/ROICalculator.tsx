@@ -29,7 +29,7 @@ const roiSchema = z.object({
   phone: z
     .string()
     .min(8, "Please enter a valid phone number")
-    .regex(/^[\+]?[0-9\s\-]{8,20}$/, "Please enter a valid phone number"),
+    .regex(/^\+?[0-9\s-]{8,20}$/, "Please enter a valid phone number"),
   companyName: z
     .string()
     .min(2, "Company name must be at least 2 characters")

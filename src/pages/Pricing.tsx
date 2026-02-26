@@ -110,6 +110,7 @@ const Pricing = () => {
           "@context": "https://schema.org",
           "@type": "Product",
           name: "Odoo ERP Implementation — SGC TECH AI",
+          image: "https://sgctech.ai/sgc-og.svg",
           brand: { "@type": "Brand", name: "SGC TECH AI" },
           description: "AI-powered Odoo ERP implementation for real estate and enterprise businesses. 14-day money-back guarantee.",
           offers: [
